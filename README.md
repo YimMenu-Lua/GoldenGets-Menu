@@ -16,7 +16,7 @@ I think it might be too late to make and share this script after the disaster ha
 
 
 <div align="center">
-  <h1> ScreenShot Features</h1>
+  <h1> Screenshots Features</h1>
 </div>
 
 ![Screenshots1](https://github.com/YimMenu-Lua/GoldenGets-Menu/blob/main/Screenshots/1.JPG)
