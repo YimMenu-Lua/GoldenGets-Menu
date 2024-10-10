@@ -19,10 +19,10 @@ I think it might be too late to make and share this script after the disaster ha
   <h1> ScreenShot Features</h1>
 </div>
 
-![Screenshot1](https://github.com/GoldenGets/BusinessControls/blob/main/Screenshot/1.JPG)
-![Screenshot2](https://github.com/GoldenGets/BusinessControls/blob/main/Screenshot/2.JPG)
-![Screenshot3](https://github.com/GoldenGets/BusinessControls/blob/main/Screenshot/3.JPG)
-![Screenshot4](https://github.com/GoldenGets/BusinessControls/blob/main/Screenshot/4.JPG)
+![Screenshots1](https://github.com/YimMenu-Lua/GoldenGets-Menu/blob/main/Screenshots/1.JPG)
+![Screenshots2](https://github.com/YimMenu-Lua/GoldenGets-Menu/blob/main/Screenshots/2.JPG)
+![Screenshots3](https://github.com/YimMenu-Lua/GoldenGets-Menu/blob/main/Screenshots/3.JPG)
+![Screenshots4](https://github.com/YimMenu-Lua/GoldenGets-Menu/blob/main/Screenshots/4.JPG)
 
 
 ## Features that need to be updated in the next version
