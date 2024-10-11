@@ -41,22 +41,21 @@ In fact, most of these scripts are independent of the GTA Online update version.
 
 
 > [!Note:]
-> Some of these features are experimental and may not work.
+> Please note, some features are experimental and may not work as expected.
 
 
 > [!Note:]
-> I set all sales businesses with a maximum profit of 2x. I hope this method is safe because it is not excessive and there are many options for making money from the business. Because based on my experience, some of my accounts have recently been banned because I exceeded the very large sales limit and used the instant money addition option.
+> For safety reasons, I've limited all business sales to a 2x profit cap to avoid detection. Based on past experience, exceeding large sales limits or using instant money options has resulted in bans.
 
 
 > [⚠︎Disclaimer⚠︎]
+> This is for educational and evaluation purposes only.
+> No responsibility is held or accepted for misuse.
 > Use at your own risk!
-> We are not responsible for any loss you may incur after downloading from this source.
-> By downloading it from this source, you're agree to the applicable terms.
-
 
 ## About me
 
-Hi, I'm not good at programming and I made this because I was inspired by someone else.
+Hi, I'm a hobbyist programmer inspired by others to create this project.
 If you like this project, please consider donating to help further development. [Click here](https://www.paypal.me/mrafiwr) to donate. Thank you for your support!
 
 
