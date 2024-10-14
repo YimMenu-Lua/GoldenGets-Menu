@@ -1,15 +1,173 @@
-GoldenGets = gui.get_tab("GoldenGets Menu")
+SupportBuild = "3337"
+SupportVersion = "1.69"
 
-gui.show_message("GoldenGets Menu v1.0","is Successfully launched!")
+------------------------------------ Launch Menu
 
-gtaoversion = memory.scan_pattern("8B C3 33 D2 C6 44 24 20"):add(0x24):rip()
-gtaoversionstr = gtaoversion:get_string()
-if gtaoversion:get_string() ~= "3337" then
-    verchkok = 0
-    log.warning("GTA Online has been update, some functions will be automatically disabled!")
-	gui.show_message("GoldenGets Menu - Warning","GTA Online has been update, some functions will be automatically disabled!")
+GoldenGetsMenu = gui.get_tab("GoldenGets Menu")
+gui.show_message("GoldenGets Menu v1.1 | "..SupportVersion.." b"..SupportBuild.."","is Successfully launched!")
+
+------------------------------------ Build Compatibility
+
+CurrentBuild = memory.scan_pattern("8B C3 33 D2 C6 44 24 20"):add(0x24):rip()
+CurrentBuild_string = CurrentBuild:get_string()
+BuildStatus = 0
+
+if CurrentBuild:get_string() ~= SupportBuild then
+    BuildStatus = 0
+	gui.show_error("GoldenGets Menu - Outdate","Unsupported Build version (b"..SupportBuild.."). Some functions will be automatically disabled!")
+    log.warning("Unsupported Build version (b"..SupportBuild.."), current Build version is (b"..CurrentBuild_string.."). Some functions will be automatically disabled!")
 else
-    verchkok = 1
+    BuildStatus = 1
+end
+
+function globals_b_get_int(SupportBuild_string, intglobal)
+    if tostring(SupportBuild_string) == CurrentBuild_string or BuildStatus == 5 then
+        return globals.get_int(intglobal)
+    else
+        log.warning("Unable to read data, unsupported Build version (b"..SupportBuild_string.."). Current Build version is (b"..CurrentBuild_string..")")
+    end
+end
+
+function globals_b_set_int(SupportBuild_string, intglobal, intval)
+    if tostring(SupportBuild_string) == CurrentBuild_string or BuildStatus == 5 then
+        globals.set_int(intglobal, intval)
+    else
+        log.warning("Unable to run, unsupported Build version (b"..SupportBuild_string.."). Current Build version is (b"..CurrentBuild_string..")")
+    end
+end
+
+function globals_b_get_float(SupportBuild_string, floatglobal)
+    if tostring(SupportBuild_string) == CurrentBuild_string or BuildStatus == 5 then
+        return globals.get_float(floatglobal)
+    else
+        log.warning("Unable to read data, unsupported Build version (b"..SupportBuild_string.."). Current Build version is (b"..CurrentBuild_string..")")
+    end
+end
+
+function globals_b_set_float(SupportBuild_string, floatglobal, floatval)
+    if tostring(SupportBuild_string) == CurrentBuild_string or BuildStatus == 5 then
+        globals.set_float(floatglobal, floatval)
+    else
+        log.warning("Unable to run, unsupported Build version (b"..SupportBuild_string.."). Current Build version is (b"..CurrentBuild_string..")")
+    end
+end
+
+function locals_b_get_int(SupportBuild_string, scriptname, intlocal)
+    if tostring(SupportBuild_string) == CurrentBuild_string or BuildStatus == 5 then
+        return locals.get_int(scriptname, intlocal)
+    else
+        log.warning("Unable to read data, unsupported Build version (b"..SupportBuild_string.."). Current Build version is (b"..CurrentBuild_string..")")
+    end
+end
+
+function locals_b_set_int(SupportBuild_string, scriptname, intlocal, intlocalval)
+    if tostring(SupportBuild_string) == CurrentBuild_string or BuildStatus == 5 then
+        locals.set_int(scriptname, intlocal, intlocalval)
+    else
+        log.warning("Unable to run, unsupported Build version (b"..SupportBuild_string.."). Current Build version is (b"..CurrentBuild_string..")")
+    end
+end
+
+function locals_b_get_float(SupportBuild_string, scriptname, flocal)
+    if tostring(SupportBuild_string) == CurrentBuild_string or BuildStatus == 5 then
+        return locals.get_float(scriptname, flocal)
+    else
+        log.warning("Unable to read data, unsupported Build version (b"..SupportBuild_string.."). Current Build version is (b"..CurrentBuild_string..")")
+    end
+end
+
+function locals_b_set_float(SupportBuild_string, scriptname, flocal, flocalval)
+    if tostring(SupportBuild_string) == CurrentBuild_string or BuildStatus == 5 then
+        locals.set_float(scriptname, flocal, flocalval)
+    else
+        log.warning("Unable to run, unsupported Build version (b"..SupportBuild_string.."). Current Build version is (b"..CurrentBuild_string..")")
+    end
+end
+
+function stats_set_packed_stat_bool(boolindex, boolval)
+    stats.set_packed_stat_bool(boolindex, boolval)
+end
+
+------------------------------------ Version Compatibility
+
+CurrentVersion = NETWORK.GET_ONLINE_VERSION()
+CurrentVersion_string = CurrentVersion
+VersionStatus = 0
+
+if CurrentVersion ~= SupportVersion then
+    VersionStatus = 0
+	gui.show_error("GoldenGets Menu - Outdate","Unsupported Online version (v"..SupportVersion.."). Some functions will be automatically disabled!")
+    log.warning("Unsupported Online version (v"..SupportVersion.."), current Online version is (v"..CurrentVersion_string.."). Some functions will be automatically disabled!")
+else
+    VersionStatus = 1
+end
+
+function globals_v_get_int(SupportVersion_string, intglobal)
+    if tostring(SupportVersion_string) == CurrentVersion_string or VersionStatus == 5 then
+        return globals.get_int(intglobal)
+    else
+        log.warning("Unable to read data, unsupported Online version (v"..SupportVersion_string.."). Current Online version is (v"..CurrentVersion_string..")")
+    end
+end
+
+function globals_v_set_int(SupportVersion_string, intglobal, intval)
+    if tostring(SupportVersion_string) == CurrentVersion_string or VersionStatus == 5 then
+        globals.set_int(intglobal, intval)
+    else
+        log.warning("Unable to run, unsupported Online version (v"..SupportVersion_string.."). Current Online version is (v"..CurrentVersion_string..")")
+    end
+end
+
+function globals_v_get_float(SupportVersion_string, floatglobal)
+    if tostring(SupportVersion_string) == CurrentVersion_string or VersionStatus == 5 then
+        return globals.get_float(floatglobal)
+    else
+        log.warning("Unable to read data, unsupported Online version (v"..SupportVersion_string.."). Current Online version is (v"..CurrentVersion_string..")")
+    end
+end
+
+function globals_v_set_float(SupportVersion_string, floatglobal, floatval)
+    if tostring(SupportVersion_string) == CurrentVersion_string or VersionStatus == 5 then
+        globals.set_float(floatglobal, floatval)
+    else
+        log.warning("Unable to run, unsupported Online version (v"..SupportVersion_string.."). Current Online version is (v"..CurrentVersion_string..")")
+    end
+end
+
+function locals_v_get_int(SupportVersion_string, scriptname, intlocal)
+    if tostring(SupportVersion_string) == CurrentVersion_string or VersionStatus == 5 then
+        return locals.get_int(scriptname, intlocal)
+    else
+        log.warning("Unable to read data, unsupported Online version (v"..SupportVersion_string.."). Current Online version is (v"..CurrentVersion_string..")")
+    end
+end
+
+function locals_v_set_int(SupportVersion_string, scriptname, intlocal, intlocalval)
+    if tostring(SupportVersion_string) == CurrentVersion_string or VersionStatus == 5 then
+        locals.set_int(scriptname, intlocal, intlocalval)
+    else
+        log.warning("Unable to run, unsupported Online version (v"..SupportVersion_string.."). Current Online version is (v"..CurrentVersion_string..")")
+    end
+end
+
+function locals_v_get_float(SupportVersion_string, scriptname, flocal)
+    if tostring(SupportVersion_string) == CurrentVersion_string or VersionStatus == 5 then
+        return locals.get_float(scriptname, flocal)
+    else
+        log.warning("Unable to read data, unsupported Online version (v"..SupportVersion_string.."). Current Online version is (v"..CurrentVersion_string..")")
+    end
+end
+
+function locals_v_set_float(SupportVersion_string, scriptname, flocal, flocalval)
+    if tostring(SupportVersion_string) == CurrentVersion_string or VersionStatus == 5 then
+        locals.set_float(scriptname, flocal, flocalval)
+    else
+        log.warning("Unable to run, unsupported Online version (v"..SupportVersion_string.."). Current Online version is (v"..CurrentVersion_string..")")
+    end
+end
+
+function stats_v_set_packed_stat_bool(boolindex, boolval)
+    stats.set_packed_stat_bool(boolindex, boolval)
 end
 
 ------------------------------------
@@ -182,568 +340,783 @@ WalletValue = math.min(transactionManager:GetWalletBalance(), WalletValue)
 BankValue = 0
 BankValue = math.min(transactionManager:GetBankBalance(), BankValue)
 
-GoldenGets:add_imgui(function()
-    if ImGui.Button("Switch CEO/President") then
-		local playerIndex = stats.get_int("MPPLY_LAST_MP_CHAR") --????ID
-		--playerOrganizationTypeRaw: {Global_1886967[PLAYER::PLAYER_ID() /*609*/].f_10.f_429}  GLOBAL  
-		--playerOrganizationType: {('1886967', '*609', '10', '429', '1')}  GLOBAL  global + (pid *pidmultiplier) + offset + offset + offset (values: 0 = CEO and 1 = MOTORCYCLE CLUB) 
-		if globals.get_int(3337, 1887305+playerIndex*609+10+430+1) == 0 then --1886967+playerIndex*609+10+429+1 = 0 ?CEO =1??????
-			globals.set_int(3337, 1887305+playerIndex*609+10+430+1,1)
-			gui.show_message("Switch as a President","Become a President of your own Motorcycle Club")
-		else
-			if globals.get_int(3337, 1887305+playerIndex*609+10+430+1) == 1 then
-				globals.set_int(3337, 1887305+playerIndex*609+10+430+1,0)
-				gui.show_message("Switch as a CEO","Become a CEO of your own Organization")
-			else
-				gui.show_message("You are Not the Boss","You Must Register as a CEO or President")
-			end
-		end
-	end
-    if ImGui.IsItemHovered() then	
-        ImGui.SetTooltip("May not work in public session")
-    end
+GoldenGetsMenu:add_imgui(function()
+    --if ImGui.Button("Switch CEO/President") then
+	--	local playerIndex = stats.get_int("MPPLY_LAST_MP_CHAR") --????ID
+	--	--playerOrganizationTypeRaw: {Global_1886967[PLAYER::PLAYER_ID() /*609*/].f_10.f_429}  GLOBAL  
+	--	--playerOrganizationType: {('1886967', '*609', '10', '429', '1')}  GLOBAL  global + (pid *pidmultiplier) + offset + offset + offset (values: 0 = CEO and 1 = MOTORCYCLE CLUB) 
+	--	if locals_b_get_int(SupportBuild, 1887305+playerIndex*609+10+430+1) == 0 then --1886967+playerIndex*609+10+429+1 = 0 ?CEO =1??????
+	--		locals_b_set_int(SupportBuild, 1887305+playerIndex*609+10+430+1,1)
+	--		gui.show_message("Switch as a President","Become a President of your own Motorcycle Club")
+	--	else
+	--		if locals_b_get_int(SupportBuild, 1887305+playerIndex*609+10+430+1) == 1 then
+	--			locals_b_set_int(SupportBuild, 1887305+playerIndex*609+10+430+1,0)
+	--			gui.show_message("Switch as a CEO","Become a CEO of your own Organization")
+	--		else
+	--			gui.show_message("You are Not the Boss","You Must Register as a CEO or President")
+	--		end
+	--	end
+	--end
+    --if ImGui.IsItemHovered() then	
+    --    ImGui.SetTooltip("May not work in public session")
+    --end
 	--ImGui.SameLine()
-	--auto_ceo_mc = ImGui.Checkbox("Auto Become a CEO/MC", auto_ceo_mc) -- Detects the cases that you should be a CEO/MC to start some heists/missions, make you one of it.
+	--auto_ceo_mc = ImGui.Checkbox("Auto Register as a Boss", auto_ceo_mc) -- Detects the cases that you should be a CEO/MC to start some heists/missions, make you one of it.
 	
 	ImGui.SeparatorText("Device Access")
 	
-	if ImGui.Button("Start Internet") then
+	if ImGui.Button("Start Internet##Device") then
 		script.run_in_fiber(function (script)
 			start_script('appInternet', 4592, script)
 		end)
 	end
 	ImGui.SameLine()
-	if ImGui.Button("Start Arcade Laptop") then
-		script.run_in_fiber(function (script)
-			start_script('appArcadeBusiness', 4592, script)
-		end)
-	end
-    if ImGui.IsItemHovered() then
-        ImGui.SetTooltip("Must be in your Arcade Interior. If there is a Bug, press 'Start Internet'")
-    end
-	
-	gtaoversion = memory.scan_pattern("8B C3 33 D2 C6 44 24 20"):add(0x24):rip()
-	if gtaoversion:get_string() == "3337" then
-		if ImGui.Button("Instant Hack") then
-	
-			local local_H4_hack = 24880 --3274    --func_6004(&Local_24880, &(Local_24871[func_389(bParam1, 3) /*2*/]), 0, joaat("heist"), Global_786547.f_1);
-		
-			if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("fm_mission_controller_2020")) ~= 0 then
-		
-				locals.set_int("fm_mission_controller_2020", 29700, 6) --3274 --??????????
-		
-				locals.set_float("fm_mission_controller_2020", 30939 + 3, 100) --3274 ????????
-		
-				if locals.get_int("fm_mission_controller_2020", 30914) == 3 then --?????? --Input_Code_Enter_Correct
-					locals.set_int("fm_mission_controller_2020", 30915, 2) --3274 --???????
-					locals.set_float("fm_mission_controller_2020", 30915 + 1 + 1, locals.get_int("fm_mission_controller_2020", 30915 + 1 + 1 + 1)) --3274 --???????????
-					locals.set_float("fm_mission_controller_2020", 30915 + 1 + 1 + 2, locals.get_int("fm_mission_controller_2020", 30915 + 1 + 1 + 1 + 2)) --3274 --???????????
-					locals.set_float("fm_mission_controller_2020", 30915 + 1 + 1 + 4, locals.get_int("fm_mission_controller_2020", 30915 + 1 + 1 + 1 + 4)) --3274 --???????????
-					PAD.SET_CONTROL_VALUE_NEXT_FRAME(2, 237, 1.0) --????
-				end
-			
-				local_H4_hack_v = locals.get_int("fm_mission_controller_2020", local_H4_hack) --???finger clone
-				if (local_H4_hack_v & (1 << 0)) == 0 then
-					local_H4_hack_v = local_H4_hack_v ~ (1 << 0)
-					locals.set_int("fm_mission_controller_2020", local_H4_hack, local_H4_hack_v)
-				end
-			end
-					
-			if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("fm_mission_controller")) ~= 0 then --????
-				locals.set_float("fm_mission_controller", 10069 + 11, 1) --3274 ??????
-				locals.set_int("fm_mission_controller", 10109 + 2, 8) --3274 ??????? DLC_HEIST3\HEIST_FINALE_LASER_DRILL case 8
-			end
-			--???????????
-			local local_H3_hack_1 = 53019 --3274    --func_14102(&Local_52985, &(Local_52920[Local_31603[bLocal_3229 /*292*/].f_27 /*2*/]), 0, joaat("heist"), Global_786547.f_1);
-			local local_H3_hack_2 = 54085 --3274    --func_14104(&Local_54047, &(Local_53982[Local_31603[bLocal_3229 /*292*/].f_27 /*2*/]), 0, joaat("heist"), Global_786547.f_1);
-			local local_H3_hack_1_p = 2840 --3274    
-			local local_H3_hack_2_p = 3841 --3274    
-		
-			if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("fm_mission_controller")) ~= 0 then --??????
-				local_H3_hack_1_v = locals.get_int("fm_mission_controller", local_H3_hack_1)
-				if (local_H3_hack_1_v & (1 << 0)) == 0 then
-					local_H3_hack_1_v = local_H3_hack_1_v ~ (1 << 0)
-					locals.set_int("fm_mission_controller", local_H3_hack_1, local_H3_hack_1_v)
-				end
-				local_H3_hack_2_v = locals.get_int("fm_mission_controller", local_H3_hack_2)
-				if (local_H3_hack_2_v & (1 << 0)) == 0 then
-					local_H3_hack_2_v = local_H3_hack_2_v ~ (1 << 0)
-					locals.set_int("fm_mission_controller", local_H3_hack_2, local_H3_hack_2_v)
-				end
-			end
-			if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("am_mp_arc_cab_manager")) ~= 0 then --??????-??
-				local_H3_hack_1_p_v = locals.get_int("am_mp_arc_cab_manager", local_H3_hack_1_p)
-				if (local_H3_hack_1_p_v & (1 << 0)) == 0 then
-					local_H3_hack_1_p_v = local_H3_hack_1_p_v ~ (1 << 0)
-					locals.set_int("am_mp_arc_cab_manager", local_H3_hack_1_p, local_H3_hack_1_p_v)
-				end
-				local_H3_hack_2_p_v = locals.get_int("am_mp_arc_cab_manager", local_H3_hack_2_p)
-				if (local_H3_hack_2_p_v & (1 << 0)) == 0 then
-					local_H3_hack_2_p_v = local_H3_hack_2_p_v ~ (1 << 0)
-					locals.set_int("am_mp_arc_cab_manager", local_H3_hack_2_p, local_H3_hack_2_p_v)
-				end
-			end
-		
-			if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("fm_mission_controller")) ~= 0 then
-				locals.set_int("fm_mission_controller", 1545, 2)  --???-?????(Heist2-Mission1-Prep3:SERVER FARM)  GRAPHICS::DRAW_SPRITE("MPHotwire", "failed"
-			end
-			if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("fm_mission_controller_2020")) ~= 0 then
-				locals.set_int("fm_mission_controller_2020", 1254, 2)  --??????? (Bottom Dollar Bail Office Mission)  GRAPHICS::DRAW_SPRITE("MPHotwire", "failed"
-			end
-		
-			--??voltlab
-				--[[
-				if (iLocal_765 == iLocal_764)
-					{
-						AUDIO::PLAY_SOUND_FRONTEND(-1, "All_Connected_Correct", uParam1->f_741, true);
-					}
-			]]
-		
-			if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("fm_mission_controller_2020")) ~= 0 then --voltlab????
-				locals.set_int("fm_mission_controller_2020", 1723, locals.get_int("fm_mission_controller_2020", 1724)) --3274 --voltlab???????????
-				locals.set_int("fm_mission_controller_2020", 1725, 3) --3274 ??????
-			end
-			if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("fm_content_island_heist")) ~= 0 then
-				locals.set_int("fm_content_island_heist", 766, locals.get_int("fm_content_island_heist", 767)) --3274 --voltlab???????????
-				locals.set_int("fm_content_island_heist", 768, 3) --3274  ??????
-			end
-			if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("fm_content_vehrob_prep")) ~= 0 then
-				locals.set_int("fm_content_vehrob_prep", 547, locals.get_int("fm_content_vehrob_prep", 548)) --3274 --voltlab???????????
-				locals.set_int("fm_content_vehrob_prep", 549, 3) --3274  ??????
-			end
-			if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("am_mp_arc_cab_manager")) ~= 0 then
-				locals.set_int("am_mp_arc_cab_manager", 455, locals.get_int("am_mp_arc_cab_manager", 456)) --3274 --voltlab???????????
-				locals.set_int("am_mp_arc_cab_manager", 457, 3) --3274  ??????
-			end
-		
-		
-			--??????????????
-			if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("fm_content_vehrob_casino_prize")) ~= 0 then
-				locals.set_int("fm_content_vehrob_casino_prize", 1045 + 135 , 3) --3274 case 3 Pass_Remote
-			end
-			if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("fm_mission_controller")) ~= 0 then --
-				locals.set_int("fm_mission_controller", 1271 + 135 , 3) --3274 case 3 Pass_Remote
-			end
-			if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("fm_mission_controller_2020")) ~= 0 then
-				locals.set_int("fm_mission_controller_2020", 980 + 135 , 3) --3095 case 3 Pass_Remote
-			end
-		
-			--??????? CIRC_COMP
-			if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("fm_mission_controller")) ~= 0 then --
-				locals.set_int("fm_mission_controller", 11778 + 24 , 7)
-			end
-			if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("fm_mission_controller_2020")) ~= 0 then --
-				locals.set_int("fm_mission_controller_2020", 9018 + 24 , 7)
-			end
-			if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("fm_content_business_battles")) ~= 0 then --
-				locals.set_int("fm_content_business_battles", 4101 + 24 , 7)
-			end
-			if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("fm_content_island_heist")) ~= 0 then --
-				locals.set_int("fm_content_island_heist", 10080 + 24 , 7)
-			end
-			if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("fm_content_vehrob_prep")) ~= 0 then --
-				locals.set_int("fm_content_vehrob_prep", 9134 + 24 , 7)
-			end
-		
-		
-			--int* iParam0, int iParam1, int iParam2, int iParam3, int iParam4, var uParam5, var uParam6, int iParam7, bool bParam8, bool bParam9, bool bParam10, bool bParam11, bool bParam12, bool bParam13, int iParam14, int iParam15, bool bParam16, bool bParam17, bool bParam18, bool bParam19, bool bParam20, bool bParam21
-			local minigamelocaltable = {
-				[1]  = {script_name = "agency_heist3b", minigame_local = 6210},
-				[2]  = {script_name = "business_battles_sell", minigame_local = 431},
-				[3]  = {script_name = "fm_content_business_battles", minigame_local = 4101},
-				[4]  = {script_name = "fm_content_island_heist", minigame_local = 10080},
-				[5]  = {script_name = "fm_content_vehrob_casino_prize", minigame_local = 7651 + 2},
-				[6]  = {script_name = "fm_content_vehrob_police", minigame_local = 7511},
-				[7]  = {script_name = "fm_content_vehrob_prep", minigame_local = 9134},
-				[8]  = {script_name = "fm_content_vip_contract_1", minigame_local = 7323},
-				[9]  = {script_name = "fm_mission_controller_2020", minigame_local = 28917},
-				[10]  = {script_name = "fm_mission_controller", minigame_local = 9775},
-				[11]  = {script_name = "gb_cashing_out", minigame_local = 401},
-				[12]  = {script_name = "gb_gunrunning_defend", minigame_local = 2261},
-				[13]  = {script_name = "gb_sightseer", minigame_local = 460},
-			}
-				--[12]  = {script_name = "gb_casino_heist", minigame_local = }, --Global_2737317
-				--[12]  = {script_name = "gb_casino", minigame_local = }, --Global_2737317
-				--[12]  = {script_name = "gb_gangops", minigame_local = }, --Global_2737317
-				--[12]  = {script_name = "gb_gunrunning", minigame_local = }, --Global_2737317
-				--[12]  = {script_name = "gb_infiltration", minigame_local = }, --Global_2737317
-				--[12]  = {script_name = "gb_smuggler", minigame_local = }, --Global_2737317
-				--[0]  = {script_name = "business_battles", minigame_local = }, --Global_2737317
-		
-			for i = 1, 13 do
-				if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat(minigamelocaltable[i].script_name)) ~= 0 then
-					minigame_tmp_v = locals.get_int(minigamelocaltable[i].script_name, minigamelocaltable[i].minigame_local) --3274 -- WINBRUTE 
-					if (minigame_tmp_v & (1 << 9)) == 0 then
-						minigame_tmp_v = minigame_tmp_v ~ (1 << 9)
-						locals.set_int(minigamelocaltable[i].script_name, minigamelocaltable[i].minigame_local, minigame_tmp_v)
-					end
-				end
-				if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat(minigamelocaltable[i].script_name)) ~= 0 then
-					minigame_tmp_v = locals.get_int(minigamelocaltable[i].script_name, minigamelocaltable[i].minigame_local) --3274 -- WINIP 
-					if (minigame_tmp_v & (1 << 18)) == 0 then
-						minigame_tmp_v = minigame_tmp_v ~ (1 << 18)
-						locals.set_int(minigamelocaltable[i].script_name, minigamelocaltable[i].minigame_local, minigame_tmp_v)
-					end
-				end
-				if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat(minigamelocaltable[i].script_name)) ~= 0 then
-					minigame_tmp_v = locals.get_int(minigamelocaltable[i].script_name, minigamelocaltable[i].minigame_local) --3274 --  --Biolab ?????????? ???? --"Hack_Success", "DLC_HEIST_BIOLAB_PREP_HACKING_SOUNDS"
-					if (minigame_tmp_v & (1 << 26)) == 0 then
-						minigame_tmp_v = minigame_tmp_v ~ (1 << 26)
-						locals.set_int(minigamelocaltable[i].script_name, minigamelocaltable[i].minigame_local, minigame_tmp_v)
-					end
-				end
-				if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat(minigamelocaltable[i].script_name)) ~= 0 then
-					minigame_tmp_v = locals.get_int(minigamelocaltable[i].script_name, minigamelocaltable[i].minigame_local) --3274 --  --Biolab ?????????? ???? --"Hack_Success", "DLC_HEIST_BIOLAB_PREP_HACKING_SOUNDS"
-					if (minigame_tmp_v & (1 << 28)) == 0 then
-						minigame_tmp_v = minigame_tmp_v ~ (1 << 28)
-						locals.set_int(minigamelocaltable[i].script_name, minigamelocaltable[i].minigame_local, minigame_tmp_v)
-					end
-				end
-			end
-		
-			if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("fm_mission_controller")) ~= 0 then --patch for WINIP
-				locals.set_int("fm_mission_controller", 142 , 0)
-				locals.set_int("fm_mission_controller", 143 , 0)
-				locals.set_int("fm_mission_controller", 158 , 7)
-			end
-		
-			minigame_tmp_v2 = globals.get_int(2737663)
-			if (minigame_tmp_v2 & (1 << 9)) == 0 then
-				minigame_tmp_v2 = minigame_tmp_v2 ~ (1 << 9)
-			end
-			if (minigame_tmp_v2 & (1 << 18)) == 0 then
-				minigame_tmp_v2 = minigame_tmp_v2 ~ (1 << 18)
-			end
-			if (minigame_tmp_v2 & (1 << 26)) == 0 then
-				minigame_tmp_v2 = minigame_tmp_v2 ~ (1 << 26)
-			end
-			globals.set_int(2737663, minigame_tmp_v2)
-			
-			if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("fm_content_stash_house")) ~= 0 then --??????
-				locals.set_int("fm_content_stash_house", 119 + 1 , 1)
-			end
+	if NETWORK.NETWORK_IS_SESSION_STARTED() then
+		if ImGui.Button("Start Arcade Laptop##Device") then
+			script.run_in_fiber(function (script)
+				start_script('appArcadeBusiness', 4592, script)
+			end)
+		end
+		if ImGui.IsItemHovered() then
+			ImGui.SetTooltip("Must be in your Arcade Interior. If there is a Bug, press 'Start Internet'")
 		end
 	else
-		ImGui.Text("Instant Hack is Outdated")
+		if ImGui.Button("Start Arcade Laptop") then
+			gui.show_error("GoldenGets - Error","Unavailable in Single Player")
+		end
+	end
+	
+	if ImGui.Button("Instant Hack/Mini Games") then
+		local local_H4_hack = 24880 --3274    --func_6004(&Local_24880, &(Local_24871[func_389(bParam1, 3) /*2*/]), 0, joaat("heist"), Global_786547.f_1);
+	
+		if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("fm_mission_controller_2020")) ~= 0 then
+	
+			locals_v_set_int(SupportVersion, "fm_mission_controller_2020", 29700, 6) --3274 --??????????
+	
+			locals_v_set_float(SupportVersion, "fm_mission_controller_2020", 30939 + 3, 100) --3274 ????????
+	
+			if locals_v_get_int(SupportVersion, "fm_mission_controller_2020", 30914) == 3 then --?????? --Input_Code_Enter_Correct
+				locals_v_set_int(SupportVersion, "fm_mission_controller_2020", 30915, 2) --3274 --???????
+				locals_v_set_float(SupportVersion, "fm_mission_controller_2020", 30915 + 1 + 1, locals_v_get_int(SupportVersion, "fm_mission_controller_2020", 30915 + 1 + 1 + 1)) --3274 --???????????
+				locals_v_set_float(SupportVersion, "fm_mission_controller_2020", 30915 + 1 + 1 + 2, locals_v_get_int(SupportVersion, "fm_mission_controller_2020", 30915 + 1 + 1 + 1 + 2)) --3274 --???????????
+				locals_v_set_float(SupportVersion, "fm_mission_controller_2020", 30915 + 1 + 1 + 4, locals_v_get_int(SupportVersion, "fm_mission_controller_2020", 30915 + 1 + 1 + 1 + 4)) --3274 --???????????
+				PAD.SET_CONTROL_VALUE_NEXT_FRAME(2, 237, 1.0) --????
+			end
+		
+			local_H4_hack_v = locals_v_get_int(SupportVersion, "fm_mission_controller_2020", local_H4_hack) --???finger clone
+			if (local_H4_hack_v & (1 << 0)) == 0 then
+				local_H4_hack_v = local_H4_hack_v ~ (1 << 0)
+				locals_v_set_int(SupportVersion, "fm_mission_controller_2020", local_H4_hack, local_H4_hack_v)
+			end
+		end
+				
+		if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("fm_mission_controller")) ~= 0 then --????
+			locals_v_set_float(SupportVersion, "fm_mission_controller", 10069 + 11, 1) --3274 ??????
+			locals_v_set_int(SupportVersion, "fm_mission_controller", 10109 + 2, 8) --3274 ??????? DLC_HEIST3\HEIST_FINALE_LASER_DRILL case 8
+		end
+		--???????????
+		local local_H3_hack_1 = 53019 --3274    --func_14102(&Local_52985, &(Local_52920[Local_31603[bLocal_3229 /*292*/].f_27 /*2*/]), 0, joaat("heist"), Global_786547.f_1);
+		local local_H3_hack_2 = 54085 --3274    --func_14104(&Local_54047, &(Local_53982[Local_31603[bLocal_3229 /*292*/].f_27 /*2*/]), 0, joaat("heist"), Global_786547.f_1);
+		local local_H3_hack_1_p = 2840 --3274    
+		local local_H3_hack_2_p = 3841 --3274    
+	
+		if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("fm_mission_controller")) ~= 0 then --??????
+			local_H3_hack_1_v = locals_v_get_int(SupportVersion, "fm_mission_controller", local_H3_hack_1)
+			if (local_H3_hack_1_v & (1 << 0)) == 0 then
+				local_H3_hack_1_v = local_H3_hack_1_v ~ (1 << 0)
+				locals_v_set_int(SupportVersion, "fm_mission_controller", local_H3_hack_1, local_H3_hack_1_v)
+			end
+			local_H3_hack_2_v = locals_v_get_int(SupportVersion, "fm_mission_controller", local_H3_hack_2)
+			if (local_H3_hack_2_v & (1 << 0)) == 0 then
+				local_H3_hack_2_v = local_H3_hack_2_v ~ (1 << 0)
+				locals_v_set_int(SupportVersion, "fm_mission_controller", local_H3_hack_2, local_H3_hack_2_v)
+			end
+		end
+		if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("am_mp_arc_cab_manager")) ~= 0 then --??????-??
+			local_H3_hack_1_p_v = locals_v_get_int(SupportVersion, "am_mp_arc_cab_manager", local_H3_hack_1_p)
+			if (local_H3_hack_1_p_v & (1 << 0)) == 0 then
+				local_H3_hack_1_p_v = local_H3_hack_1_p_v ~ (1 << 0)
+				locals_v_set_int(SupportVersion, "am_mp_arc_cab_manager", local_H3_hack_1_p, local_H3_hack_1_p_v)
+			end
+			local_H3_hack_2_p_v = locals_v_get_int(SupportVersion, "am_mp_arc_cab_manager", local_H3_hack_2_p)
+			if (local_H3_hack_2_p_v & (1 << 0)) == 0 then
+				local_H3_hack_2_p_v = local_H3_hack_2_p_v ~ (1 << 0)
+				locals_v_set_int(SupportVersion, "am_mp_arc_cab_manager", local_H3_hack_2_p, local_H3_hack_2_p_v)
+			end
+		end
+	
+		if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("fm_mission_controller")) ~= 0 then
+			locals_v_set_int(SupportVersion, "fm_mission_controller", 1545, 2)  --???-?????(Heist2-Mission1-Prep3:SERVER FARM)  GRAPHICS::DRAW_SPRITE("MPHotwire", "failed"
+		end
+		if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("fm_mission_controller_2020")) ~= 0 then
+			locals_v_set_int(SupportVersion, "fm_mission_controller_2020", 1254, 2)  --??????? (Bottom Dollar Bail Office Mission)  GRAPHICS::DRAW_SPRITE("MPHotwire", "failed"
+		end
+	
+		--??voltlab
+			--[[
+			if (iLocal_765 == iLocal_764)
+				{
+					AUDIO::PLAY_SOUND_FRONTEND(-1, "All_Connected_Correct", uParam1->f_741, true);
+				}
+		]]
+	
+		if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("fm_mission_controller_2020")) ~= 0 then --voltlab????
+			locals_v_set_int(SupportVersion, "fm_mission_controller_2020", 1723, locals_v_get_int(SupportVersion, "fm_mission_controller_2020", 1724)) --3274 --voltlab???????????
+			locals_v_set_int(SupportVersion, "fm_mission_controller_2020", 1725, 3) --3274 ??????
+		end
+		if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("fm_content_island_heist")) ~= 0 then
+			locals_v_set_int(SupportVersion, "fm_content_island_heist", 766, locals_v_get_int(SupportVersion, "fm_content_island_heist", 767)) --3274 --voltlab???????????
+			locals_v_set_int(SupportVersion, "fm_content_island_heist", 768, 3) --3274  ??????
+		end
+		if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("fm_content_vehrob_prep")) ~= 0 then
+			locals_v_set_int(SupportVersion, "fm_content_vehrob_prep", 547, locals_v_get_int(SupportVersion, "fm_content_vehrob_prep", 548)) --3274 --voltlab???????????
+			locals_v_set_int(SupportVersion, "fm_content_vehrob_prep", 549, 3) --3274  ??????
+		end
+		if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("am_mp_arc_cab_manager")) ~= 0 then
+			locals_v_set_int(SupportVersion, "am_mp_arc_cab_manager", 455, locals_v_get_int(SupportVersion, "am_mp_arc_cab_manager", 456)) --3274 --voltlab???????????
+			locals_v_set_int(SupportVersion, "am_mp_arc_cab_manager", 457, 3) --3274  ??????
+		end
+	
+	
+		--??????????????
+		if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("fm_content_vehrob_casino_prize")) ~= 0 then
+			locals_v_set_int(SupportVersion, "fm_content_vehrob_casino_prize", 1045 + 135 , 3) --3274 case 3 Pass_Remote
+		end
+		if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("fm_mission_controller")) ~= 0 then --
+			locals_v_set_int(SupportVersion, "fm_mission_controller", 1271 + 135 , 3) --3274 case 3 Pass_Remote
+		end
+		if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("fm_mission_controller_2020")) ~= 0 then
+			locals_v_set_int(SupportVersion, "fm_mission_controller_2020", 980 + 135 , 3) --3095 case 3 Pass_Remote
+		end
+	
+		--??????? CIRC_COMP
+		if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("fm_mission_controller")) ~= 0 then --
+			locals_v_set_int(SupportVersion, "fm_mission_controller", 11778 + 24 , 7)
+		end
+		if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("fm_mission_controller_2020")) ~= 0 then --
+			locals_v_set_int(SupportVersion, "fm_mission_controller_2020", 9018 + 24 , 7)
+		end
+		if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("fm_content_business_battles")) ~= 0 then --
+			locals_v_set_int(SupportVersion, "fm_content_business_battles", 4101 + 24 , 7)
+		end
+		if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("fm_content_island_heist")) ~= 0 then --
+			locals_v_set_int(SupportVersion, "fm_content_island_heist", 10080 + 24 , 7)
+		end
+		if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("fm_content_vehrob_prep")) ~= 0 then --
+			locals_v_set_int(SupportVersion, "fm_content_vehrob_prep", 9134 + 24 , 7)
+		end
+	
+	
+		--int* iParam0, int iParam1, int iParam2, int iParam3, int iParam4, var uParam5, var uParam6, int iParam7, bool bParam8, bool bParam9, bool bParam10, bool bParam11, bool bParam12, bool bParam13, int iParam14, int iParam15, bool bParam16, bool bParam17, bool bParam18, bool bParam19, bool bParam20, bool bParam21
+		local minigamelocaltable = {
+			[1]  = {script_name = "agency_heist3b", minigame_local = 6210},
+			[2]  = {script_name = "business_battles_sell", minigame_local = 431},
+			[3]  = {script_name = "fm_content_business_battles", minigame_local = 4101},
+			[4]  = {script_name = "fm_content_island_heist", minigame_local = 10080},
+			[5]  = {script_name = "fm_content_vehrob_casino_prize", minigame_local = 7651 + 2},
+			[6]  = {script_name = "fm_content_vehrob_police", minigame_local = 7511},
+			[7]  = {script_name = "fm_content_vehrob_prep", minigame_local = 9134},
+			[8]  = {script_name = "fm_content_vip_contract_1", minigame_local = 7323},
+			[9]  = {script_name = "fm_mission_controller_2020", minigame_local = 28917},
+			[10]  = {script_name = "fm_mission_controller", minigame_local = 9775},
+			[11]  = {script_name = "gb_cashing_out", minigame_local = 401},
+			[12]  = {script_name = "gb_gunrunning_defend", minigame_local = 2261},
+			[13]  = {script_name = "gb_sightseer", minigame_local = 460},
+		}
+			--[12]  = {script_name = "gb_casino_heist", minigame_local = }, --Global_2737317
+			--[12]  = {script_name = "gb_casino", minigame_local = }, --Global_2737317
+			--[12]  = {script_name = "gb_gangops", minigame_local = }, --Global_2737317
+			--[12]  = {script_name = "gb_gunrunning", minigame_local = }, --Global_2737317
+			--[12]  = {script_name = "gb_infiltration", minigame_local = }, --Global_2737317
+			--[12]  = {script_name = "gb_smuggler", minigame_local = }, --Global_2737317
+			--[0]  = {script_name = "business_battles", minigame_local = }, --Global_2737317
+	
+		for i = 1, 13 do
+			if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat(minigamelocaltable[i].script_name)) ~= 0 then
+				minigame_tmp_v = locals_v_get_int(SupportVersion, minigamelocaltable[i].script_name, minigamelocaltable[i].minigame_local) --3274 -- WINBRUTE 
+				if (minigame_tmp_v & (1 << 9)) == 0 then
+					minigame_tmp_v = minigame_tmp_v ~ (1 << 9)
+					locals_v_set_int(SupportVersion, minigamelocaltable[i].script_name, minigamelocaltable[i].minigame_local, minigame_tmp_v)
+				end
+			end
+			if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat(minigamelocaltable[i].script_name)) ~= 0 then
+				minigame_tmp_v = locals_v_get_int(SupportVersion, minigamelocaltable[i].script_name, minigamelocaltable[i].minigame_local) --3274 -- WINIP 
+				if (minigame_tmp_v & (1 << 18)) == 0 then
+					minigame_tmp_v = minigame_tmp_v ~ (1 << 18)
+					locals_v_set_int(SupportVersion, minigamelocaltable[i].script_name, minigamelocaltable[i].minigame_local, minigame_tmp_v)
+				end
+			end
+			if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat(minigamelocaltable[i].script_name)) ~= 0 then
+				minigame_tmp_v = locals_v_get_int(SupportVersion, minigamelocaltable[i].script_name, minigamelocaltable[i].minigame_local) --3274 --  --Biolab ?????????? ???? --"Hack_Success", "DLC_HEIST_BIOLAB_PREP_HACKING_SOUNDS"
+				if (minigame_tmp_v & (1 << 26)) == 0 then
+					minigame_tmp_v = minigame_tmp_v ~ (1 << 26)
+					locals_v_set_int(SupportVersion, minigamelocaltable[i].script_name, minigamelocaltable[i].minigame_local, minigame_tmp_v)
+				end
+			end
+			if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat(minigamelocaltable[i].script_name)) ~= 0 then
+				minigame_tmp_v = locals_v_get_int(SupportVersion, minigamelocaltable[i].script_name, minigamelocaltable[i].minigame_local) --3274 --  --Biolab ?????????? ???? --"Hack_Success", "DLC_HEIST_BIOLAB_PREP_HACKING_SOUNDS"
+				if (minigame_tmp_v & (1 << 28)) == 0 then
+					minigame_tmp_v = minigame_tmp_v ~ (1 << 28)
+					locals_v_set_int(SupportVersion, minigamelocaltable[i].script_name, minigamelocaltable[i].minigame_local, minigame_tmp_v)
+				end
+			end
+		end
+	
+		if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("fm_mission_controller")) ~= 0 then --patch for WINIP
+			locals_v_set_int(SupportVersion, "fm_mission_controller", 142 , 0)
+			locals_v_set_int(SupportVersion, "fm_mission_controller", 143 , 0)
+			locals_v_set_int(SupportVersion, "fm_mission_controller", 158 , 7)
+		end
+	
+		minigame_tmp_v2 = globals.get_int(2737663)
+		if (minigame_tmp_v2 & (1 << 9)) == 0 then
+			minigame_tmp_v2 = minigame_tmp_v2 ~ (1 << 9)
+		end
+		if (minigame_tmp_v2 & (1 << 18)) == 0 then
+			minigame_tmp_v2 = minigame_tmp_v2 ~ (1 << 18)
+		end
+		if (minigame_tmp_v2 & (1 << 26)) == 0 then
+			minigame_tmp_v2 = minigame_tmp_v2 ~ (1 << 26)
+		end
+		globals.set_int(2737663, minigame_tmp_v2)
+		
+		if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("fm_content_stash_house")) ~= 0 then --??????
+			locals_v_set_int(SupportVersion, "fm_content_stash_house", 119 + 1 , 1)
+		end
+	end
+	if ImGui.IsItemHovered() then
+		ImGui.SetTooltip("Skip all the hacking, fleeca and casino drilling, cayo glass cutting and drainage cut")
 	end
 	ImGui.SameLine()
 	RemoveAllCCTV = ImGui.Checkbox("Remove All CCTV", RemoveAllCCTV)
 	
-	--PhoneAnimations = ImGui.Checkbox("Enable Phone Animations", PhoneAnimations)
-	--if ImGui.IsItemHovered() then
-	--	ImGui.SetTooltip("Makes so player's ped actually uses phone like in singleplayer")
-	--end
-	--
-	--if PhoneAnimations then
-	--	restore_sp_funcs = ImGui.Checkbox("Restore Singleplayer Functions", restore_sp_funcs)
-	--	if ImGui.IsItemHovered() then
-	--		ImGui.SetTooltip("Recreates singleplayer's phone functions like finger moving, phone leaning in email app etc.")
-	--	end
-	--end
-	
 	ImGui.Separator()
 	
-	if NETWORK.NETWORK_IS_SESSION_STARTED() then
-		if ImGui.BeginTabBar("GoldenGets Tabs") then
+	if ImGui.BeginTabBar("GoldenGets Menu Tabs") then
+		--if NETWORK.NETWORK_IS_SESSION_STARTED() then
 			if ImGui.BeginTabItem("ATM") then
-				ImGui.Text("$Wallet: " .. transactionManager:GetWalletBalance())
-				
-				if ImGui.Button("Deposit All Money To $Bank") then
-					character = transactionManager:GetCharacter()
-					wallet = transactionManager:GetWalletBalance()
-					NETSHOPPING.NET_GAMESERVER_TRANSFER_WALLET_TO_BANK(character, wallet)
-				end
-				
-				WalletValue, drag = ImGui.DragInt("##WalletValue", WalletValue, 1, 0, transactionManager:GetWalletBalance())
-				if ImGui.Button("Deposit Amount") then
-					character = transactionManager:GetCharacter()
-					NETSHOPPING.NET_GAMESERVER_TRANSFER_WALLET_TO_BANK(character, WalletValue)
-				end
-				
-				ImGui.Text("$Bank: " .. transactionManager:GetBankBalance())
-				
-				if ImGui.Button("Withdraw All Money To $Wallet") then
-					character = transactionManager:GetCharacter()
-					bank = transactionManager:GetBankBalance()
-					NETSHOPPING.NET_GAMESERVER_TRANSFER_BANK_TO_WALLET(character, bank)
-				end
-				
-				BankValue, drag = ImGui.DragInt("##BankValue", BankValue, 1, 0, transactionManager:GetBankBalance())
-				if ImGui.Button("Withdraw Amount") then
-					character = transactionManager:GetCharacter()
-					NETSHOPPING.NET_GAMESERVER_TRANSFER_BANK_TO_WALLET(character, BankValue)
+				if NETWORK.NETWORK_IS_SESSION_STARTED() then
+					ImGui.Text("$Wallet: " .. transactionManager:GetWalletBalance())
+					
+					if ImGui.Button("Deposit All Money To $Bank") then
+						character = transactionManager:GetCharacter()
+						wallet = transactionManager:GetWalletBalance()
+						NETSHOPPING.NET_GAMESERVER_TRANSFER_WALLET_TO_BANK(character, wallet)
+					end
+					
+					WalletValue, drag = ImGui.DragInt("##WalletValue", WalletValue, 1, 0, transactionManager:GetWalletBalance())
+					if ImGui.Button("Deposit Amount") then
+						character = transactionManager:GetCharacter()
+						NETSHOPPING.NET_GAMESERVER_TRANSFER_WALLET_TO_BANK(character, WalletValue)
+					end
+					
+					ImGui.Text("$Bank: " .. transactionManager:GetBankBalance())
+					
+					if ImGui.Button("Withdraw All Money To $Wallet") then
+						character = transactionManager:GetCharacter()
+						bank = transactionManager:GetBankBalance()
+						NETSHOPPING.NET_GAMESERVER_TRANSFER_BANK_TO_WALLET(character, bank)
+					end
+					
+					BankValue, drag = ImGui.DragInt("##BankValue", BankValue, 1, 0, transactionManager:GetBankBalance())
+					if ImGui.Button("Withdraw Amount") then
+						character = transactionManager:GetCharacter()
+						NETSHOPPING.NET_GAMESERVER_TRANSFER_BANK_TO_WALLET(character, BankValue)
+					end
+				else
+					ImGui.Text("\nUnavailable in Single Player.\n\n")
 				end
 				ImGui.EndTabItem()
 			end
 			
 			if ImGui.BeginTabItem("Computer") then
-				if ImGui.IsItemHovered() then
-					ImGui.SetTooltip("You must register as a boss, otherwise some mission will not work. If you get a\nblackscreen on exterior, go to Settings > Debug > Misc > 'Remove Black Screen'")
-				end
-	
-				if ImGui.Button("Start Master Control Terminal") then
-					script.run_in_fiber(function (script)
-						start_script('appArcadeBusinessHub', 1424, script)
-					end)
-				end
-				
-				if ImGui.Button("Start Bunker Desktop Computer") then
-					script.run_in_fiber(function (script)
-						start_script('appBunkerBusiness', 1424, script)
-					end)
-				end
-				
-				if ImGui.Button("Start Hangar Desktop Computer") then
-					script.run_in_fiber(function (script)
-						start_script('appSmuggler', 4592, script)
-					end)
-				end
-				
-				if ImGui.Button("Start Nightclub Computer") then
-					script.run_in_fiber(function (script)
-						start_script('appBusinessHub', 1424, script)
-					end)
-				end
-				
-				if ImGui.Button("Start Terrorbyte Touchscreen Computer") then
-					script.run_in_fiber(function (script)
-						start_script('appHackerTruck', 4592, script)
-					end)
-				end
-				
-				if ImGui.Button("Start Agency Network Computer") then
-					script.run_in_fiber(function (script)
-						start_script('appFixerSecurity', 4592, script)
-					end)
-				end
-				
-				if ImGui.Button("Start Avengers Operations Terminal") then
-					script.run_in_fiber(function (script)
-						start_script('appAvengerOperations', 4592, script)
-					end)
-				end
-				
-				if ImGui.Button("Start Bail Office Enforcement System") then
-					script.run_in_fiber(function (script)
-						start_script('appBailOffice', 4592, script)
-					end)
-				end
-				
-				ImGui.Separator()
-				
-				if ImGui.Button("Start Clubhouse Computer") then
-					script.run_in_fiber(function (script)
-						globals.set_int(1962105)
-						start_script('appBikerBusiness', 4592, script)
-					end)
-				end
-				
-				if ImGui.Button("Start Cocaine Lockup Computer") then
-					script.run_in_fiber(function (script)
-						globals.set_int(global_computer_type, 8)
-						start_script('appBikerBusiness', 4592, script)
-					end)
-				end
-				
-				if ImGui.Button("Start Methamphetamine Lab Computer") then
-					script.run_in_fiber(function (script)
-						globals.set_int(global_computer_type, 6)
-						start_script('appBikerBusiness', 4592, script)
-					end)
-				end
-				
-				if ImGui.Button("Start Weed Farm Computer") then
-					script.run_in_fiber(function (script)
-						globals.set_int(global_computer_type, 7)
-						start_script('appBikerBusiness', 4592, script)
-					end)
-				end
-				
-				if ImGui.Button("Start Counterfeit Cash Factory Computer") then
-					script.run_in_fiber(function (script)
-						globals.set_int(global_computer_type, 9)
-						start_script('appBikerBusiness', 4592, script)
-					end)
-				end
-				
-				if ImGui.Button("Start Document Forgery Computer") then
-					script.run_in_fiber(function (script)
-						globals.set_int(global_computer_type, 10)
-						start_script('appBikerBusiness', 4592, script)
-					end)
+				if NETWORK.NETWORK_IS_SESSION_STARTED() then
+					if ImGui.IsItemHovered() then
+						ImGui.SetTooltip("You must register as a boss, otherwise some mission will not work. If you get a\nblackscreen on exterior, go to Settings > Debug > Misc > 'Remove Black Screen'")
+					end
+					
+					if ImGui.Button("Start Master Control Terminal##Computer") then
+						script.run_in_fiber(function (script)
+							start_script('appArcadeBusinessHub', 1424, script)
+						end)
+					end
+					
+					if ImGui.TreeNode("MC Business Computer") then
+						if ImGui.Button("Start Clubhouse Computer##Computer") then
+							script.run_in_fiber(function (script)
+								globals.set_int(1962105)
+								start_script('appBikerBusiness', 4592, script)
+							end)
+						end
+						
+						if ImGui.Button("Start Cocaine Lockup Computer##Computer") then
+							script.run_in_fiber(function (script)
+								globals.set_int(global_computer_type, 8)
+								start_script('appBikerBusiness', 4592, script)
+							end)
+						end
+						
+						if ImGui.Button("Start Methamphetamine Lab Computer##Computer") then
+							script.run_in_fiber(function (script)
+								globals.set_int(global_computer_type, 6)
+								start_script('appBikerBusiness', 4592, script)
+							end)
+						end
+						
+						if ImGui.Button("Start Weed Farm Computer##Computer") then
+							script.run_in_fiber(function (script)
+								globals.set_int(global_computer_type, 7)
+								start_script('appBikerBusiness', 4592, script)
+							end)
+						end
+						
+						if ImGui.Button("Start Counterfeit Cash Factory Computer##Computer") then
+							script.run_in_fiber(function (script)
+								globals.set_int(global_computer_type, 9)
+								start_script('appBikerBusiness', 4592, script)
+							end)
+						end
+						
+						if ImGui.Button("Start Document Forgery Computer##Computer") then
+							script.run_in_fiber(function (script)
+								globals.set_int(global_computer_type, 10)
+								start_script('appBikerBusiness', 4592, script)
+							end)
+						end
+						
+						ImGui.Separator()
+						
+						ImGui.TreePop()
+					end
+					
+					if ImGui.Button("Start Bunker Desktop Computer##Computer") then
+						script.run_in_fiber(function (script)
+							start_script('appBunkerBusiness', 1424, script)
+						end)
+					end
+					
+					if ImGui.Button("Start Hangar Desktop Computer##Computer") then
+						script.run_in_fiber(function (script)
+							start_script('appSmuggler', 4592, script)
+						end)
+					end
+					
+					if ImGui.Button("Start Nightclub Computer##Computer") then
+						script.run_in_fiber(function (script)
+							start_script('appBusinessHub', 1424, script)
+						end)
+					end
+					
+					if ImGui.Button("Start Terrorbyte Touchscreen Computer##Computer") then
+						script.run_in_fiber(function (script)
+							start_script('appHackerTruck', 4592, script)
+						end)
+					end
+					
+					if ImGui.Button("Start Agency Network Computer##Computer") then
+						script.run_in_fiber(function (script)
+							start_script('appFixerSecurity', 4592, script)
+						end)
+					end
+					
+					if ImGui.Button("Start Avengers Operations Terminal##Computer") then
+						script.run_in_fiber(function (script)
+							start_script('appAvengerOperations', 4592, script)
+						end)
+					end
+					
+					if ImGui.Button("Start Bail Office Enforcement System##Computer") then
+						script.run_in_fiber(function (script)
+							start_script('appBailOffice', 4592, script)
+						end)
+					end
+				else
+					ImGui.Text("\nUnavailable in Single Player.\n\n")
 				end
 				ImGui.EndTabItem()
 			end
 			
-			if ImGui.BeginTabItem("Cooldown") then
-				ImGui.SeparatorText("Remove Jobs Cooldowns")
-				
-				VIPMCWorkChallengeCooldown = ImGui.Checkbox("VIP/MC Work & Challenge##VIPMCWorkChallengeCooldown", VIPMCWorkChallengeCooldown)
-				if ImGui.IsItemHovered() then
-					ImGui.SetTooltip("Remove cooldown vip/mc work and challenge on interaction menu")
-				end
-				
-				MCBikerBarMissionCooldown = ImGui.Checkbox("MC Biker Bar Mission##MCBikerBarMissionCooldown", MCBikerBarMissionCooldown)
-				if ImGui.IsItemHovered() then
-					ImGui.SetTooltip("Remove short cooldown clubhouse mission")
-				end
-				
-				TerrorbyteClientJobCooldown = ImGui.Checkbox("Terrorbyte Client Job##TerrorbyteClientJobCooldown", TerrorbyteClientJobCooldown)
-				if ImGui.IsItemHovered() then
-					ImGui.SetTooltip("Remove cooldown client jobs")
-				end
-				
-				CasinoWorkCooldown = ImGui.Checkbox("Casino Work##CasinoWorkCooldown", CasinoWorkCooldown)
-				if ImGui.IsItemHovered() then
-					ImGui.SetTooltip("Remove short cooldown casino work and request a job to Ms. Baker")
-				end
-				
-				AgencyCooldown = ImGui.Checkbox("Agency##AgencyCooldown", AgencyCooldown)
-				if ImGui.IsItemHovered() then
-					ImGui.SetTooltip("Remove cooldown security contract, vip contract and payphone hit assassination.\nFor vip contract, you must be outside agency until called by Franklin or Imani")
-				end
-				
-				DaxWorkCooldown = ImGui.Checkbox("Dax Work##DaxWorkCooldown", DaxWorkCooldown)
-				if ImGui.IsItemHovered() then
-					ImGui.SetTooltip("Remove cooldown fooligan job after request work to Dax")
-				end
-				
-				DispatchWorkCooldown = ImGui.Checkbox("Dispatch Work##DispatchWorkCooldown", DispatchWorkCooldown)
-				if ImGui.IsItemHovered() then
-					ImGui.SetTooltip("Remove short cooldown dispatch work after request received from Vincent")
-				end
-				
-				ImGui.SeparatorText("Remove Business Cooldowns")
-				
-				Special_Cargo_Cooldown = SpecialCargoCooldown
-				SpecialCargoCooldown = ImGui.Checkbox("Special Cargo##SpecialCargoCooldown", SpecialCargoCooldown)
-				if ImGui.IsItemHovered() then
-					ImGui.SetTooltip("Remove cooldown source/sell crates")
-				end
-				if SpecialCargoCooldown ~= Special_Cargo_Cooldown then
-					SpecialCargoSourceCooldown = SpecialCargoCooldown
-					SpecialCargoSellCooldown = SpecialCargoCooldown
-					SpecialCargoCooldownSS = true
+			if ImGui.BeginTabItem("Cooldowns") then
+				if NETWORK.NETWORK_IS_SESSION_STARTED() then
+					All_Cooldowns = AllCooldowns
+					AllCooldowns = ImGui.Checkbox("All Cooldowns##AllCooldowns", AllCooldowns)
+					if ImGui.IsItemHovered() then
+						ImGui.SetTooltip("Enable/Disable all 'Cooldowns'")
+					end
+					if AllCooldowns ~= All_Cooldowns then
+						AllJobCooldowns = AllCooldowns
+						VIPMCWorkChallengeCooldown = AllCooldowns
+						MCBikerBarMissionCooldown = AllCooldowns
+						TerrorbyteClientJobCooldown = AllCooldowns
+						CasinoWorkCooldown = AllCooldowns
+						AgencyCooldown = AllCooldowns
+						DaxWorkCooldown = AllCooldowns
+						DispatchWorkCooldown = AllCooldowns
+						AllBusinessCooldowns = AllCooldowns
+						SpecialCargoCooldown = AllCooldowns
+						SpecialCargoSourceCooldown = AllCooldowns
+						SpecialCargoSellCooldown = AllCooldowns
+						VehicleCargoCooldown = AllCooldowns
+						VehicleCargoSourceCooldown = AllCooldowns
+						VehicleCargoSellCooldown = AllCooldowns
+						HangarCargoCooldown = AllCooldowns
+						HangarCargoSourceCooldown = AllCooldowns
+						HangarCargoSellCooldown = AllCooldowns
+						HangarCargoDuration = AllCooldowns
+						NightclubCooldown = AllCooldowns
+						AllOtherCooldowns = AllCooldowns
+						RequestVehicleCooldown = AllCooldowns
+						ServiceVehiclesCooldown = AllCooldowns
+						CEOAbilitiesCooldown = AllCooldowns
+						CEOVehiclesCooldown = AllCooldowns
+						SpinLuckyWheelCooldown = AllCooldowns
+						AllMiscCooldowns = AllCooldowns
+						MCClientVehicleCooldown = AllCooldowns
+						BunkerCooldown = AllCooldowns
+						ArenaWheelCooldown = AllCooldowns
+						NightclubTroublemakerCooldown = AllCooldowns
+						AutoShopClientVehicleCooldown = AllCooldowns
+						AllCooldowns28 = true
+					else
+						AllCooldowns28 = false
+					end
+					if not AllCooldowns28 then
+						AllCooldowns = AllJobCooldowns
+						and VIPMCWorkChallengeCooldown
+						and MCBikerBarMissionCooldown
+						and TerrorbyteClientJobCooldown
+						and CasinoWorkCooldown
+						and AgencyCooldown
+						and DaxWorkCooldown
+						and DispatchWorkCooldown
+						and AllBusinessCooldowns
+						and SpecialCargoCooldown
+						and SpecialCargoSourceCooldown
+						and SpecialCargoSellCooldown
+						and VehicleCargoCooldown
+						and VehicleCargoSourceCooldown
+						and VehicleCargoSellCooldown
+						and HangarCargoCooldown
+						and HangarCargoSourceCooldown
+						and HangarCargoSellCooldown
+						and HangarCargoDuration
+						and NightclubCooldown
+						and AllOtherCooldowns
+						and RequestVehicleCooldown
+						and ServiceVehiclesCooldown
+						and CEOAbilitiesCooldown
+						and CEOVehiclesCooldown
+						and SpinLuckyWheelCooldown
+						and AllMiscCooldowns
+						and MCClientVehicleCooldown
+						and BunkerCooldown
+						and ArenaWheelCooldown
+						and NightclubTroublemakerCooldown
+						and AutoShopClientVehicleCooldown
+					end
+					
+					All_Job_Cooldowns = AllJobCooldowns
+					AllJobCooldowns = ImGui.Checkbox("All##AllJobCooldowns", AllJobCooldowns)
+					if ImGui.IsItemHovered() then
+						ImGui.SetTooltip("Enable/Disable all options for 'Remove Job Cooldowns'")
+					end
+					if AllJobCooldowns ~= All_Job_Cooldowns then
+						VIPMCWorkChallengeCooldown = AllJobCooldowns
+						MCBikerBarMissionCooldown = AllJobCooldowns
+						TerrorbyteClientJobCooldown = AllJobCooldowns
+						CasinoWorkCooldown = AllJobCooldowns
+						AgencyCooldown = AllJobCooldowns
+						DaxWorkCooldown = AllJobCooldowns
+						DispatchWorkCooldown = AllJobCooldowns
+						AllJobCooldowns28 = true
+					else
+						AllJobCooldowns28 = false
+					end
+					if not AllJobCooldowns28 then
+						AllJobCooldowns = VIPMCWorkChallengeCooldown
+						and MCBikerBarMissionCooldown
+						and TerrorbyteClientJobCooldown
+						and CasinoWorkCooldown
+						and AgencyCooldown
+						and DaxWorkCooldown
+						and DispatchWorkCooldown
+					end
+					ImGui.SameLine()
+					if ImGui.TreeNode("Remove Job Cooldowns") then
+						VIPMCWorkChallengeCooldown = ImGui.Checkbox("VIP/MC Work & Challenge##VIPMCWorkChallengeCooldown", VIPMCWorkChallengeCooldown)
+						if ImGui.IsItemHovered() then
+							ImGui.SetTooltip("Remove cooldown vip/mc work and challenge on interaction menu")
+						end
+						
+						MCBikerBarMissionCooldown = ImGui.Checkbox("MC Biker Bar Mission##MCBikerBarMissionCooldown", MCBikerBarMissionCooldown)
+						if ImGui.IsItemHovered() then
+							ImGui.SetTooltip("Remove short cooldown clubhouse mission")
+						end
+						
+						TerrorbyteClientJobCooldown = ImGui.Checkbox("Terrorbyte Client Job##TerrorbyteClientJobCooldown", TerrorbyteClientJobCooldown)
+						if ImGui.IsItemHovered() then
+							ImGui.SetTooltip("Remove cooldown client jobs")
+						end
+						
+						CasinoWorkCooldown = ImGui.Checkbox("Casino Work##CasinoWorkCooldown", CasinoWorkCooldown)
+						if ImGui.IsItemHovered() then
+							ImGui.SetTooltip("Remove short cooldown casino work and request a job to Ms. Baker")
+						end
+						
+						AgencyCooldown = ImGui.Checkbox("Agency##AgencyCooldown", AgencyCooldown)
+						if ImGui.IsItemHovered() then
+							ImGui.SetTooltip("Remove cooldown security contract, vip contract and payphone hit assassination.\nFor vip contract, you must be outside agency until called by Franklin or Imani")
+						end
+						
+						DaxWorkCooldown = ImGui.Checkbox("Dax Work##DaxWorkCooldown", DaxWorkCooldown)
+						if ImGui.IsItemHovered() then
+							ImGui.SetTooltip("Remove cooldown fooligan job after request work to Dax")
+						end
+						
+						DispatchWorkCooldown = ImGui.Checkbox("Dispatch Work##DispatchWorkCooldown", DispatchWorkCooldown)
+						if ImGui.IsItemHovered() then
+							ImGui.SetTooltip("Remove short cooldown dispatch work after request received from Vincent")
+						end
+						
+						ImGui.Separator()
+						
+						ImGui.TreePop()
+					end
+					
+					All_Business_Cooldowns = AllBusinessCooldowns
+					AllBusinessCooldowns = ImGui.Checkbox("All##AllBusinessCooldowns", AllBusinessCooldowns)
+					if ImGui.IsItemHovered() then
+						ImGui.SetTooltip("Enable/Disable all options for 'Remove Business Cooldowns'")
+					end
+					if AllBusinessCooldowns ~= All_Business_Cooldowns then
+						SpecialCargoCooldown = AllBusinessCooldowns
+						SpecialCargoSourceCooldown = AllBusinessCooldowns
+						SpecialCargoSellCooldown = AllBusinessCooldowns
+						VehicleCargoCooldown = AllBusinessCooldowns
+						VehicleCargoSourceCooldown = AllBusinessCooldowns
+						VehicleCargoSellCooldown = AllBusinessCooldowns
+						HangarCargoCooldown = AllBusinessCooldowns
+						HangarCargoSourceCooldown = AllBusinessCooldowns
+						HangarCargoSellCooldown = AllBusinessCooldowns
+						HangarCargoDuration = AllBusinessCooldowns
+						NightclubCooldown = AllBusinessCooldowns
+						AllBusinessCooldowns28 = true
+					else
+						AllBusinessCooldowns28 = false
+					end
+					if not AllBusinessCooldowns28 then
+						AllBusinessCooldowns = SpecialCargoCooldown
+						and SpecialCargoSourceCooldown
+						and SpecialCargoSellCooldown
+						and VehicleCargoCooldown
+						and VehicleCargoSourceCooldown
+						and VehicleCargoSellCooldown
+						and HangarCargoCooldown
+						and HangarCargoSourceCooldown
+						and HangarCargoSellCooldown
+						and HangarCargoDuration
+						and NightclubCooldown
+					end
+					ImGui.SameLine()
+					if ImGui.TreeNode("Remove Business Cooldowns") then
+						Special_Cargo_Cooldown = SpecialCargoCooldown
+						SpecialCargoCooldown = ImGui.Checkbox("Special Cargo##SpecialCargoCooldown", SpecialCargoCooldown)
+						if ImGui.IsItemHovered() then
+							ImGui.SetTooltip("Remove cooldown source/sell crates")
+						end
+						if SpecialCargoCooldown ~= Special_Cargo_Cooldown then
+							SpecialCargoSourceCooldown = SpecialCargoCooldown
+							SpecialCargoSellCooldown = SpecialCargoCooldown
+							SpecialCargoCooldownSS = true
+						else
+							SpecialCargoCooldownSS = false
+						end
+						if not SpecialCargoCooldownSS then
+							SpecialCargoCooldown = SpecialCargoSourceCooldown
+							and SpecialCargoSellCooldown
+						end
+						
+						Vehicle_Cargo_Cooldown = VehicleCargoCooldown
+						VehicleCargoCooldown = ImGui.Checkbox("Vehicle Cargo##VehicleCargoCooldown", VehicleCargoCooldown)
+						if ImGui.IsItemHovered() then
+							ImGui.SetTooltip("Remove cooldown import/export vehicle cargo")
+						end
+						if VehicleCargoCooldown ~= Vehicle_Cargo_Cooldown then
+							VehicleCargoSourceCooldown = VehicleCargoCooldown
+							VehicleCargoSellCooldown = VehicleCargoCooldown
+							VehicleCargoCooldownSS = true
+						else
+							VehicleCargoCooldownSS = false
+						end
+						if not VehicleCargoCooldownSS then
+							VehicleCargoCooldown = VehicleCargoSourceCooldown
+							and VehicleCargoSellCooldown
+						end
+						
+						Hangar_Cargo_Cooldown = HangarCargoCooldown
+						HangarCargoCooldown = ImGui.Checkbox("Hangar Cargo##HangarCargoCooldown", HangarCargoCooldown)
+						if ImGui.IsItemHovered() then
+							ImGui.SetTooltip("Remove cooldown source/sell hangar crates")
+						end
+						if HangarCargoCooldown ~= Hangar_Cargo_Cooldown then
+							HangarCargoSourceCooldown = HangarCargoCooldown
+							HangarCargoSellCooldown = HangarCargoCooldown
+							HangarCargoCooldownSS = true
+						else
+							HangarCargoCooldownSS = false
+						end
+						if not HangarCargoCooldownSS then
+							HangarCargoCooldown = HangarCargoSourceCooldown
+							and HangarCargoSellCooldown
+						end
+						ImGui.SameLine()
+						HangarCargoDuration = ImGui.Checkbox("Extend Timers##HangarCargoDuration", HangarCargoDuration)
+						
+						NightclubCooldown = ImGui.Checkbox("Nightclub##NightclubCooldown", NightclubCooldown)
+						if ImGui.IsItemHovered() then
+							ImGui.SetTooltip("Remove cooldown promote club, source/sell goods")
+						end
+						
+						ImGui.Separator()
+						
+						ImGui.TreePop()
+					end
+					
+					All_Other_Cooldowns = AllOtherCooldowns
+					AllOtherCooldowns = ImGui.Checkbox("All##AllOtherCooldowns", AllOtherCooldowns)
+					if ImGui.IsItemHovered() then
+						ImGui.SetTooltip("Enable/Disable all options for 'Remove Other Cooldowns'")
+					end
+					if AllOtherCooldowns ~= All_Other_Cooldowns then
+						RequestVehicleCooldown = AllOtherCooldowns
+						ServiceVehiclesCooldown = AllOtherCooldowns
+						CEOAbilitiesCooldown = AllOtherCooldowns
+						CEOVehiclesCooldown = AllOtherCooldowns
+						SpinLuckyWheelCooldown = AllOtherCooldowns
+						AllOtherCooldowns28 = true
+					else
+						AllOtherCooldowns28 = false
+					end
+					if not AllOtherCooldowns28 then
+						AllOtherCooldowns = RequestVehicleCooldown
+						and ServiceVehiclesCooldown
+						and CEOAbilitiesCooldown
+						and CEOVehiclesCooldown
+						and SpinLuckyWheelCooldown
+					end
+					ImGui.SameLine()
+					if ImGui.TreeNode("Remove Other Cooldowns") then
+						RequestVehicleCooldown = ImGui.Checkbox("Request Vehicle##RequestVehicleCooldown", RequestVehicleCooldown)
+						if ImGui.IsItemHovered() then
+							ImGui.SetTooltip("Activate before request. Remove short cooldown\nafter request a vehicle")
+						end
+						ImGui.SameLine()
+						ServiceVehiclesCooldown = ImGui.Checkbox("Service Vehicles##ServiceVehiclesCooldown", ServiceVehiclesCooldown)
+						if ImGui.IsItemHovered() then
+							ImGui.SetTooltip("Activate before request. Remove short cooldown\nrequest a service vehicles on interaction menu")
+						end
+						
+						CEOAbilitiesCooldown = ImGui.Checkbox("CEO Abilities##CEOAbilitiesCooldown", CEOAbilitiesCooldown)
+						if ImGui.IsItemHovered() then
+							ImGui.SetTooltip("Remove short cooldown after request a ceo abilities on interaction menu")
+						end
+						ImGui.SameLine()
+						CEOVehiclesCooldown = ImGui.Checkbox("CEO Vehicles##CEOVehiclesCooldown", CEOVehiclesCooldown)
+						if ImGui.IsItemHovered() then
+							ImGui.SetTooltip("Remove short cooldown after request a ceo vehicles on interaction menu")
+						end
+						
+						SpinLuckyWheelCooldown = ImGui.Checkbox("Spin Lucky Wheel##SpinLuckyWheelCooldown", SpinLuckyWheelCooldown)
+						if ImGui.IsItemHovered() then
+							ImGui.SetTooltip("Remove cooldown spin lucky wheel once per day at diamond casino")
+						end
+						
+						ImGui.Separator()
+						
+						ImGui.TreePop()
+					end
+									
+					All_Misc_Cooldowns = AllMiscCooldowns
+					AllMiscCooldowns = ImGui.Checkbox("All##AllMiscCooldowns", AllMiscCooldowns)
+					if ImGui.IsItemHovered() then
+						ImGui.SetTooltip("Enable/Disable all options for 'Misc Cooldowns'")
+					end
+					if AllMiscCooldowns ~= All_Misc_Cooldowns then
+						MCClientVehicleCooldown = AllMiscCooldowns
+						BunkerCooldown = AllMiscCooldowns
+						ArenaWheelCooldown = AllMiscCooldowns
+						NightclubTroublemakerCooldown = AllMiscCooldowns
+						AutoShopClientVehicleCooldown = AllMiscCooldowns
+						AllMiscCooldowns28 = true
+					else
+						AllMiscCooldowns28 = false
+					end
+					if not AllMiscCooldowns28 then
+						AllMiscCooldowns = MCClientVehicleCooldown
+						and BunkerCooldown
+						and ArenaWheelCooldown
+						and NightclubTroublemakerCooldown
+						and AutoShopClientVehicleCooldown
+					end
+					ImGui.SameLine()
+					if ImGui.TreeNode("Misc Cooldowns") then
+						MCClientVehicleCooldown = ImGui.Checkbox("MC Client Vehicle##MCClientVehicleCooldown", MCClientVehicleCooldown)
+						if ImGui.IsItemHovered() then
+							ImGui.SetTooltip("Mc client is vehicle always come")
+						end
+						
+						BunkerCooldown = ImGui.Checkbox("Bunker Deliver Ammunation##BunkerCooldown", BunkerCooldown)
+						if ImGui.IsItemHovered() then
+							ImGui.SetTooltip("Bunker delivery ammunation is always ready")
+						end
+						
+						ArenaWheelCooldown = ImGui.Checkbox("Arena Spin Wheel##ArenaWheelCooldown", ArenaWheelCooldown)
+						if ImGui.IsItemHovered() then
+							ImGui.SetTooltip("Remove short cooldown after spin arena wheel")
+						end
+						
+						NightclubTroublemakerCooldown = ImGui.Checkbox("Nightclub Troublemaker##NightclubTroublemakerCooldown", NightclubTroublemakerCooldown)
+						if ImGui.IsItemHovered() then
+							ImGui.SetTooltip("Troublemakers are always present in your nightclub")
+						end
+						
+						AutoShopClientVehicleCooldown = ImGui.Checkbox("Auto Shop Client Vehicle##AutoShopClientVehicleCooldown", AutoShopClientVehicleCooldown)
+						if ImGui.IsItemHovered() then
+							ImGui.SetTooltip("Auto shop client is vehicle always come")
+						end
+						
+						ImGui.Separator()
+						
+						ImGui.TreePop()
+					end
 				else
-					SpecialCargoCooldownSS = false
-				end
-				if not SpecialCargoCooldownSS then
-					if not SpecialCargoSourceCooldown or not SpecialCargoSellCooldown then
-						SpecialCargoCooldown = false
-					end
-					if SpecialCargoSourceCooldown and SpecialCargoSellCooldown then
-						SpecialCargoCooldown = true
-					end
-				end
-				
-				Vehicle_Cargo_Cooldown = VehicleCargoCooldown
-				VehicleCargoCooldown = ImGui.Checkbox("Vehicle Cargo##VehicleCargoCooldown", VehicleCargoCooldown)
-				if ImGui.IsItemHovered() then
-					ImGui.SetTooltip("Remove cooldown import/export vehicle cargo")
-				end
-				if VehicleCargoCooldown ~= Vehicle_Cargo_Cooldown then
-					VehicleCargoSourceCooldown = VehicleCargoCooldown
-					VehicleCargoSellCooldown = VehicleCargoCooldown
-					VehicleCargoCooldownSS = true
-				else
-					VehicleCargoCooldownSS = false
-				end
-				if not VehicleCargoCooldownSS then
-					if not VehicleCargoSourceCooldown or not VehicleCargoSellCooldown then
-						VehicleCargoCooldown = false
-					end
-					if VehicleCargoSourceCooldown and VehicleCargoSellCooldown then
-						VehicleCargoCooldown = true
-					end
-				end
-				
-				Hangar_Cargo_Cooldown = HangarCargoCooldown
-				HangarCargoCooldown = ImGui.Checkbox("Hangar Cargo##HangarCargoCooldown", HangarCargoCooldown)
-				if ImGui.IsItemHovered() then
-					ImGui.SetTooltip("Remove cooldown source/sell hangar crates")
-				end
-				if HangarCargoCooldown ~= Hangar_Cargo_Cooldown then
-					HangarCargoSourceCooldown = HangarCargoCooldown
-					HangarCargoSellCooldown = HangarCargoCooldown
-					HangarCargoCooldownSS = true
-				else
-					HangarCargoCooldownSS = false
-				end
-				if not HangarCargoCooldownSS then
-					if not HangarCargoSourceCooldown or not HangarCargoSellCooldown then
-						HangarCargoCooldown = false
-					end
-					if HangarCargoSourceCooldown and HangarCargoSellCooldown then
-						HangarCargoCooldown = true
-					end
-				end
-				ImGui.SameLine()
-				HangarCargoDuration = ImGui.Checkbox("Extend Timers##HangarCargoDuration", HangarCargoDuration)
-				
-				NightclubCooldown = ImGui.Checkbox("Nightclub##NightclubCooldown", NightclubCooldown)
-				if ImGui.IsItemHovered() then
-					ImGui.SetTooltip("Remove cooldown promote club, source/sell goods")
-				end
-				
-				ImGui.SeparatorText("Remove Other Cooldowns")
-				
-				RequestVehicleCooldown = ImGui.Checkbox("Request Vehicle##RequestVehicleCooldown", RequestVehicleCooldown)
-				if ImGui.IsItemHovered() then
-					ImGui.SetTooltip("Remove short cooldown after request a vehicle.\nActivate before request.")
-				end
-				ImGui.SameLine()
-				ServiceVehiclesCooldown = ImGui.Checkbox("Service Vehicles##ServiceVehiclesCooldown", ServiceVehiclesCooldown)
-				if ImGui.IsItemHovered() then
-					ImGui.SetTooltip("Remove short cooldown request a service vehicles on interaction menu.\nActivate before request.")
-				end
-				
-				CEOAbilitiesCooldown = ImGui.Checkbox("CEO Abilities##CEOAbilitiesCooldown", CEOAbilitiesCooldown)
-				if ImGui.IsItemHovered() then
-					ImGui.SetTooltip("Remove short cooldown after request a ceo abilities on interaction menu")
-				end
-				ImGui.SameLine()
-				CEOVehiclesCooldown = ImGui.Checkbox("CEO Vehicles##CEOVehiclesCooldown", CEOVehiclesCooldown)
-				if ImGui.IsItemHovered() then
-					ImGui.SetTooltip("Remove short cooldown after request a ceo vehicles on interaction menu")
-				end
-				
-				SpinLuckyWheelCooldown = ImGui.Checkbox("Spin Lucky Wheel##SpinLuckyWheelCooldown", SpinLuckyWheelCooldown)
-				if ImGui.IsItemHovered() then
-					ImGui.SetTooltip("Remove cooldown spin lucky wheel once per day at diamond casino")
-				end
-				
-				ImGui.SeparatorText("Misc Cooldowns")
-				
-				MCClientVehicleCooldown = ImGui.Checkbox("MC Client Vehicle##MCClientVehicleCooldown", MCClientVehicleCooldown)
-				if ImGui.IsItemHovered() then
-					ImGui.SetTooltip("Mc client is vehicle always come")
-				end
-				
-				BunkerCooldown = ImGui.Checkbox("Bunker Deliver Ammunation##BunkerCooldown", BunkerCooldown)
-				if ImGui.IsItemHovered() then
-					ImGui.SetTooltip("Bunker delivery ammunation is always ready")
-				end
-				
-				ArenaWheelCooldown = ImGui.Checkbox("Arena Wheel##ArenaWheelCooldown", ArenaWheelCooldown)
-				if ImGui.IsItemHovered() then
-					ImGui.SetTooltip("Remove short cooldown after spin arena wheel")
-				end
-				
-				NightclubTroublemakerCooldown = ImGui.Checkbox("Nightclub Troublemaker##NightclubTroublemakerCooldown", NightclubTroublemakerCooldown)
-				if ImGui.IsItemHovered() then
-					ImGui.SetTooltip("Troublemakers are always present in your nightclub")
-				end
-				
-				AutoShopClientVehicleCooldown = ImGui.Checkbox("Auto Shop Client Vehicle##AutoShopClientVehicleCooldown", AutoShopClientVehicleCooldown)
-				if ImGui.IsItemHovered() then
-					ImGui.SetTooltip("Auto shop client is vehicle always come")
+					ImGui.Text("\nUnavailable in Single Player.\n\n")
 				end
 				ImGui.EndTabItem()
 			end
-			ImGui.EndTabBar()
+		--end
+		
+		if ImGui.BeginTabItem("Settings") then
+			PhoneAnimations = ImGui.Checkbox("Enable Phone Animations", PhoneAnimations)
+			if ImGui.IsItemHovered() then
+				ImGui.SetTooltip("Makes so player's ped actually uses phone like in singleplayer")
+			end
+			if PhoneAnimations then
+				restore_sp_funcs = ImGui.Checkbox("Restore Singleplayer Functions", restore_sp_funcs)
+				if ImGui.IsItemHovered() then
+					ImGui.SetTooltip("Recreates singleplayer's phone functions like finger moving, phone leaning in email app etc.")
+				end
+			end
+			
+			ImGui.Separator()
+			
+			ForceUnsupportedVersion = ImGui.Checkbox("Force Unsupported Version", ForceUnsupportedVersion)
+			if ImGui.IsItemHovered() then
+				ImGui.SetTooltip("This will undo some disabled scripts, as they are outdated with\nthe current game version.")
+			end
+			ImGui.EndTabItem()
 		end
-		else
-		ImGui.Text("\nUnavailable in Single Player.\n\n")
+		ImGui.EndTabBar()
 	end
 end)
 
@@ -772,10 +1145,8 @@ AllCCTV = {
 
 auto_ceo_mc = false
 RemoveAllCCTV = false
-PhoneAnimations = true
-restore_sp_funcs = false
 
-script.register_looped("GoldenGets", function()
+script.register_looped("GoldenGets Menu", function()
 	--if not util.is_session_started() then return end
 	--
 	--local CEOLabels = {
@@ -839,34 +1210,9 @@ script.register_looped("GoldenGets", function()
             end
         end
     end
-	
-    if globals.get_int(79389) == 1 then
-        if PhoneAnimations then
-            if PED.GET_PED_CONFIG_FLAG(self.get_ped(), 242, true) then
-                PED.SET_PED_CONFIG_FLAG(self.get_ped(), 242, false)
-            end
-            if PED.GET_PED_CONFIG_FLAG(self.get_ped(), 243, true) then
-                PED.SET_PED_CONFIG_FLAG(self.get_ped(), 243, false)
-            end
-            if PED.GET_PED_CONFIG_FLAG(self.get_ped(), 244, true) then
-                PED.SET_PED_CONFIG_FLAG(self.get_ped(), 244, false)
-            end
-        else
-            PED.SET_PED_CONFIG_FLAG(self.get_ped(), 242, true)
-            PED.SET_PED_CONFIG_FLAG(self.get_ped(), 243, true)
-            PED.SET_PED_CONFIG_FLAG(self.get_ped(), 244, true)
-        end
-        if restore_sp_funcs then
-            if PAD.IS_CONTROL_JUST_PRESSED(2, 172) then
-                MOBILE.CELL_SET_INPUT(1)
-            end
-            if PAD.IS_CONTROL_JUST_PRESSED(2, 173) then
-                MOBILE.CELL_SET_INPUT(2)
-            end
-        end
-    end
 end)
 
+AllCooldowns = false
 VIPMCWorkChallengeCooldown = false
 MCBikerBarMissionCooldown = false
 TerrorbyteClientJobCooldown = false
@@ -874,26 +1220,26 @@ CasinoWorkCooldown = false
 AgencyCooldown = false
 DaxWorkCooldown = false
 DispatchWorkCooldown = false
+AllBusinessCooldowns = false
 SpecialCargoCooldown = false
-SpecialCargoCooldownSS = false
 VehicleCargoCooldown = false
-VehicleCargoCooldownSS = false
 HangarCargoCooldown = false
-HangarCargoCooldownSS = false
 HangarCargoDuration = false
 NightclubCooldown = false
+AllOtherCooldowns = false
 RequestVehicleCooldown = false
 ServiceVehiclesCooldown = false
 CEOAbilitiesCooldown = false
 CEOVehiclesCooldown = false
 SpinLuckyWheelCooldown = false
+AllMiscCooldowns = false
 MCClientVehicleCooldown = false
 BunkerCooldown = false
 ArenaWheelCooldown = false
 NightclubTroublemakerCooldown = false
 AutoShopClientVehicleCooldown = false
 
-script.register_looped("My Cooldown", function (script)
+script.register_looped("GoldenGets Cooldowns", function()
 	if VIPMCWorkChallengeCooldown then
 		if tunables.get_int("GB_COOLDOWN_UNTIL_NEXT_BOSS_WORK") ~= 0 then -- VIP Work Cooldown *(300000ms)*
 			tunables.set_int("GB_COOLDOWN_UNTIL_NEXT_BOSS_WORK", 0)
@@ -1015,6 +1361,47 @@ script.register_looped("My Cooldown", function (script)
 		if stats.get_int("MPPLY_VIPGAMEPLAYDISABLEDTIMER") ~= 0 then
 			stats.set_int("MPPLY_VIPGAMEPLAYDISABLEDTIMER", 0)
 		end
+	else
+		tunables.set_int("GB_COOLDOWN_UNTIL_NEXT_BOSS_WORK", 300000)
+		tunables.set_int("GB_COOLDOWN_UNTIL_NEXT_BOSS_CHALLENGE", 180000)
+		tunables.set_int("GB_BECOME_BOSS_COOLDOWN", 43200)
+		tunables.set_int("GB_ASSAULT_COOLDOWN", 1200000)
+		tunables.set_int("GB_BELLY_COOLDOWN", 600000)
+		tunables.set_int("GB_BOSSVSBOSSDM_COOLDOWN", 1800000)
+		tunables.set_int("GB_CARJACKING_COOLDOWN", 600000)
+		tunables.set_int("GB_FINDERS_KEEPERS_COOLDOWN", 600000)
+		tunables.set_int("GB_HUNTBOSS_COOLDOWN", 600000)
+		tunables.set_int("GB_MOSTWANTED_COOLDOWN", 600000)
+		tunables.set_int("GB_POINTTOPOINT_COOLDOWN", 600000)
+		tunables.set_int("GB_PROTECTIONRACKET_COOLDOWN", 600000)
+		tunables.set_int("GB_SIGHTSEER_COOLDOWN", 600000)
+		tunables.set_int("GB_SMASHANDGRAB_COOLDOWN", 600000)
+		tunables.set_int("GB_YACHTATTACK_COOLDOWN", 3600000)
+		tunables.set_int("GB_SMASHANDGRAB_STORE_COOLDOWN", 120000)
+		tunables.set_int("EXEC_CASHING_COOLDOWN", 600000)
+		tunables.set_int("EXEC_SALVAGE_COOLDOWN", 600000)
+		tunables.set_int("EXEC_AIRFREIGHT_COOLDOWN", 600000)
+		tunables.set_int("EXEC_AIRFREIGHT_DISCONNECT_COOLDOWN", 30000)
+		tunables.set_int("EXEC_DESTROY_CONTRABAND_RATE_LIMITER_COOLDOWN", 2880)
+		tunables.set_int("EXEC_FGOODS_COOLDOWN", 600000)
+		tunables.set_int("EXEC_FGOODS_DISCONNECT_COOLDOWN", 30000)
+		tunables.set_int("EXEC_HEADHUNTER_COOLDOWN", 600000)
+		tunables.set_int("IMPEXP_PLOWED_COOLDOWN", 3600000)
+		tunables.set_int("IMPEXP_FULLY_LOADED_COOLDOWN", 3600000)
+		tunables.set_int("IMPEXP_AMPHIBIOUS_ASSAULT_COOLDOWN", 1800000)
+		tunables.set_int("IMPEXP_TRANSPORTER_COOLDOWN", 1800000)
+		tunables.set_int("IMPEXP_FORTIFIED_COOLDOWN", 1800000)
+		tunables.set_int("IMPEXP_VELOCITY_COOLDOWN", 1800000)
+		tunables.set_int("IMPEXP_RAMPED_UP_COOLDOWN", 3600000)
+		tunables.set_int("IMPEXP_STOCKPILING_COOLDOWN", 1800000)
+		tunables.set_int("BIKER_CLUB_WORK_COOLDOWN_GLOBAL", 180000)
+		--tunables.set_int("BIKER_CHALLENGES_COOLDOWN_GLOBAL", 0)
+		--tunables.set_int("BIKER_CHALLENGES_COOLDOWN_SPECIFIC", 0)
+		--tunables.set_int("BIKER_DEATHMATCH_COOLDOWN", 0)
+		--tunables.set_int("BIKER_JOUST_COOLDOWN", 0)
+		tunables.set_int("BIKER_STAND_YOUR_GROUND_COOLDOWN", 180000)
+		--tunables.set_int("BIKER_CAGED_IN_COOLDOWN", 0)
+		--stats.set_int("MPPLY_VIPGAMEPLAYDISABLEDTIMER", 0)
 	end
 	
 	if MCBikerBarMissionCooldown then
@@ -1027,10 +1414,14 @@ script.register_looped("My Cooldown", function (script)
 		if stats.get_int("MPX_BIKER_BAR_RESUPPLY_CD_POSIX") ~= -1 then
 			stats.set_int("MPX_BIKER_BAR_RESUPPLY_CD_POSIX", -1)
 		end
+	else
+		--tunables.set_int("BIKER_CLUBHOUSE_COOLDOWN", 0)
+		tunables.set_int("BIKER_RESUPPLY_MISSION_COOLDOWN", 48)
+		--stats.set_int("MPX_BIKER_BAR_RESUPPLY_CD_POSIX", 0)
 	end
 	
 	if TerrorbyteClientJobCooldown then
-		if tunables.get_int("BB_TERRORBYTE_MISSION_COOLDOWN_TIMER") ~= 0 then -- nill tunable
+		if tunables.get_int("BB_TERRORBYTE_MISSION_COOLDOWN_TIMER") ~= 0 then -- null tunable
 			tunables.set_int("BB_TERRORBYTE_MISSION_COOLDOWN_TIMER", 0)
 		end
 		if tunables.get_int("BB_HACKER_WORK_CLIENT_WORK_GLOBAL_COOLDOWN") ~= 0 then -- Between Jobs *(300000ms)*
@@ -1057,6 +1448,16 @@ script.register_looped("My Cooldown", function (script)
 		if tunables.get_int("BB_HACKER_WORK_HACKER_CHALLENGE_COOLDOWN_TARGET_PURSUIT") ~= 0 then -- Deal Breaker *(600000ms)*
 			tunables.set_int("BB_HACKER_WORK_HACKER_CHALLENGE_COOLDOWN_TARGET_PURSUIT", 0)
 		end
+	else
+		--tunables.set_int("BB_TERRORBYTE_MISSION_COOLDOWN_TIMER", 0)
+		tunables.set_int("BB_HACKER_WORK_CLIENT_WORK_GLOBAL_COOLDOWN", 300000)
+		tunables.set_int("BB_HACKER_WORK_CLIENT_WORK_COOLDOWN_BANK_JOB", 1800000)
+		tunables.set_int("BB_HACKER_WORK_CLIENT_WORK_COOLDOWN_DATA_HACK", 1800000)
+		tunables.set_int("BB_HACKER_WORK_CLIENT_WORK_COOLDOWN_INFILTRATION", 1800000)
+		tunables.set_int("BB_HACKER_WORK_CLIENT_WORK_COOLDOWN_JEWEL_STORE_GRAB", 1800000)
+		tunables.set_int("BB_HACKER_WORK_HACKER_CHALLENGE_COOLDOWN_GLOBAL_COOLDOWN", 180000)
+		tunables.set_int("BB_HACKER_WORK_HACKER_CHALLENGE_COOLDOWN_SECURITY_VANS", 600000)
+		tunables.set_int("BB_HACKER_WORK_HACKER_CHALLENGE_COOLDOWN_TARGET_PURSUIT", 600000)
 	end
 	
 	if CasinoWorkCooldown then
@@ -1066,6 +1467,9 @@ script.register_looped("My Cooldown", function (script)
 		if tunables.get_int("VC_WORK_REQUEST_COOLDOWN") ~= 0 then -- *(180000ms)*
 			tunables.set_int("VC_WORK_REQUEST_COOLDOWN", 0)
 		end
+	else
+		tunables.set_int("VC_WORK_COOLDOWN", 36000)
+		tunables.set_int("VC_WORK_REQUEST_COOLDOWN", 180000)
 	end
 	
 	if AgencyCooldown then
@@ -1081,6 +1485,11 @@ script.register_looped("My Cooldown", function (script)
 		if tunables.get_int("REQUEST_FRANKLIN_PAYPHONE_HIT_COOLDOWN") ~= 0 then -- *(600000ms)*
 			tunables.set_int("REQUEST_FRANKLIN_PAYPHONE_HIT_COOLDOWN", 0)
 		end
+	else
+		tunables.set_int("FIXER_STORY_COOLDOWN_POSIX", 1800)
+		tunables.set_int("FIXER_SECURITY_CONTRACT_COOLDOWN_TIME", 300000)
+		tunables.set_int("FRANKLIN_SUPPLY_STASH_COOLDOWN", 600000)
+		tunables.set_int("REQUEST_FRANKLIN_PAYPHONE_HIT_COOLDOWN", 600000)
 	end
 	
 	if DaxWorkCooldown then
@@ -1090,11 +1499,14 @@ script.register_looped("My Cooldown", function (script)
 		if tunables.get_int("JUGALLO_BOSS_WORK_COOLDOWN_TIME") ~= 0 then -- *(2880ms)*
 			tunables.set_int("JUGALLO_BOSS_WORK_COOLDOWN_TIME", 0)
 		end
+	else
+		--stats.set_int("MPX_XM22JUGGALOWORKCDTIMER", 0)
+		tunables.set_int("JUGALLO_BOSS_WORK_COOLDOWN_TIME", 2880)
 	end
 	
 	if DispatchWorkCooldown then
-		if globals.get_int(3337, DWCl) ~= 0 then
-			globals.set_int(3337, DWCl, 0)
+		if locals_v_get_int(SupportVersion, DWCl) ~= 0 then
+			locals_v_set_int(SupportVersion, DWCl, 0)
 		end
 		if stats.get_int("MPX_DISPATCH_WORK_CALL_CD") ~= 0 then
 			stats.set_int("MPX_DISPATCH_WORK_CALL_CD", 0)
@@ -1102,6 +1514,10 @@ script.register_looped("My Cooldown", function (script)
 		if stats.get_int("MPX_DISPATCH_WORK_REQUEST_CD") ~= 0 then
 			stats.set_int("MPX_DISPATCH_WORK_REQUEST_CD", 0)
 		end
+	else
+		--locals_v_set_int(SupportVersion, DWCl, 0)
+		--stats.set_int("MPX_DISPATCH_WORK_CALL_CD", 0)
+		--stats.set_int("MPX_DISPATCH_WORK_REQUEST_CD", 0)
 	end
 	
 	if HangarCargoDuration then
@@ -1212,7 +1628,7 @@ script.register_looped("My Cooldown", function (script)
 		if tunables.get_int("BB_CLUB_MANAGEMENT_CLUB_MANAGEMENT_MISSION_COOLDOWN") ~= 0 then -- Nightclub Promote Club Cooldown *(300000ms)*
 			tunables.set_int("BB_CLUB_MANAGEMENT_CLUB_MANAGEMENT_MISSION_COOLDOWN", 0)
 		end
-		if tunables.get_int("BB_SELL_MISSIONS_MISSION_COOLDOWN") ~= 0 then -- // *(300000ms)*
+		if tunables.get_int("BB_SELL_MISSIONS_MISSION_COOLDOWN") ~= 0 then -- *(300000ms)*
 			tunables.set_int("BB_SELL_MISSIONS_MISSION_COOLDOWN", 0)
 		end
 		if tunables.get_int("BB_SELL_MISSIONS_DELIVERY_VEHICLE_COOLDOWN_AFTER_SELL_MISSION") ~= 0 then -- *(300000ms)*
@@ -1233,6 +1649,15 @@ script.register_looped("My Cooldown", function (script)
 		if tunables.get_int("NIGHTCLUB_SOURCE_GOODS_CD_TIME") ~= 0 then -- *(1200ms)*
 			tunables.set_int("NIGHTCLUB_SOURCE_GOODS_CD_TIME", 0)
 		end
+	else
+		tunables.set_int("BB_CLUB_MANAGEMENT_CLUB_MANAGEMENT_MISSION_COOLDOWN", 300000)
+		tunables.set_int("BB_SELL_MISSIONS_MISSION_COOLDOWN", 300000)
+		tunables.set_int("BB_SELL_MISSIONS_DELIVERY_VEHICLE_COOLDOWN_AFTER_SELL_MISSION", 300000)
+		--stats.set_int("MPX_SOURCE_GOODS_CDTIMER", 0)
+		--stats.set_int("MPX_SOURCE_RESEARCH_CDTIMER", 0)
+		tunables.set_int("EXPORT_CARGO_LAUNCH_CD_TIME", 2880)
+		tunables.set_int("NC_SOURCE_TRUCK_COOLDOWN", 960000)
+		tunables.set_int("NIGHTCLUB_SOURCE_GOODS_CD_TIME", 1200)
 	end
 	
 	if RequestVehicleCooldown then
@@ -1284,6 +1709,23 @@ script.register_looped("My Cooldown", function (script)
 		if tunables.get_int("JUGALLO_BOSS_VEHICLE_COOLDOWN_TIME") ~= 0 then -- *(120000ms)*
 			tunables.set_int("JUGALLO_BOSS_VEHICLE_COOLDOWN_TIME", 0)
 		end
+	else
+		--tunables.set_int("PV_MECHANIC_COOLDOWN", 0)
+		--tunables.set_int("PV_RETURN_COOLDOWN", 0)
+		tunables.set_int("YACHT_CAPTAIN_REQUEST_HELI", 1000)
+		tunables.set_int("YACHT_CAPTAIN_REQUEST_BOAT", 750)
+		--tunables.set_int("YACHT_CAPTAIN_REQUEST_PV", 0)
+		tunables.set_int("SV_MECHANIC_COOLDOWN", 120000)
+		tunables.set_int("TANK_COOLDOWN_TIME", 120000)
+		--tunables.set_int("SUPPORT_BIKE_REQUEST_COOLDOWN", 0)
+		tunables.set_int("SMUG_REQUEST_PERSONAL_AIRCRAFT_COOLDOWN", 300000)
+		tunables.set_int("TONY_LIMO_COOLDOWN_TIME", 120000)
+		tunables.set_int("BB_SUBMARINE_REQUEST_COOLDOWN_TIMER", 120000)
+		--tunables.set_int("BB_SUBMARINE_DINGHY_REQUEST_COOLDOWN_TIMER", 0)
+		tunables.set_int("VC_COOLDOWN_REQUEST_CAR_SERVICE", 120000)
+		tunables.set_int("VC_COOLDOWN_REQUEST_LIMO_SERVICE", 120000)
+		tunables.set_int("REQUEST_COMPANY_SUV_SERVICE_COOLDOWN", 120000)
+		tunables.set_int("JUGALLO_BOSS_VEHICLE_COOLDOWN_TIME", 120000)
 	end
 	
 	if ServiceVehiclesCooldown then
@@ -1302,6 +1744,12 @@ script.register_looped("My Cooldown", function (script)
 		if tunables.get_int("ACID_LAB_REQUEST_COOLDOWN") ~= 0 then -- *(300000ms)*
 			tunables.set_int("ACID_LAB_REQUEST_COOLDOWN", 0)
 		end
+	else
+		tunables.set_int("GR_MOBILE_OPERATIONS_CENTRE_COOLDOWN_TIMER", 120000)
+		tunables.set_int("H2_AVENGER_INTN_MENU_REQUEST_AVENGER_COOLDOWN", 120000)
+		tunables.set_int("BB_TERRORBYTE_TERRORBYTE_COOLDOWN_TIMER", 120000)
+		tunables.set_int("IH_MOON_POOL_COOLDOWN", 120000)
+		tunables.set_int("ACID_LAB_REQUEST_COOLDOWN", 300000)
 	end
 	
 	if CEOAbilitiesCooldown then
@@ -1317,7 +1765,7 @@ script.register_looped("My Cooldown", function (script)
 		if tunables.get_int("BALLISTICARMOURREQUESTCOOLDOWN") ~= 0 then -- *(900000ms)*
 			tunables.set_int("BALLISTICARMOURREQUESTCOOLDOWN", 0)
 		end
-		if tunables.get_int("GR_BALLISTIC_EQ_COOLDOWN_TIMER") ~= 0 then -- nill tunable
+		if tunables.get_int("GR_BALLISTIC_EQ_COOLDOWN_TIMER") ~= 0 then -- null tunable
 			tunables.set_int("GR_BALLISTIC_EQ_COOLDOWN_TIMER", 0)
 		end
 		if tunables.get_int("GB_GHOST_ORG_COOLDOWN") ~= 0 then -- *(600000ms)*
@@ -1326,12 +1774,22 @@ script.register_looped("My Cooldown", function (script)
 		if tunables.get_int("GB_BRIBE_AUTHORITIES_COOLDOWN") ~= 0 then -- *(600000ms)*
 			tunables.set_int("GB_BRIBE_AUTHORITIES_COOLDOWN", 0)
 		end
+	else
+		tunables.set_int("GB_DROP_BULLSHARK_COOLDOWN", 30000)
+		tunables.set_int("GB_DROP_AMMO_COOLDOWN", 30000)
+		tunables.set_int("GB_DROP_ARMOR_COOLDOWN", 30000)
+		tunables.set_int("BALLISTICARMOURREQUESTCOOLDOWN", 900000)
+		--tunables.set_int("GR_BALLISTIC_EQ_COOLDOWN_TIMER", 0)
+		tunables.set_int("GB_GHOST_ORG_COOLDOWN", 600000)
+		tunables.set_int("GB_BRIBE_AUTHORITIES_COOLDOWN", 600000)
 	end
 	
 	if CEOVehiclesCooldown then
-		if tunables.get_int("GB_CALL_VEHICLE_COOLDOWN") ~= 0 then
+		if tunables.get_int("GB_CALL_VEHICLE_COOLDOWN") ~= 0 then -- *(120000ms)*
 			tunables.set_int("GB_CALL_VEHICLE_COOLDOWN", 0)
 		end
+	else
+		tunables.set_int("GB_CALL_VEHICLE_COOLDOWN", 120000)
 	end
 	
 	if SpinLuckyWheelCooldown then
@@ -1344,51 +1802,113 @@ script.register_looped("My Cooldown", function (script)
 		if tunables.get_int("VC_LUCKY_WHEEL_ADDITIONAL_SPINS_ENABLE") ~= 1 then
 			tunables.set_int("VC_LUCKY_WHEEL_ADDITIONAL_SPINS_ENABLE", 1)
 		end
+	else
+		--stats.set_int("MPX_LUCKY_WHEEL_NUM_SPIN", 0)
+		--tunables.set_int("VC_LUCKY_WHEEL_NUM_SPINS_PER_DAY", 0)
+		--tunables.set_int("VC_LUCKY_WHEEL_ADDITIONAL_SPINS_ENABLE", 0)
 	end
 	
 	if MCClientVehicleCooldown then
 		if tunables.get_int("BIKER_CLIENT_VEH_SPAWN_COOLDOWN_POSIX_TIME") ~= 0 then -- *(600ms)*
 			tunables.set_int("BIKER_CLIENT_VEH_SPAWN_COOLDOWN_POSIX_TIME", 0)
 		end
+	else
+		tunables.set_int("BIKER_CLIENT_VEH_SPAWN_COOLDOWN_POSIX_TIME", 600)
 	end
 	
 	if BunkerCooldown then
 		if tunables.get_int("BUNKER_VEHICLE_COOLDOWN_TIME") ~= 0 then -- *(120000ms)*
 			tunables.set_int("BUNKER_VEHICLE_COOLDOWN_TIME", 0)
 		end
+	else
+		tunables.set_int("BUNKER_VEHICLE_COOLDOWN_TIME", 120000)
 	end
 	
 	if ArenaWheelCooldown then
 		if tunables.get_int("AW_ARENA_WAR_WHEEL_COOLDOWN") ~= 0 then -- *(10000ms)*
 			tunables.set_int("AW_ARENA_WAR_WHEEL_COOLDOWN", 0)
 		end
+	else
+		tunables.set_int("AW_ARENA_WAR_WHEEL_COOLDOWN", 10000)
 	end
 	
 	if NightclubTroublemakerCooldown then
-		if tunables.get_int("NC_TROUBLEMAKER_CHANCE_IS_VIP_EVENT") ~= 0 then -- *(50)*
+		if tunables.get_int("NC_TROUBLEMAKER_CHANCE_IS_VIP_EVENT") ~= 0 then -- *(50%)*
 			tunables.set_int("NC_TROUBLEMAKER_CHANCE_IS_VIP_EVENT", 0)
 		end
+	else
+		tunables.set_int("NC_TROUBLEMAKER_CHANCE_IS_VIP_EVENT", 50)
 	end
 	
 	if AutoShopClientVehicleCooldown then
 		if tunables.get_int("TUNER_AUTO_SHOP_CLIENT_VEH_SPAWN_COOLDOWN_POSIX_TIME") ~= 0 then -- *(2880ms)*
 			tunables.set_int("TUNER_AUTO_SHOP_CLIENT_VEH_SPAWN_COOLDOWN_POSIX_TIME", 0)
 		end
+	else
+		tunables.set_int("TUNER_AUTO_SHOP_CLIENT_VEH_SPAWN_COOLDOWN_POSIX_TIME", 2880)
 	end
+end)
+
+PhoneAnimations = false
+restore_sp_funcs = false
+ForceUnsupportedVersion = false
+
+script.register_looped("GoldenGets Settings", function (script)
+    if globals.get_int(79389) == 1 then
+        if PhoneAnimations then
+            if PED.GET_PED_CONFIG_FLAG(self.get_ped(), 242, true) then
+                PED.SET_PED_CONFIG_FLAG(self.get_ped(), 242, false)
+            end
+            if PED.GET_PED_CONFIG_FLAG(self.get_ped(), 243, true) then
+                PED.SET_PED_CONFIG_FLAG(self.get_ped(), 243, false)
+            end
+            if PED.GET_PED_CONFIG_FLAG(self.get_ped(), 244, true) then
+                PED.SET_PED_CONFIG_FLAG(self.get_ped(), 244, false)
+            end
+        else
+            PED.SET_PED_CONFIG_FLAG(self.get_ped(), 242, true)
+            PED.SET_PED_CONFIG_FLAG(self.get_ped(), 243, true)
+            PED.SET_PED_CONFIG_FLAG(self.get_ped(), 244, true)
+        end
+		
+        if restore_sp_funcs then
+            if PAD.IS_CONTROL_JUST_PRESSED(2, 172) then
+                MOBILE.CELL_SET_INPUT(1)
+            end
+            if PAD.IS_CONTROL_JUST_PRESSED(2, 173) then
+                MOBILE.CELL_SET_INPUT(2)
+            end
+        end
+		
+		if ForceUnsupportedVersion then
+			BuildStatus = 5
+			VersionStatus = 5
+		else
+			BuildStatus = 0
+			VersionStatus = 0
+		end
+    end
 end)
 
 ------------------------------------
 
 ------------------
-MyBusiness = GoldenGets:add_tab("Business")
+GoldenGetsBusiness = GoldenGetsMenu:add_tab("Business")
 ------------------
 
  -- Resupply
+Warehouse1 = stats.get_int("MPX_CONTOTALFORWHOUSE0")
+Warehouse2 = stats.get_int("MPX_CONTOTALFORWHOUSE1")
+Warehouse3 = stats.get_int("MPX_CONTOTALFORWHOUSE2")
+Warehouse4 = stats.get_int("MPX_CONTOTALFORWHOUSE3")
+Warehouse5 = stats.get_int("MPX_CONTOTALFORWHOUSE4")
+WarehouseCrates = (Warehouse1 + Warehouse2 + Warehouse3 + Warehouse4 + Warehouse5)
 collectcrates = 1
-selected_unique_cargo = globals.get_int(SCVUCl)
+selected_unique_cargo = locals.get_int(SCVUCl)
 unique_cargo_selected = 0
 MCBusinessSupplyCost = tunables.get_int("BIKER_PURCHASE_SUPPLIES_COST_PER_SEGMENT")
 BunkerSupplyCost = tunables.get_int("GR_PURCHASE_SUPPLIES_COST_PER_SEGMENT")
+HangarCrates = stats.get_int("MPX_HANGAR_CONTRABAND_TOTAL")
 CargoandShipmentsCapacity = tunables.get_int("BB_BUSINESS_TOTAL_MAX_UNITS_CARGO")
 SportingGoodsCapacity = tunables.get_int("BB_BUSINESS_TOTAL_MAX_UNITS_WEAPONS")
 SouthAmericaImportsCapacity = tunables.get_int("BB_BUSINESS_TOTAL_MAX_UNITS_COKE")
@@ -1436,9 +1956,19 @@ OrganicProduceValue = tunables.get_int("BB_BUSINESS_VALUE_WEED")
 PrintingandCopyingValue = tunables.get_int("BB_BUSINESS_VALUE_FORGED_DOCUMENTS")
 CashCreationValue = tunables.get_int("BB_BUSINESS_VALUE_COUNTERFEIT_CASH")
 
-script.register_looped("get_My Business", function (script)
+script.register_looped("get_GoldenGets Business", function (script)
+	Warehouse1 = stats.get_int("MPX_CONTOTALFORWHOUSE0")
+	Warehouse2 = stats.get_int("MPX_CONTOTALFORWHOUSE1")
+	Warehouse3 = stats.get_int("MPX_CONTOTALFORWHOUSE2")
+	Warehouse4 = stats.get_int("MPX_CONTOTALFORWHOUSE3")
+	Warehouse5 = stats.get_int("MPX_CONTOTALFORWHOUSE4")
+	WarehouseCrates = (Warehouse1 + Warehouse2 + Warehouse3 + Warehouse4 + Warehouse5)
+	collectcrates = 1
+	selected_unique_cargo = locals.get_int(SCVUCl)
+	unique_cargo_selected = 0
 	MCBusinessSupplyCost = tunables.get_int("BIKER_PURCHASE_SUPPLIES_COST_PER_SEGMENT")
 	BunkerSupplyCost = tunables.get_int("GR_PURCHASE_SUPPLIES_COST_PER_SEGMENT")
+	HangarCrates = stats.get_int("MPX_HANGAR_CONTRABAND_TOTAL")
 	CargoandShipmentsCapacity = tunables.get_int("BB_BUSINESS_TOTAL_MAX_UNITS_CARGO")
 	SportingGoodsCapacity = tunables.get_int("BB_BUSINESS_TOTAL_MAX_UNITS_WEAPONS")
 	SouthAmericaImportsCapacity = tunables.get_int("BB_BUSINESS_TOTAL_MAX_UNITS_COKE")
@@ -1486,47 +2016,60 @@ script.register_looped("get_My Business", function (script)
 	script:yield()
 end)
 
-MyBusiness:add_imgui(function()
+GoldenGetsBusiness:add_imgui(function()
 	if NETWORK.NETWORK_IS_SESSION_STARTED() then
-		if ImGui.BeginTabBar("My Business Tab") then
-			if ImGui.BeginTabItem("Control##Business") then
-				NightclubIncome = ImGui.Checkbox("Max Nightclub Income", NightclubIncome)
-				if ImGui.IsItemHovered() then
-					ImGui.SetTooltip("Income equals nightclub safe capacity")
-				end
-				ImGui.SameLine()
-				NightclubPopularity = ImGui.Checkbox("Full Nightclub Popularity", NightclubPopularity)
-				if ImGui.IsItemHovered() then
-					ImGui.SetTooltip("Your nightclub popularity is always full")
-				end
-				
-				ArcadeIncome = ImGui.Checkbox("Max Arcade Income", ArcadeIncome)
-				if ImGui.IsItemHovered() then
-					ImGui.SetTooltip("Income equals arcade safe capacity")
-				end
-				
-				AgencyIncome = ImGui.Checkbox("Max Agency Income", AgencyIncome)
-				if ImGui.IsItemHovered() then
-					ImGui.SetTooltip("Income equals agency safe capacity")
-				end
-				
-				ImGui.Separator()
-				
+		if ImGui.BeginTabBar("GoldenGets Business Tab") then
+			if ImGui.BeginTabItem("Controls##Business") then
 				BusinessRaids = ImGui.Checkbox("Disable Business Raids", BusinessRaids)
 				if ImGui.IsItemHovered() then
 					ImGui.SetTooltip("Your business will not be attacked by thieves, especially in the mc business which is often attacked")
 				end
-				ImGui.SameLine()
-				WarehouseAuto = ImGui.Checkbox("Enable Warehouse Auto", WarehouseAuto)
+				
+				All_Business_Income = AllBusinessIncome
+				AllBusinessIncome = ImGui.Checkbox("All##AllBusinessIncome", AllBusinessIncome)
 				if ImGui.IsItemHovered() then
-					ImGui.SetTooltip("On the computer screen, select special cargo > source/sell cargo, select your warehouse,\nautomatically fill your warehouse in one second or also sell crates one by one")
+					ImGui.SetTooltip("Enable/Disable all options for 'Business Income'")
 				end
-				if WarehouseAuto then
-					if ImGui.Button("Start Master Control Terminal") then
-						script.run_in_fiber(function (script)
-							start_script('appArcadeBusinessHub', 1424, script)
-						end)
+				if AllBusinessIncome ~= All_Business_Income then
+					NightclubIncome = AllBusinessIncome
+					NightclubPopularity = AllBusinessIncome
+					ArcadeIncome = AllBusinessIncome
+					AgencyIncome = AllBusinessIncome
+					AllBusinessIncome4 = true
+				else
+					AllBusinessIncome4 = false
+				end
+				if not AllBusinessIncome4 then
+					AllBusinessIncome = NightclubIncome
+					and NightclubPopularity
+					and ArcadeIncome
+					and AgencyIncome
+				end
+				ImGui.SameLine()
+				if ImGui.TreeNode("Business Income") then
+					NightclubIncome = ImGui.Checkbox("Max Nightclub Income", NightclubIncome)
+					if ImGui.IsItemHovered() then
+						ImGui.SetTooltip("Income equals nightclub safe capacity")
 					end
+					ImGui.SameLine()
+					NightclubPopularity = ImGui.Checkbox("Full Nightclub Popularity", NightclubPopularity)
+					if ImGui.IsItemHovered() then
+						ImGui.SetTooltip("Your nightclub popularity is always full")
+					end
+					
+					ArcadeIncome = ImGui.Checkbox("Max Arcade Income", ArcadeIncome)
+					if ImGui.IsItemHovered() then
+						ImGui.SetTooltip("Income equals arcade safe capacity")
+					end
+					
+					AgencyIncome = ImGui.Checkbox("Max Agency Income", AgencyIncome)
+					if ImGui.IsItemHovered() then
+						ImGui.SetTooltip("Income equals agency safe capacity")
+					end
+					
+					ImGui.Separator()
+					
+					ImGui.TreePop()
 				end
 				
 				All_Auto_Resupply = AllAutoResupply
@@ -1543,18 +2086,10 @@ MyBusiness:add_imgui(function()
 					AllAutoResupply3 = false
 				end
 				if not AllAutoResupply3 then
-					if not MCBusinessAutoResupply 
-						or not BunkerAutoResupply 
-						or not AcidLabAutoResupply then
-						AllAutoResupply = false
-					end
-					if MCBusinessAutoResupply 
-						and BunkerAutoResupply 
-						and AcidLabAutoResupply then
-						AllAutoResupply = true
-					end
+					AllAutoResupply = MCBusinessAutoResupply 
+					and BunkerAutoResupply 
+					and AcidLabAutoResupply
 				end
-				--ImGui.SameLine() ImGui.Dummy(30, 1)
 				ImGui.SameLine()
 				if ImGui.TreeNode("Auto-Fill Low Supplies") then
 					MCBusinessAutoResupply = ImGui.Checkbox("MC Business Auto-Fill##MCBusinessAutoResupply", MCBusinessAutoResupply)
@@ -1571,7 +2106,9 @@ MyBusiness:add_imgui(function()
 					if ImGui.IsItemHovered() then
 						ImGui.SetTooltip("Auto refilling low acid lab supply. If unlimited resupply bug occurs, turn off and change session")
 					end
+					
 					ImGui.Separator()
+					
 					ImGui.TreePop()
 				end
 				
@@ -1589,18 +2126,10 @@ MyBusiness:add_imgui(function()
 					AllReduceProduction3 = false
 				end
 				if not AllReduceProduction3 then
-					if not MCBusinessReduceProduction 
-						or not BunkerReduceProduction 
-						or not AcidLabReduceProduction then
-						AllReduceProduction = false
-					end
-					if MCBusinessReduceProduction 
-						and BunkerReduceProduction 
-						and AcidLabReduceProduction then
-						AllReduceProduction = true
-					end
+					AllReduceProduction = MCBusinessReduceProduction 
+					and BunkerReduceProduction 
+					and AcidLabReduceProduction
 				end
-				
 				ImGui.SameLine()
 				if ImGui.TreeNode("Reduce Production of Supply") then
 					MCBusinessReduceProduction = ImGui.Checkbox("MC Business Reduce##MCBusinessReduceProduction", MCBusinessReduceProduction)
@@ -1617,7 +2146,9 @@ MyBusiness:add_imgui(function()
 					if ImGui.IsItemHovered() then
 						ImGui.SetTooltip("Reducing multiple units of acid lab supply produced to just single unit")
 					end
+					
 					ImGui.Separator()
+					
 					ImGui.TreePop()
 				end
 				
@@ -1644,34 +2175,18 @@ MyBusiness:add_imgui(function()
 					AllProductionCooldown12 = false
 				end
 				if not AllProductionCooldown12 then
-					--if not MCBusinessProductionCooldown60s 
-					if not MCBusinessProductionCooldown5s 
-						--or not BunkerProductionCooldown60s 
-						or not BunkerProductionCooldown5s 
-						--or not BunkerResearchCooldown60s 
-						or not BunkerResearchCooldown5s 
-						--or not NightclubProductionCooldownx4 
-						--or not NightclubProductionCooldownx10 
-						--or not NightclubProductionCooldownx20 
-						or not NightclubProductionCooldown5s 
-						--or not AcidLabProductionCooldown60s 
-						or not AcidLabProductionCooldown5s then
-						AllProductionCooldown = false
-					end
-					--if MCBusinessProductionCooldown60s 
-					if MCBusinessProductionCooldown5s 
-						--and BunkerProductionCooldown60s 
-						and BunkerProductionCooldown5s 
-						--and BunkerResearchCooldown60s 
-						and BunkerResearchCooldown5s 
-						--and NightclubProductionCooldownx4 
-						--and NightclubProductionCooldownx10 
-						--and NightclubProductionCooldownx20 
-						and NightclubProductionCooldown5s 
-						--and AcidLabProductionCooldown60s 
-						and AcidLabProductionCooldown5s then
-						AllProductionCooldown = true
-					end
+					--AllProductionCooldown = MCBusinessProductionCooldown60s 
+					AllProductionCooldown = MCBusinessProductionCooldown5s 
+					--and BunkerProductionCooldown60s 
+					and BunkerProductionCooldown5s 
+					--and BunkerResearchCooldown60s 
+					and BunkerResearchCooldown5s 
+					--and NightclubProductionCooldownx4 
+					--and NightclubProductionCooldownx10 
+					--and NightclubProductionCooldownx20 
+					and NightclubProductionCooldown5s 
+					--and AcidLabProductionCooldown60s 
+					and AcidLabProductionCooldown5s
 				end
 				ImGui.SameLine()
 				if ImGui.TreeNode("Production Speed") then
@@ -1757,28 +2272,76 @@ MyBusiness:add_imgui(function()
 					--if AcidLabProductionCooldown5s then
 					--	AcidLabProductionCooldown60s = false
 					--end
+					
 					ImGui.Separator()
+					
 					ImGui.TreePop()
 				end
 				
-				ImGui.Dummy(45, 1) ImGui.SameLine() if ImGui.TreeNode("Easy Business Mission") then
+				All_Easy_Business_Mission = AllEasyBusinessMission
+				AllEasyBusinessMission = ImGui.Checkbox("All##AllEasyBusinessMission", AllEasyBusinessMission)
+				if ImGui.IsItemHovered() then
+					ImGui.SetTooltip("Enable/Disable all options for 'Business Income'")
+				end
+				if AllEasyBusinessMission ~= All_Easy_Business_Mission then
+					VehicleCargoSourceMission = AllEasyBusinessMission
+					SpecialCargoBuyMission = AllEasyBusinessMission
+					SpecialCargoSellMission = AllEasyBusinessMission
+					MCBusinessStealMission = AllEasyBusinessMission
+					MCBusinessSellMission = AllEasyBusinessMission
+					HangarAirStealMission = AllEasyBusinessMission
+					HangarAirSellMission = AllEasyBusinessMission
+					NightclubSellMission = AllEasyBusinessMission
+					AllEasyBusinessMission4 = true
+				else
+					AllEasyBusinessMission4 = false
+				end
+				if not AllEasyBusinessMission4 then
+					AllEasyBusinessMission = VehicleCargoSourceMission
+					and SpecialCargoBuyMission
+					and SpecialCargoSellMission
+					and MCBusinessStealMission
+					and MCBusinessSellMission
+					and HangarAirStealMission
+					and HangarAirSellMission
+					and NightclubSellMission
+				end
+				ImGui.SameLine()
+				if ImGui.TreeNode("Easy Business Mission") then
 					if ImGui.IsItemHovered() then
 						ImGui.SetTooltip("Possibility the second business mission failed to start. If mission not start, change sessions")
 					end
-					
 					VehicleCargoSourceMission = ImGui.Checkbox("Vehicle Cargo Source##VehicleCargoSourceMission", VehicleCargoSourceMission)
 					
+					SpecialCargoBuyMission = ImGui.Checkbox("Special Cargo Buy##SpecialCargoBuyMission", SpecialCargoBuyMission)
+					ImGui.SameLine()
 					SpecialCargoSellMission = ImGui.Checkbox("Special Cargo Sell##SpecialCargoSellMission", SpecialCargoSellMission)
 					
+					MCBusinessStealMission = ImGui.Checkbox("MC Business Steal##MCBusinessStealMission", MCBusinessStealMission)
+					ImGui.SameLine()
 					MCBusinessSellMission = ImGui.Checkbox("MC Business Sell##MCBusinessSellMission", MCBusinessSellMission)
 					
-					HangarAirStealMission = ImGui.Checkbox("Hangar Air Source##HangarAirStealMission", HangarAirStealMission)
+					HangarAirStealMission = ImGui.Checkbox("Hangar Air Steal##HangarAirStealMission", HangarAirStealMission)
 					ImGui.SameLine()
 					HangarAirSellMission = ImGui.Checkbox("Hangar Air Sell##HangarAirSellMission", HangarAirSellMission)
 					
 					NightclubSellMission = ImGui.Checkbox("Nightclub Sell##NightclubSellMission", NightclubSellMission)
+					
 					ImGui.Separator()
+					
 					ImGui.TreePop()
+				end
+				
+				WarehouseAuto = ImGui.Checkbox("Enable Warehouse Auto", WarehouseAuto)
+				if ImGui.IsItemHovered() then
+					ImGui.SetTooltip("Automatically fill your warehouse in one second or also sell crates one by one. On the\ncomputer screen, select special cargo > source/sell cargo, select your warehouse")
+				end
+				if WarehouseAuto then
+					if ImGui.Button("Start Master Control Terminal") then
+						script.run_in_fiber(function (script)
+							start_script('appArcadeBusinessHub', 1424, script)
+						end)
+					end
 				end
 				ImGui.EndTabItem()
 			end
@@ -1787,35 +2350,51 @@ MyBusiness:add_imgui(function()
 				ImGui.SeparatorText("Special Cargo")
 				
 				if ImGui.Button("Instant Collect Crates##SpecialCargo") then
-					locals.set_int(3337, GCB, SCVIBl1, 1)
-					locals.set_int(3337, GCB, SCVIBl3, 6)
-					locals.set_int(3337, GCB, SCVIBl4, 4)
+					locals_v_set_int(SupportVersion, GCB, SCVIBl1, 1)
+					locals_v_set_int(SupportVersion, GCB, SCVIBl3, 6)
+					locals_v_set_int(SupportVersion, GCB, SCVIBl4, 4)
 				end
 				if ImGui.IsItemHovered() then
-					ImGui.SetTooltip("Completing the current crate orders as needed. Not working on Lupe's mission source special cargo.")
+					ImGui.SetTooltip("Completing the current crate orders as needed. Not working\non Lupe's mission source special cargo")
 				end
 				
 				collectcrates, drag = ImGui.DragInt("Crates Source", collectcrates, 1, 0, 111)
 				if ImGui.Button("Collect Crates Amount##SpecialCargo") then
-					locals.set_int(3337, GCB, SCVIBl1, 1)
-					locals.set_int(3337, GCB, SCVIBl2, collectcrates)
-					locals.set_int(3337, GCB, SCVIBl3, 6)
-					locals.set_int(3337, GCB, SCVIBl4, 4)
+					locals_v_set_int(SupportVersion, GCB, SCVIBl1, 1)
+					locals_v_set_int(SupportVersion, GCB, SCVIBl2, collectcrates)
+					locals_v_set_int(SupportVersion, GCB, SCVIBl3, 6)
+					locals_v_set_int(SupportVersion, GCB, SCVIBl4, 4)
 				end
 				if ImGui.IsItemHovered() then
-					ImGui.SetTooltip("Completing the current crate orders with customizations. Not working on Lupe's mission source special cargo.")
+					ImGui.SetTooltip("Completing the current crate orders with customizations.\nNot working on Lupe's mission source special cargo")
 				end
 				
-				if ImGui.Button("Warehouse Staff Sourced##SpecialCargo") then
-					--freemode.c void func_17501(int iParam0, BOOL bParam1) // Position - 0x56C7B6
-					stats.set_packed_stat_bool(3337, 32359, true)
-					stats.set_packed_stat_bool(3337, 32360, true)
-					stats.set_packed_stat_bool(3337, 32361, true)
-					stats.set_packed_stat_bool(3337, 32362, true)
-					stats.set_packed_stat_bool(3337, 32363, true)
+				if WarehouseCrates < 555 then
+					if ImGui.Button("Staff Source Crates##WarehouseStaffSourced") then
+						script.run_in_fiber(function(fillceo)
+							for i = 12, 16 do
+								stats.set_bool_masked("MPX_FIXERPSTAT_BOOL1", true, i)
+								fillceo:sleep(500) -- half second delay between each warehouse
+							end
+						end)
+					end
+					if ImGui.IsItemHovered() then
+						ImGui.SetTooltip("Send your staff member to source crates\nof special cargo for the warehouse")
+					end
+					ImGui.SameLine()
+					WarehouseStaffSourced = ImGui.Checkbox("Fill Up##WarehouseStaffSourced", WarehouseStaffSourced, true)
+					if ImGui.IsItemHovered() then
+						ImGui.SetTooltip("Continuously send your staff member to source\ncrates of special cargo for the warehouse")
+					end
+				else
+					if WarehouseStaffSourced then
+						WarehouseStaffSourced = false
+					end
+					ImGui.Text("[ All your Warehouses are full ]")
+					if ImGui.IsItemHovered() then
+						ImGui.SetTooltip("Unavailable. All your warehouses are already\nfull")
+					end
 				end
-				ImGui.SameLine()
-				WarehouseStaffSourced = ImGui.Checkbox("Fill Warehouse Staff Sourced##WarehouseStaffSourced", WarehouseStaffSourced)
 				
 				--CEOSpecialItem = ImGui.Checkbox("Enable Special Item Unique Cargo", CEOSpecialItem)
 				
@@ -1874,11 +2453,27 @@ MyBusiness:add_imgui(function()
 				
 				ImGui.SeparatorText("Hangar Cargo")
 				
-				if ImGui.Button("Hangar Staff Sourced##HangarCargo") then
-					stats.set_packed_stat_bool(3337, 36828, true)
+				if HangarCrates < 50 then
+					if ImGui.Button("Staff Source Crates##HangarStaffSourced") then
+						stats.set_bool_masked("MPX_DLC22022PSTAT_BOOL3", true, 9)
+					end
+					if ImGui.IsItemHovered() then
+						ImGui.SetTooltip("Send rooster to source crates of\nair-freight cargo for the hangar")
+					end
+					ImGui.SameLine()
+					HangarStaffSourced = ImGui.Checkbox("Fill Up##HangarStaffSourced", HangarStaffSourced, true)
+					if ImGui.IsItemHovered() then
+						ImGui.SetTooltip("Continuously send rooster to source crates of\nair-freight cargo for the hangar")
+					end
+				else
+					if HangarStaffSourced then
+						HangarStaffSourced = false
+					end
+					ImGui.Text("[ Your Hangar is full ]")
+					if ImGui.IsItemHovered() then
+						ImGui.SetTooltip("Unavailable. Not enough storage space\nfor more air-freight cargo")
+					end
 				end
-				ImGui.SameLine()
-				HangarStaffSourced = ImGui.Checkbox("Fill Hangar Staff Sourced##HangarStaffSourced", HangarStaffSourced)
 				
 				HangarCargoSourceCooldown = ImGui.Checkbox("Remove Hangar Cargo Source Cooldown##HangarCargoSourceCooldown", HangarCargoSourceCooldown)
 				
@@ -2031,7 +2626,7 @@ MyBusiness:add_imgui(function()
 				end
 				
 				if ImGui.Button("Instant Sell##SpecialCargo") then
-					locals.set_int(3337, GCS, SCVISl, 99999)
+					locals_v_set_int(SupportVersion, GCS, SCVISl, 99999)
 				end
 				
 				SpecialCargoSellCooldown = ImGui.Checkbox("Remove Special Cargo Sell Cooldown", SpecialCargoSellCooldown)
@@ -2094,10 +2689,10 @@ MyBusiness:add_imgui(function()
 				
 				MCBusinessSell, drag = ImGui.DragInt("Supply Sell", MCBusinessSell, 1, 0, 15)
 				if ImGui.Button("Sell Supply Amount") then
-					if locals.get_int(GBCS, MCBSTl) >= 1 then
-						locals.set_int(GBCS, 704 + 122, MCBusinessSell) --704 + 122 = 826
+					if locals_v_get_int(SupportVersion, GBCS, MCBSTl) >= 1 then
+						locals_v_set_int(SupportVersion, GBCS, 704 + 122, MCBusinessSell) --704 + 122 = 826
 					else
-						gui.show_error("MC Business Sell", "Not work with single Shipment, there will be no payment.")
+						gui.show_error("GoldenGets Selling - Error", "Not work with single Shipment, there will be no payment.")
 					end
 				end
 				if ImGui.IsItemHovered() then
@@ -2127,7 +2722,7 @@ MyBusiness:add_imgui(function()
 				
 				if ImGui.Button("Instant Sell (Beta)##Bunker") then
 					gui.show_message("Autoshipment","may show that the task failed, but you should get the money!")
-					locals.set_int(3337, GB, BCISl, 0) 
+					locals_v_set_int(SupportVersion, GB, BCISl, 0) 
 					--  gb_gunrunning.c Local_1211.f_774
 					--	while (iVar0 < func_837(func_3839(), func_60(), Local_1211.f_774, Local_1211.f_809))
 					--  REMOVE_PARTICLE_FX_FROM_ENTITY
@@ -2143,12 +2738,12 @@ MyBusiness:add_imgui(function()
 				
 				if ImGui.Button("Instant Sell - Air##HangarCargo") then
 				gui.show_message("Autoshipment","may show that the task failed, but you should get the money!")
-					local integer = locals.get_int(3337, GS, HCVISl1)  --Local_1934.f_1078 SMOT_HLPDROP2
-					locals.set_int(3337, GS, 1934 + 1035, integer) --1934 + 1035 = 2969
+					local integer = locals_v_get_int(SupportVersion, GS, HCVISl1)  --Local_1934.f_1078 SMOT_HLPDROP2
+					locals_v_set_int(SupportVersion, GS, 1934 + 1035, integer) --1934 + 1035 = 2969
 					gui.show_message("Autoshipment","may show that the task failed, but you should get the money!")
 				end
 				if ImGui.IsItemHovered() then
-					ImGui.SetTooltip("Only work for Air Cargo")
+					ImGui.SetTooltip("Only work for Air-Freight Cargo")
 				end
 				
 				HangarCargoSellCooldown = ImGui.Checkbox("Remove Hangar Cargo Sell Cooldown", HangarCargoSellCooldown)
@@ -2198,24 +2793,24 @@ MyBusiness:add_imgui(function()
 				ImGui.SeparatorText("Acid Lab")
 				
 				if ImGui.Button("Instant Sell##AcidLab") then
-					if locals.get_int(3337, FCALS) == true then -- https://www.unknowncheats.me/forum/3641612-post76.html
-						if locals.get_int(3337, FCALS, ALISCl1) >= 1 then
-							locals.set_int(3337, FCALS, ALISDl1 + 2, 10) -- Progress Delivery Mission
-							locals.set_int(3337, FCALS, ALISDl1 + 3, 10) -- Must Delivery Mission
+					if locals_v_get_int(SupportVersion, FCALS) == true then -- https://www.unknowncheats.me/forum/3641612-post76.html
+						if locals_v_get_int(SupportVersion, FCALS, ALISCl1) >= 1 then
+							locals_v_set_int(SupportVersion, FCALS, ALISDl1 + 2, 10) -- Progress Delivery Mission
+							locals_v_set_int(SupportVersion, FCALS, ALISDl1 + 3, 10) -- Must Delivery Mission
 							script:sleep(1000)
-							locals.set_int(3337, FCALS, ALISCl1, 2) -- Delivery Mission Passed
+							locals_v_set_int(SupportVersion, FCALS, ALISCl1, 2) -- Delivery Mission Passed
 					--	else
-					--		locals.set_int(FCALS, ALISDl2, 3) -- Skip Fake Delivery Mission
+					--		locals_v_set_int(SupportVersion, FCALS, ALISDl2, 3) -- Skip Fake Delivery Mission
 					--		script:sleep(1000)
-					--		if locals.get_int(FCALS, ALISDl2) == 3 then
-					--			locals.set_int(FCALS, ALISDl2, 5)
-					--			locals.set_int(FCALS, ALISCl2, 5) -- Delivery Mission Passed
+					--		if locals_v_get_int(SupportVersion, FCALS, ALISDl2) == 3 then
+					--			locals_v_set_int(SupportVersion, FCALS, ALISDl2, 5)
+					--			locals_v_set_int(SupportVersion, FCALS, ALISCl2, 5) -- Delivery Mission Passed
 					--		end
 						end
 					--else
-					--	locals.set_int(FCALS, ALISDl3, 2)
+					--	locals_v_set_int(SupportVersion, FCALS, ALISDl3, 2)
 					--	script:sleep(1000)
-					--	locals.set_int(FCALS, ALISCl3, 2) -- Delivery Mission Passed
+					--	locals_v_set_int(SupportVersion, FCALS, ALISCl3, 2) -- Delivery Mission Passed
 					end
 				end
 				ImGui.EndTabItem()
@@ -2229,11 +2824,12 @@ end)
 
 ------------------------------------
 
+BusinessRaids = false
+AllBusinessIncome = false
 NightclubIncome = false
 NightclubPopularity = false
 ArcadeIncome = false
 AgencyIncome = false
-BusinessRaids = false
 AllAutoResupply = false
 AllAutoResupply3 = false
 MCBusinessAutoResupply = false
@@ -2270,14 +2866,106 @@ AcidLabProductionCooldown60s = false
 AcidLabProductionControl60s = 0
 AcidLabProductionCooldown5s = false
 AcidLabProductionControl5s = 0
+AllEasyBusinessMission = false
 VehicleCargoSourceMission = false
+SpecialCargoBuyMission = false
 SpecialCargoSellMission = false
+MCBusinessStealMission = false
 MCBusinessSellMission = false
 HangarAirStealMission = false
 HangarAirSellMission = false
 NightclubSellMission = false
+WarehouseAuto = false
 
-script.register_looped("My Control", function (script)
+script.register_looped("GoldenGets Controls", function (script)
+	if BusinessRaids then
+		if tunables.get_bool("EXEC_DISABLE_DEFEND_MISSIONS") ~= true then -- CEO Warehouse
+			tunables.set_bool("EXEC_DISABLE_DEFEND_MISSIONS", true)
+		end
+		if tunables.get_bool("EXEC_DISABLE_DEFEND_FLEEING") ~= true then
+			tunables.set_bool("EXEC_DISABLE_DEFEND_FLEEING", true)
+		end
+		if tunables.get_bool("EXEC_DISABLE_DEFEND_UNDER_ATTACK") ~= true then
+			tunables.set_bool("EXEC_DISABLE_DEFEND_UNDER_ATTACK", true)
+		end
+		--if tunables.get_float("EXEC_WAREHOUSE_STOCK_DEFEND_THRESHOLD") ~= 9999 then
+		--	tunables.set_float("EXEC_WAREHOUSE_STOCK_DEFEND_THRESHOLD", 9999)
+		--end
+		if tunables.get_bool("BIKER_DISABLE_DEFEND_GETAWAY") ~= true then -- MC Business
+			tunables.set_bool("BIKER_DISABLE_DEFEND_GETAWAY", true)
+		end
+		if tunables.get_bool("BIKER_DISABLE_DEFEND_SHOOTOUT") ~= true then
+			tunables.set_bool("BIKER_DISABLE_DEFEND_SHOOTOUT", true)
+		end
+		if tunables.get_bool("BIKER_DISABLE_DEFEND_CRASH_DEAL") ~= true then
+			tunables.set_bool("BIKER_DISABLE_DEFEND_CRASH_DEAL", true)
+		end
+		if tunables.get_bool("BIKER_DISABLE_DEFEND_SNITCH") ~= true then
+			tunables.set_bool("BIKER_DISABLE_DEFEND_SNITCH", true)
+		end
+		if tunables.get_bool("BIKER_DISABLE_DEFEND_RETRIEVAL") ~= true then
+			tunables.set_bool("BIKER_DISABLE_DEFEND_RETRIEVAL", true)
+		end
+		--if tunables.get_int("BIKER_DEFEND_SHOOTOUT_PRODUCT_THRESHOLD") ~= 9999 then
+		--	tunables.set_int("BIKER_DEFEND_SHOOTOUT_PRODUCT_THRESHOLD", 9999)
+		--end
+		--if tunables.get_int("BIKER_DEFEND_GETAWAY_PRODUCT_THRESHOLD") ~= 9999 then
+		--	tunables.set_int("BIKER_DEFEND_GETAWAY_PRODUCT_THRESHOLD", 9999)
+		--end
+		--if tunables.get_int("BIKER_DEFEND_CRASH_DEAL_PRODUCT_THRESHOLD") ~= 9999 then
+		--	tunables.set_int("BIKER_DEFEND_CRASH_DEAL_PRODUCT_THRESHOLD", 9999)
+		--end
+		--if tunables.get_int("BIKER_DEFEND_RETRIEVAL_PRODUCT_THRESHOLD") ~= 9999 then
+		--	tunables.set_int("BIKER_DEFEND_RETRIEVAL_PRODUCT_THRESHOLD", 9999)
+		--end
+		--if tunables.get_int("BIKER_DEFEND_SNITCH_PRODUCT_THRESHOLD") ~= 9999 then
+		--	tunables.set_int("BIKER_DEFEND_SNITCH_PRODUCT_THRESHOLD", 9999)
+		--end
+		if tunables.get_bool("GR_DEFEND_VALKYRIE_DISABLE_VALKYRIE") ~= true then -- Bunker
+			tunables.set_bool("GR_DEFEND_VALKYRIE_DISABLE_VALKYRIE", true)
+		end
+		if tunables.get_bool("GR_DEFEND_DISARM_BOMBS_DISABLE_DISARM_BOMBS") ~= true then
+			tunables.set_bool("GR_DEFEND_DISARM_BOMBS_DISABLE_DISARM_BOMBS", true)
+		end
+		--if tunables.get_int("GR_GENERAL_STOCK_LEVEL_LAUNCH_THRESHOLD") ~= 9999 then
+		--	tunables.set_int("GR_GENERAL_STOCK_LEVEL_LAUNCH_THRESHOLD", 9999)
+		--end
+		if tunables.get_float("BB_DEFEND_MISSIONS_WEIGHTING_POLICE_RAID") ~= 0.000 then -- Nightclub
+			tunables.set_float("BB_DEFEND_MISSIONS_WEIGHTING_POLICE_RAID", 0.000)
+		end
+		if tunables.get_float("BB_DEFEND_MISSIONS_WEIGHTING_RECOVER_PROPERTY") ~= 0.000 then
+			tunables.set_float("BB_DEFEND_MISSIONS_WEIGHTING_RECOVER_PROPERTY", 0.000)
+		end
+		--if tunables.get_float("BB_DEFEND_MISSIONS_STOCK_THRESHOLD_FOR_MISSION_LAUNCH_DEFAULT") ~= 9999 then
+		--	tunables.set_float("BB_DEFEND_MISSIONS_STOCK_THRESHOLD_FOR_MISSION_LAUNCH_DEFAULT", 9999)
+		--end
+		--if tunables.get_float("BB_DEFEND_MISSIONS_STOCK_THRESHOLD_FOR_MISSION_LAUNCH_UPGRADED") ~= 9999 then
+		--	tunables.set_float("BB_DEFEND_MISSIONS_STOCK_THRESHOLD_FOR_MISSION_LAUNCH_UPGRADED", 9999)
+		--end
+	else
+		tunables.set_bool("EXEC_DISABLE_DEFEND_MISSIONS", false) -- CEO Warehouse
+		tunables.set_bool("EXEC_DISABLE_DEFEND_FLEEING", false)
+		tunables.set_bool("EXEC_DISABLE_DEFEND_UNDER_ATTACK", false)
+		--tunables.set_float("EXEC_WAREHOUSE_STOCK_DEFEND_THRESHOLD", 0.700)
+		tunables.set_bool("BIKER_DISABLE_DEFEND_GETAWAY", false) -- MC Business
+		tunables.set_bool("BIKER_DISABLE_DEFEND_SHOOTOUT", false)
+		tunables.set_bool("BIKER_DISABLE_DEFEND_CRASH_DEAL", false)
+		tunables.set_bool("BIKER_DISABLE_DEFEND_SNITCH", false)
+		tunables.set_bool("BIKER_DISABLE_DEFEND_RETRIEVAL", false)
+		--tunables.set_int("BIKER_DEFEND_SHOOTOUT_PRODUCT_THRESHOLD", 20)
+		--tunables.set_int("BIKER_DEFEND_GETAWAY_PRODUCT_THRESHOLD", 20)
+		--tunables.set_int("BIKER_DEFEND_CRASH_DEAL_PRODUCT_THRESHOLD", 20)
+		--tunables.set_int("BIKER_DEFEND_RETRIEVAL_PRODUCT_THRESHOLD", 20)
+		--tunables.set_int("BIKER_DEFEND_SNITCH_PRODUCT_THRESHOLD", 20)
+		tunables.set_bool("GR_DEFEND_VALKYRIE_DISABLE_VALKYRIE", false) -- Bunker
+		tunables.set_bool("GR_DEFEND_DISARM_BOMBS_DISABLE_DISARM_BOMBS", false)
+		--tunables.set_int("GR_GENERAL_STOCK_LEVEL_LAUNCH_THRESHOLD", 50)
+		tunables.set_float("BB_DEFEND_MISSIONS_WEIGHTING_POLICE_RAID", 1.000) -- Nightclub
+		tunables.set_float("BB_DEFEND_MISSIONS_WEIGHTING_RECOVER_PROPERTY", 1.000)
+		--tunables.set_float("BB_DEFEND_MISSIONS_STOCK_THRESHOLD_FOR_MISSION_LAUNCH_DEFAULT", 0.200)
+		--tunables.set_float("BB_DEFEND_MISSIONS_STOCK_THRESHOLD_FOR_MISSION_LAUNCH_UPGRADED", 0.400)
+	end
+	
 	if NightclubIncome then
 		--if tunables.get_int("NIGHTCLUBMAXSAFEVALUE") ~= 250000 then
 		--	tunables.set_int("NIGHTCLUBMAXSAFEVALUE", 250000)
@@ -2422,127 +3110,39 @@ script.register_looped("My Control", function (script)
 		tunables.set_int("MAXFIXERHQPAYOUTPERDAY", 5000)
 	end
 	
-	if BusinessRaids then
-		if tunables.get_bool("EXEC_DISABLE_DEFEND_MISSIONS") ~= true then -- CEO Warehouse
-			tunables.set_bool("EXEC_DISABLE_DEFEND_MISSIONS", true)
-		end
-		if tunables.get_bool("EXEC_DISABLE_DEFEND_FLEEING") ~= true then
-			tunables.set_bool("EXEC_DISABLE_DEFEND_FLEEING", true)
-		end
-		if tunables.get_bool("EXEC_DISABLE_DEFEND_UNDER_ATTACK") ~= true then
-			tunables.set_bool("EXEC_DISABLE_DEFEND_UNDER_ATTACK", true)
-		end
-		--if tunables.get_float("EXEC_WAREHOUSE_STOCK_DEFEND_THRESHOLD") ~= 9999 then
-		--	tunables.set_float("EXEC_WAREHOUSE_STOCK_DEFEND_THRESHOLD", 9999)
-		--end
-		if tunables.get_bool("BIKER_DISABLE_DEFEND_GETAWAY") ~= true then -- MC Business
-			tunables.set_bool("BIKER_DISABLE_DEFEND_GETAWAY", true)
-		end
-		if tunables.get_bool("BIKER_DISABLE_DEFEND_SHOOTOUT") ~= true then
-			tunables.set_bool("BIKER_DISABLE_DEFEND_SHOOTOUT", true)
-		end
-		if tunables.get_bool("BIKER_DISABLE_DEFEND_CRASH_DEAL") ~= true then
-			tunables.set_bool("BIKER_DISABLE_DEFEND_CRASH_DEAL", true)
-		end
-		if tunables.get_bool("BIKER_DISABLE_DEFEND_SNITCH") ~= true then
-			tunables.set_bool("BIKER_DISABLE_DEFEND_SNITCH", true)
-		end
-		if tunables.get_bool("BIKER_DISABLE_DEFEND_RETRIEVAL") ~= true then
-			tunables.set_bool("BIKER_DISABLE_DEFEND_RETRIEVAL", true)
-		end
-		--if tunables.get_int("BIKER_DEFEND_SHOOTOUT_PRODUCT_THRESHOLD") ~= 9999 then
-		--	tunables.set_int("BIKER_DEFEND_SHOOTOUT_PRODUCT_THRESHOLD", 9999)
-		--end
-		--if tunables.get_int("BIKER_DEFEND_GETAWAY_PRODUCT_THRESHOLD") ~= 9999 then
-		--	tunables.set_int("BIKER_DEFEND_GETAWAY_PRODUCT_THRESHOLD", 9999)
-		--end
-		--if tunables.get_int("BIKER_DEFEND_CRASH_DEAL_PRODUCT_THRESHOLD") ~= 9999 then
-		--	tunables.set_int("BIKER_DEFEND_CRASH_DEAL_PRODUCT_THRESHOLD", 9999)
-		--end
-		--if tunables.get_int("BIKER_DEFEND_RETRIEVAL_PRODUCT_THRESHOLD") ~= 9999 then
-		--	tunables.set_int("BIKER_DEFEND_RETRIEVAL_PRODUCT_THRESHOLD", 9999)
-		--end
-		--if tunables.get_int("BIKER_DEFEND_SNITCH_PRODUCT_THRESHOLD") ~= 9999 then
-		--	tunables.set_int("BIKER_DEFEND_SNITCH_PRODUCT_THRESHOLD", 9999)
-		--end
-		if tunables.get_bool("GR_DEFEND_VALKYRIE_DISABLE_VALKYRIE") ~= true then -- Bunker
-			tunables.set_bool("GR_DEFEND_VALKYRIE_DISABLE_VALKYRIE", true)
-		end
-		if tunables.get_bool("GR_DEFEND_DISARM_BOMBS_DISABLE_DISARM_BOMBS") ~= true then
-			tunables.set_bool("GR_DEFEND_DISARM_BOMBS_DISABLE_DISARM_BOMBS", true)
-		end
-		--if tunables.get_int("GR_GENERAL_STOCK_LEVEL_LAUNCH_THRESHOLD") ~= 9999 then
-		--	tunables.set_int("GR_GENERAL_STOCK_LEVEL_LAUNCH_THRESHOLD", 9999)
-		--end
-		if tunables.get_float("BB_DEFEND_MISSIONS_WEIGHTING_POLICE_RAID") ~= 0.000 then -- Nightclub
-			tunables.set_float("BB_DEFEND_MISSIONS_WEIGHTING_POLICE_RAID", 0.000)
-		end
-		if tunables.get_float("BB_DEFEND_MISSIONS_WEIGHTING_RECOVER_PROPERTY") ~= 0.000 then
-			tunables.set_float("BB_DEFEND_MISSIONS_WEIGHTING_RECOVER_PROPERTY", 0.000)
-		end
-		--if tunables.get_float("BB_DEFEND_MISSIONS_STOCK_THRESHOLD_FOR_MISSION_LAUNCH_DEFAULT") ~= 9999 then
-		--	tunables.set_float("BB_DEFEND_MISSIONS_STOCK_THRESHOLD_FOR_MISSION_LAUNCH_DEFAULT", 9999)
-		--end
-		--if tunables.get_float("BB_DEFEND_MISSIONS_STOCK_THRESHOLD_FOR_MISSION_LAUNCH_UPGRADED") ~= 9999 then
-		--	tunables.set_float("BB_DEFEND_MISSIONS_STOCK_THRESHOLD_FOR_MISSION_LAUNCH_UPGRADED", 9999)
-		--end
-	else
-		tunables.set_bool("EXEC_DISABLE_DEFEND_MISSIONS", false) -- CEO Warehouse
-		tunables.set_bool("EXEC_DISABLE_DEFEND_FLEEING", false)
-		tunables.set_bool("EXEC_DISABLE_DEFEND_UNDER_ATTACK", false)
-		--tunables.set_float("EXEC_WAREHOUSE_STOCK_DEFEND_THRESHOLD", 0.700)
-		tunables.set_bool("BIKER_DISABLE_DEFEND_GETAWAY", false) -- MC Business
-		tunables.set_bool("BIKER_DISABLE_DEFEND_SHOOTOUT", false)
-		tunables.set_bool("BIKER_DISABLE_DEFEND_CRASH_DEAL", false)
-		tunables.set_bool("BIKER_DISABLE_DEFEND_SNITCH", false)
-		tunables.set_bool("BIKER_DISABLE_DEFEND_RETRIEVAL", false)
-		--tunables.set_int("BIKER_DEFEND_SHOOTOUT_PRODUCT_THRESHOLD", 20)
-		--tunables.set_int("BIKER_DEFEND_GETAWAY_PRODUCT_THRESHOLD", 20)
-		--tunables.set_int("BIKER_DEFEND_CRASH_DEAL_PRODUCT_THRESHOLD", 20)
-		--tunables.set_int("BIKER_DEFEND_RETRIEVAL_PRODUCT_THRESHOLD", 20)
-		--tunables.set_int("BIKER_DEFEND_SNITCH_PRODUCT_THRESHOLD", 20)
-		tunables.set_bool("GR_DEFEND_VALKYRIE_DISABLE_VALKYRIE", false) -- Bunker
-		tunables.set_bool("GR_DEFEND_DISARM_BOMBS_DISABLE_DISARM_BOMBS", false)
-		--tunables.set_int("GR_GENERAL_STOCK_LEVEL_LAUNCH_THRESHOLD", 50)
-		tunables.set_float("BB_DEFEND_MISSIONS_WEIGHTING_POLICE_RAID", 1.000) -- Nightclub
-		tunables.set_float("BB_DEFEND_MISSIONS_WEIGHTING_RECOVER_PROPERTY", 1.000)
-		--tunables.set_float("BB_DEFEND_MISSIONS_STOCK_THRESHOLD_FOR_MISSION_LAUNCH_DEFAULT", 0.200)
-		--tunables.set_float("BB_DEFEND_MISSIONS_STOCK_THRESHOLD_FOR_MISSION_LAUNCH_UPGRADED", 0.400)
-	end
-	
 	if MCBusinessAutoResupply then
 		if stats.get_int("MPX_PROP_FAC_SLOT0") ~= 0 then
-			if stats.get_int ("MPX_MATTOTALFORFACTORY0") < 18 then -- Cocaine Lockup
+			if stats.get_int ("MPX_MATTOTALFORFACTORY0") <= 18 then -- Cocaine Lockup
 			script:sleep(5000)
-				globals.set_int(3337, GSIg + 0 + 1, 1)
+				locals_v_set_int(SupportVersion, GSIg + 0 + 1, 1)
 				script:sleep(10000)
 			end
 		end
 		if stats.get_int("MPX_PROP_FAC_SLOT1") ~= 0 then
-			if stats.get_int ("MPX_MATTOTALFORFACTORY1") < 11 then -- Methamphetamine Lab
+			if stats.get_int ("MPX_MATTOTALFORFACTORY1") <= 11 then -- Methamphetamine Lab
 			script:sleep(5000)
-				globals.set_int(3337, GSIg + 1 + 1, 1)
+				locals_v_set_int(SupportVersion, GSIg + 1 + 1, 1)
 				script:sleep(10000)
 			end
 		end
 		if stats.get_int("MPX_PROP_FAC_SLOT2") ~= 0 then
-			if stats.get_int ("MPX_MATTOTALFORFACTORY2") < 7 then -- Weed Farm
+			if stats.get_int ("MPX_MATTOTALFORFACTORY2") <= 7 then -- Weed Farm
 			script:sleep(5000)
-				globals.set_int(3337, GSIg + 2 + 1, 1)
+				locals_v_set_int(SupportVersion, GSIg + 2 + 1, 1)
 				script:sleep(10000)
 			end
 		end
 		if stats.get_int("MPX_PROP_FAC_SLOT3") ~= 0 then
-			if stats.get_int ("MPX_MATTOTALFORFACTORY3") < 5 then -- Counterfeit Cash Factory
+			if stats.get_int ("MPX_MATTOTALFORFACTORY3") <= 5 then -- Counterfeit Cash Factory
 			script:sleep(5000)
-				globals.set_int(3337, GSIg + 3 + 1, 1)
+				locals_v_set_int(SupportVersion, GSIg + 3 + 1, 1)
 				script:sleep(10000)
 			end
 		end
 		if stats.get_int("MPX_PROP_FAC_SLOT4") ~= 0 then
-			if stats.get_int ("MPX_MATTOTALFORFACTORY4") < 3 then -- Document Forgery
+			if stats.get_int ("MPX_MATTOTALFORFACTORY4") <= 3 then -- Document Forgery
 			script:sleep(5000)
-				globals.set_int(3337, GSIg + 4 + 1, 1)
+				locals_v_set_int(SupportVersion, GSIg + 4 + 1, 1)
 				script:sleep(10000)
 			end
 		end
@@ -2550,9 +3150,9 @@ script.register_looped("My Control", function (script)
 	
 	if BunkerAutoResupply then
 		if stats.get_int("MPX_PROP_FAC_SLOT5") ~= 0 then
-			if stats.get_int ("MPX_MATTOTALFORFACTORY5") < 10 then
+			if stats.get_int ("MPX_MATTOTALFORFACTORY5") <= 10 then
 			script:sleep(5000)
-				globals.set_int(3337, GSIg + 5 + 1, 1)
+				locals_v_set_int(SupportVersion, GSIg + 5 + 1, 1)
 				script:sleep(10000)
 			end
 		end
@@ -2560,9 +3160,9 @@ script.register_looped("My Control", function (script)
 	
 	if AcidLabAutoResupply then
 		if stats.get_int("MPX_PROP_FAC_SLOT6") ~= 0 then
-			if stats.get_int ("MPX_MATTOTALFORFACTORY6") < 2 then
+			if stats.get_int ("MPX_MATTOTALFORFACTORY6") <= 2 then
 			script:sleep(5000)
-				globals.set_int(3337, GSIg + 6 + 1, 1)
+				locals_v_set_int(SupportVersion, GSIg + 6 + 1, 1)
 				script:sleep(10000)
 			end
 		end
@@ -2840,37 +3440,37 @@ script.register_looped("My Control", function (script)
         if NightclubProductionControlx4 == 0 then
             gui.show_message("Nightclub Speedx4","It will take effect the next time production is triggered. Reassign employees to take effect immediately")
         end
-        if globals.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_CARGO") ~= 2100000 then -- Cargo and Shipments
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_CARGO", 2100000)
+        if tunables.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_CARGO") ~= 2100000 then -- Cargo and Shipments
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_CARGO", 2100000)
         end
-        if globals.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEAPONS") ~= 3600000 then -- Sporting Goods
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEAPONS", 3600000)
+        if tunables.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEAPONS") ~= 3600000 then -- Sporting Goods
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEAPONS", 3600000)
         end
-        if globals.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COKE") ~= 1800000 then -- South America Imports
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COKE", 1800000)
+        if tunables.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COKE") ~= 1800000 then -- South America Imports
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COKE", 1800000)
         end
-        if globals.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_METH") ~= 600000 then -- Pharmaceutical Research
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_METH", 600000)
+        if tunables.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_METH") ~= 600000 then -- Pharmaceutical Research
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_METH", 600000)
         end
-        if globals.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEED") ~= 600000 then -- Organic Produce
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEED", 600000)
+        if tunables.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEED") ~= 600000 then -- Organic Produce
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEED", 600000)
         end
-        if globals.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_FORGED_DOCUMENTS") ~= 450000 then -- Printing & Copying
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_FORGED_DOCUMENTS", 450000)
+        if tunables.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_FORGED_DOCUMENTS") ~= 450000 then -- Printing & Copying
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_FORGED_DOCUMENTS", 450000)
         end
-        if globals.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COUNTERFEIT_CASH") ~= 900000 then -- Cash Creation
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COUNTERFEIT_CASH", 900000)
+        if tunables.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COUNTERFEIT_CASH") ~= 900000 then -- Cash Creation
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COUNTERFEIT_CASH", 900000)
         end
         NightclubProductionControlx4 = 1
     else
         if NightclubProductionControlx4 == 1 then
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_CARGO", 8400000) -- Cargo and Shipments
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEAPONS", 4800000) -- Sporting Goods
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COKE", 14400000) -- South America Imports
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_METH", 7200000) -- Pharmaceutical Research
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEED", 2400000) -- Organic Produce
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_FORGED_DOCUMENTS", 1800000) -- Printing & Copying
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COUNTERFEIT_CASH", 3600000) -- Cash Creation
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_CARGO", 8400000) -- Cargo and Shipments
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEAPONS", 4800000) -- Sporting Goods
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COKE", 14400000) -- South America Imports
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_METH", 7200000) -- Pharmaceutical Research
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEED", 2400000) -- Organic Produce
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_FORGED_DOCUMENTS", 1800000) -- Printing & Copying
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COUNTERFEIT_CASH", 3600000) -- Cash Creation
             NightclubProductionControlx4 = 0
         end
     end
@@ -2879,37 +3479,37 @@ script.register_looped("My Control", function (script)
         if NightclubProductionControlx10 == 0 then
             gui.show_message("Nightclub Speedx10","It will take effect the next time production is triggered. Reassign employees to take effect immediately")
         end
-        if globals.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_CARGO") ~= 840000 then -- Cargo and Shipments
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_CARGO", 840000)
+        if tunables.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_CARGO") ~= 840000 then -- Cargo and Shipments
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_CARGO", 840000)
         end
-        if globals.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEAPONS") ~= 1440000 then -- Sporting Goods
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEAPONS", 1440000)
+        if tunables.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEAPONS") ~= 1440000 then -- Sporting Goods
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEAPONS", 1440000)
         end
-        if globals.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COKE") ~= 720000 then -- South America Imports
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COKE", 720000)
+        if tunables.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COKE") ~= 720000 then -- South America Imports
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COKE", 720000)
         end
-        if globals.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_METH") ~= 240000 then -- Pharmaceutical Research
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_METH", 240000)
+        if tunables.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_METH") ~= 240000 then -- Pharmaceutical Research
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_METH", 240000)
         end
-        if globals.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEED") ~= 240000 then -- Organic Produce
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEED", 240000)
+        if tunables.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEED") ~= 240000 then -- Organic Produce
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEED", 240000)
         end
-        if globals.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_FORGED_DOCUMENTS") ~= 180000 then -- Printing & Copying
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_FORGED_DOCUMENTS", 180000)
+        if tunables.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_FORGED_DOCUMENTS") ~= 180000 then -- Printing & Copying
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_FORGED_DOCUMENTS", 180000)
         end
-        if globals.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COUNTERFEIT_CASH") ~= 360000 then -- Cash Creation
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COUNTERFEIT_CASH", 360000)
+        if tunables.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COUNTERFEIT_CASH") ~= 360000 then -- Cash Creation
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COUNTERFEIT_CASH", 360000)
         end
         NightclubProductionControlx10 = 1
     else
         if NightclubProductionControlx10 == 1 then
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_CARGO", 8400000) -- Cargo and Shipments
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEAPONS", 4800000) -- Sporting Goods
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COKE", 14400000) -- South America Imports
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_METH", 7200000) -- Pharmaceutical Research
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEED", 2400000) -- Organic Produce
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_FORGED_DOCUMENTS", 1800000) -- Printing & Copying
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COUNTERFEIT_CASH", 3600000) -- Cash Creation
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_CARGO", 8400000) -- Cargo and Shipments
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEAPONS", 4800000) -- Sporting Goods
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COKE", 14400000) -- South America Imports
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_METH", 7200000) -- Pharmaceutical Research
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEED", 2400000) -- Organic Produce
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_FORGED_DOCUMENTS", 1800000) -- Printing & Copying
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COUNTERFEIT_CASH", 3600000) -- Cash Creation
             NightclubProductionControlx10 = 0
         end
     end
@@ -2918,37 +3518,37 @@ script.register_looped("My Control", function (script)
         if NightclubProductionControlx20 == 0 then
             gui.show_message("Nightclub Speedx20","It will take effect the next time production is triggered. Reassign employees to take effect immediately")
         end
-        if globals.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_CARGO") ~= 420000 then -- Cargo and Shipments
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_CARGO", 420000)
+        if tunables.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_CARGO") ~= 420000 then -- Cargo and Shipments
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_CARGO", 420000)
         end
-        if globals.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEAPONS") ~= 720000 then -- Sporting Goods
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEAPONS", 720000)
+        if tunables.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEAPONS") ~= 720000 then -- Sporting Goods
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEAPONS", 720000)
         end
-        if globals.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COKE") ~= 360000 then -- South America Imports
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COKE", 360000)
+        if tunables.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COKE") ~= 360000 then -- South America Imports
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COKE", 360000)
         end
-        if globals.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_METH") ~= 120000 then -- Pharmaceutical Research
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_METH", 120000)
+        if tunables.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_METH") ~= 120000 then -- Pharmaceutical Research
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_METH", 120000)
         end
-        if globals.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEED") ~= 120000 then -- Organic Produce
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEED", 120000)
+        if tunables.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEED") ~= 120000 then -- Organic Produce
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEED", 120000)
         end
-        if globals.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_FORGED_DOCUMENTS") ~= 90000 then -- Printing & Copying
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_FORGED_DOCUMENTS", 90000)
+        if tunables.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_FORGED_DOCUMENTS") ~= 90000 then -- Printing & Copying
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_FORGED_DOCUMENTS", 90000)
         end
-        if globals.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COUNTERFEIT_CASH") ~= 5000 then -- Cash Creation
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COUNTERFEIT_CASH", 180000)
+        if tunables.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COUNTERFEIT_CASH") ~= 5000 then -- Cash Creation
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COUNTERFEIT_CASH", 180000)
         end
         NightclubProductionControlx20 = 1
     else
         if NightclubProductionControlx20 == 1 then
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_CARGO", 8400000) -- Cargo and Shipments
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEAPONS", 4800000) -- Sporting Goods
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COKE", 14400000) -- South America Imports
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_METH", 7200000) -- Pharmaceutical Research
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEED", 2400000) -- Organic Produce
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_FORGED_DOCUMENTS", 1800000) -- Printing & Copying
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COUNTERFEIT_CASH", 3600000) -- Cash Creation
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_CARGO", 8400000) -- Cargo and Shipments
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEAPONS", 4800000) -- Sporting Goods
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COKE", 14400000) -- South America Imports
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_METH", 7200000) -- Pharmaceutical Research
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEED", 2400000) -- Organic Produce
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_FORGED_DOCUMENTS", 1800000) -- Printing & Copying
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COUNTERFEIT_CASH", 3600000) -- Cash Creation
             NightclubProductionControlx20 = 0
         end
     end
@@ -2957,37 +3557,37 @@ script.register_looped("My Control", function (script)
         if NightclubProductionControl5s == 0 then
             gui.show_message("Nightclub Speed5s","It will take effect the next time production is triggered. Reassign employees to take effect immediately")
         end
-        if globals.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_CARGO") ~= 5000 then -- Cargo and Shipments
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_CARGO", 5000)
+        if tunables.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_CARGO") ~= 5000 then -- Cargo and Shipments
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_CARGO", 5000)
         end
-        if globals.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEAPONS") ~= 5000 then -- Sporting Goods
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEAPONS", 5000)
+        if tunables.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEAPONS") ~= 5000 then -- Sporting Goods
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEAPONS", 5000)
         end
-        if globals.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COKE") ~= 5000 then -- South America Imports
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COKE", 5000)
+        if tunables.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COKE") ~= 5000 then -- South America Imports
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COKE", 5000)
         end
-        if globals.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_METH") ~= 5000 then -- Pharmaceutical Research
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_METH", 5000)
+        if tunables.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_METH") ~= 5000 then -- Pharmaceutical Research
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_METH", 5000)
         end
-        if globals.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEED") ~= 5000 then -- Organic Produce
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEED", 5000)
+        if tunables.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEED") ~= 5000 then -- Organic Produce
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEED", 5000)
         end
-        if globals.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_FORGED_DOCUMENTS") ~= 5000 then -- Printing & Copying
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_FORGED_DOCUMENTS", 5000)
+        if tunables.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_FORGED_DOCUMENTS") ~= 5000 then -- Printing & Copying
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_FORGED_DOCUMENTS", 5000)
         end
-        if globals.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COUNTERFEIT_CASH") ~= 5000 then -- Cash Creation
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COUNTERFEIT_CASH", 5000)
+        if tunables.get_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COUNTERFEIT_CASH") ~= 5000 then -- Cash Creation
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COUNTERFEIT_CASH", 5000)
         end
         NightclubProductionControl5s = 1
     else
         if NightclubProductionControl5s == 1 then
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_CARGO", 8400000) -- Cargo and Shipments
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEAPONS", 4800000) -- Sporting Goods
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COKE", 14400000) -- South America Imports
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_METH", 7200000) -- Pharmaceutical Research
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEED", 2400000) -- Organic Produce
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_FORGED_DOCUMENTS", 1800000) -- Printing & Copying
-            globals.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COUNTERFEIT_CASH", 3600000) -- Cash Creation
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_CARGO", 8400000) -- Cargo and Shipments
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEAPONS", 4800000) -- Sporting Goods
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COKE", 14400000) -- South America Imports
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_METH", 7200000) -- Pharmaceutical Research
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_WEED", 2400000) -- Organic Produce
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_FORGED_DOCUMENTS", 1800000) -- Printing & Copying
+            tunables.set_int("BB_BUSINESS_DEFAULT_ACCRUE_TIME_COUNTERFEIT_CASH", 3600000) -- Cash Creation
             NightclubProductionControl5s = 0
         end
     end
@@ -3078,7 +3678,7 @@ script.register_looped("My Control", function (script)
 			tunables.set_bool("IMPEXP_DISABLE_STUNT_MAN", true)
 		end
 	else
-	--	tunables.set_bool("IMPEXP_DISABLE_PARKED_CAR", false)
+		--tunables.set_bool("IMPEXP_DISABLE_PARKED_CAR", false)
 		tunables.set_bool("IMPEXP_DISABLE_PROTECTED_CAR", false)
 		tunables.set_bool("IMPEXP_DISABLE_MOVING_CAR", false)
 		tunables.set_bool("IMPEXP_DISABLE_PICTURE_MESSAGE", false)
@@ -3096,44 +3696,284 @@ script.register_looped("My Control", function (script)
 		tunables.set_bool("IMPEXP_DISABLE_STUNT_MAN", false)
 	end
 	
-	Special_Cargo_Sell_Mission = 
-	{0, -- bool CEO Disable Air Attacked Sell Mission *(false)*
-	12, -- bool CEO Disable Air Drop Sell Mission *(false)*
-	18, -- bool CEO Disable Fly Low Sell Mission *(false)*
-	19, -- bool CEO Disable Restricted Airspace Sell Mission *(false)*
-	25, -- bool CEO Disable Attacked Sell Mission *(false)*
-	27, -- bool CEO Disable Defend Sell Mission *(false)*
-	55, -- bool CEO Disable No-Damage Sell Mission *(false)*
-	56, -- bool CEO Disable Sea Attacked Sell Mission *(false)*
-	62, -- bool CEO Disable Sea Defend Sell Mission *(false)* 
-	68, -- bool CEO Disable Sting Operation Sell Mission *(false)*
-	74} -- bool CEO Disable Trackify Sell Mission *(false)*
-	if SpecialCargoSellMission then
-		for i, value in ipairs(Special_Cargo_Sell_Mission) do
-			if globals.get_int(SCSMg + value) == 0 then
-				globals.set_int(SCSMg + value, 1)
-			end
+	if SpecialCargoBuyMission then -- there is 19 missions // https://gta.fandom.com/wiki/Special_Cargo/Steal_Missions
+		if tunables.get_bool("EXEC_DISABLE_BUY_AFTERMATH") ~= true then
+			tunables.set_bool("EXEC_DISABLE_BUY_AFTERMATH", true)
 		end
+		if tunables.get_bool("EXEC_DISABLE_BUY_AMBUSHED") ~= true then
+			tunables.set_bool("EXEC_DISABLE_BUY_AMBUSHED", true)
+		end
+		if tunables.get_bool("EXEC_DISABLE_BUY_ASSASSINATE") ~= true then
+			tunables.set_bool("EXEC_DISABLE_BUY_ASSASSINATE", true)
+		end
+		if tunables.get_bool("EXEC_DISABLE_BUY_BOATATTACK") ~= true then
+			tunables.set_bool("EXEC_DISABLE_BUY_BOATATTACK", true)
+		end
+		if tunables.get_bool("EXEC_DISABLE_BUY_BREAKUPDEAL") ~= true then
+			tunables.set_bool("EXEC_DISABLE_BUY_BREAKUPDEAL", true)
+		end
+		if tunables.get_bool("EXEC_DISABLE_BUY_CARGODROP") ~= true then
+			tunables.set_bool("EXEC_DISABLE_BUY_CARGODROP", true)
+		end
+		if tunables.get_bool("EXEC_DISABLE_BUY_CRASHSITE") ~= true then
+			tunables.set_bool("EXEC_DISABLE_BUY_CRASHSITE", true)
+		end
+		if tunables.get_bool("EXEC_DISABLE_BUY_GANGHIDEOUT") ~= true then
+			tunables.set_bool("EXEC_DISABLE_BUY_GANGHIDEOUT", true)
+		end
+		if tunables.get_bool("EXEC_DISABLE_BUY_HELITAKEDOWN") ~= true then
+			tunables.set_bool("EXEC_DISABLE_BUY_HELITAKEDOWN", true)
+		end
+		if tunables.get_bool("EXEC_DISABLE_BUY_IMPOUNDED") ~= true then
+			tunables.set_bool("EXEC_DISABLE_BUY_IMPOUNDED", true)
+		end
+		if tunables.get_bool("EXEC_DISABLE_BUY_MOVEDCOLLECTION") ~= true then
+			tunables.set_bool("EXEC_DISABLE_BUY_MOVEDCOLLECTION", true)
+		end
+		if tunables.get_bool("EXEC_DISABLE_BUY_MOVINGCOLLECTION") ~= true then
+			tunables.set_bool("EXEC_DISABLE_BUY_MOVINGCOLLECTION", true)
+		end
+		if tunables.get_bool("EXEC_DISABLE_BUY_MULTIPLEMOVINGVEHICLES") ~= true then
+			tunables.set_bool("EXEC_DISABLE_BUY_MULTIPLEMOVINGVEHICLES", true)
+		end
+		if tunables.get_bool("EXEC_DISABLE_BUY_POLICESTING") ~= true then
+			tunables.set_bool("EXEC_DISABLE_BUY_POLICESTING", true)
+		end
+		if tunables.get_bool("EXEC_DISABLE_BUY_STEALTRANSPORTER") ~= true then
+			tunables.set_bool("EXEC_DISABLE_BUY_STEALTRANSPORTER", true)
+		end
+		if tunables.get_bool("EXEC_DISABLE_BUY_THIEF") ~= true then
+			tunables.set_bool("EXEC_DISABLE_BUY_THIEF", true)
+		end
+		if tunables.get_bool("EXEC_DISABLE_BUY_TRACKIFY") ~= true then
+			tunables.set_bool("EXEC_DISABLE_BUY_TRACKIFY", true)
+		end
+		if tunables.get_bool("EXEC_DISABLE_BUY_TRAPPED") ~= true then
+			tunables.set_bool("EXEC_DISABLE_BUY_TRAPPED", true)
+		end
+		if tunables.get_bool("EXEC_DISABLE_BUY_VALKYRIETAKEDOWN") ~= true then
+			tunables.set_bool("EXEC_DISABLE_BUY_VALKYRIETAKEDOWN", true)
+		end
+		--if tunables.get_bool("EXEC_DISABLE_BUY_VEHICLECOLLECTION") ~= true then
+		--	tunables.set_bool("EXEC_DISABLE_BUY_VEHICLECOLLECTION", true)
+		--end
+	else
+		tunables.set_bool("EXEC_DISABLE_BUY_AFTERMATH", false)
+		tunables.set_bool("EXEC_DISABLE_BUY_AMBUSHED", false)
+		tunables.set_bool("EXEC_DISABLE_BUY_ASSASSINATE", false)
+		tunables.set_bool("EXEC_DISABLE_BUY_BOATATTACK", false)
+		tunables.set_bool("EXEC_DISABLE_BUY_BREAKUPDEAL", false)
+		tunables.set_bool("EXEC_DISABLE_BUY_CARGODROP", false)
+		tunables.set_bool("EXEC_DISABLE_BUY_CRASHSITE", false)
+		tunables.set_bool("EXEC_DISABLE_BUY_GANGHIDEOUT", false)
+		tunables.set_bool("EXEC_DISABLE_BUY_HELITAKEDOWN", false)
+		tunables.set_bool("EXEC_DISABLE_BUY_IMPOUNDED", false)
+		tunables.set_bool("EXEC_DISABLE_BUY_MOVEDCOLLECTION", false)
+		tunables.set_bool("EXEC_DISABLE_BUY_MOVINGCOLLECTION", false)
+		tunables.set_bool("EXEC_DISABLE_BUY_MULTIPLEMOVINGVEHICLES", false)
+		tunables.set_bool("EXEC_DISABLE_BUY_POLICESTING", false)
+		tunables.set_bool("EXEC_DISABLE_BUY_STEALTRANSPORTER", false)
+		tunables.set_bool("EXEC_DISABLE_BUY_THIEF", false)
+		tunables.set_bool("EXEC_DISABLE_BUY_TRACKIFY", false)
+		tunables.set_bool("EXEC_DISABLE_BUY_TRAPPED", false)
+		tunables.set_bool("EXEC_DISABLE_BUY_VALKYRIETAKEDOWN", false)
+		--tunables.set_bool("EXEC_DISABLE_BUY_VEHICLECOLLECTION", false)
 	end
 	
-	MC_Business_Sell_Mission = 
-	{0, -- bool MC Disable Convoy Sell Mission *(false)*
-	--2, -- bool MC Disable Trashmaster Sell Mission *(false)*
-	5,  -- bool MC Disable Proven Sell Mission *(false)*
-	7,  -- bool MC Disable Friends In Need Sell Mission *(false)*
-	10, -- bool MC Disable Border Patrol Sell Mission *(false)* 
-	32, -- bool MC Disable Heli Drop Sell Mission *(false)* 
-	35, -- bool MC Disable Post OP Sell Mission *(false)* 
-	37, -- bool MC Disable Air Drop Sell Mission *(false)* 
-	42, -- bool MC Disable Sting Operation Sell Mission *(false)* 
-	--44, -- bool MC Disable Benson Sell Mission *(false)* 
-	52} -- bool MC Disable Race Sell Mission *(false)*
-	if MCBusinessSellMission then
-		for i, value in ipairs(MC_Business_Sell_Mission) do
-			if globals.get_int(MCBSg + value) == 0 then
-				globals.set_int(MCBSg + value, 1)
-			end
+	if SpecialCargoSellMission then
+		if tunables.get_bool("EXEC_DISABLE_SELL_AIRATTACKED") ~= true then
+			tunables.set_bool("EXEC_DISABLE_SELL_AIRATTACKED", true)
 		end
+		--if tunables.get_bool("EXEC_DISABLE_SELL_AIRCLEARAREA") ~= true then -- not included in the mission
+		--	tunables.set_bool("EXEC_DISABLE_SELL_AIRCLEARAREA", true)
+		--end
+		if tunables.get_bool("EXEC_DISABLE_SELL_AIRDROP") ~= true then
+			tunables.set_bool("EXEC_DISABLE_SELL_AIRDROP", true)
+		end
+		if tunables.get_bool("EXEC_DISABLE_SELL_AIRFLYLOW") ~= true then
+			tunables.set_bool("EXEC_DISABLE_SELL_AIRFLYLOW", true)
+		end
+		if tunables.get_bool("EXEC_DISABLE_SELL_AIRRESTRICTED") ~= true then
+			tunables.set_bool("EXEC_DISABLE_SELL_AIRRESTRICTED", true)
+		end
+		if tunables.get_bool("EXEC_DISABLE_SELL_ATTACKED") ~= true then
+			tunables.set_bool("EXEC_DISABLE_SELL_ATTACKED", true)
+		end
+		--if tunables.get_bool("EXEC_DISABLE_SELL_DEFAULT") ~= true then -- not included in the mission
+		--	tunables.set_bool("EXEC_DISABLE_SELL_DEFAULT", true)
+		--end
+		if tunables.get_bool("EXEC_DISABLE_SELL_DEFEND") ~= true then
+			tunables.set_bool("EXEC_DISABLE_SELL_DEFEND", true)
+		end
+		--if tunables.get_bool("EXEC_DISABLE_SELL_MULTIPLE") ~= true then -- not included in the mission
+		--	tunables.set_bool("EXEC_DISABLE_SELL_MULTIPLE", true)
+		--end
+		if tunables.get_bool("EXEC_DISABLE_SELL_NODAMAGE") ~= true then
+			tunables.set_bool("EXEC_DISABLE_SELL_NODAMAGE", true)
+		end
+		if tunables.get_bool("EXEC_DISABLE_SELL_SEAATTACKED") ~= true then
+			tunables.set_bool("EXEC_DISABLE_SELL_SEAATTACKED", true)
+		end
+		if tunables.get_bool("EXEC_DISABLE_SELL_SEADEFEND") ~= true then
+			tunables.set_bool("EXEC_DISABLE_SELL_SEADEFEND", true)
+		end
+		if tunables.get_bool("EXEC_DISABLE_SELL_STING") ~= true then
+			tunables.set_bool("EXEC_DISABLE_SELL_STING", true)
+		end
+		if tunables.get_bool("EXEC_DISABLE_SELL_TRACKIFY") ~= true then
+			tunables.set_bool("EXEC_DISABLE_SELL_TRACKIFY", true)
+		end
+	else
+		tunables.set_bool("EXEC_DISABLE_SELL_AIRATTACKED", false)
+		--tunables.set_bool("EXEC_DISABLE_SELL_AIRCLEARAREA", false) -- not included in the mission
+		tunables.set_bool("EXEC_DISABLE_SELL_AIRDROP", false)
+		tunables.set_bool("EXEC_DISABLE_SELL_AIRFLYLOW", false)
+		tunables.set_bool("EXEC_DISABLE_SELL_AIRRESTRICTED", false)
+		tunables.set_bool("EXEC_DISABLE_SELL_ATTACKED", false)
+		--tunables.set_bool("EXEC_DISABLE_SELL_DEFAULT", false) -- not included in the mission
+		tunables.set_bool("EXEC_DISABLE_SELL_DEFEND", false)
+		--tunables.set_bool("EXEC_DISABLE_SELL_MULTIPLE", false) -- not included in the mission
+		tunables.set_bool("EXEC_DISABLE_SELL_NODAMAGE", false)
+		tunables.set_bool("EXEC_DISABLE_SELL_SEAATTACKED", false)
+		tunables.set_bool("EXEC_DISABLE_SELL_SEADEFEND", false)
+		tunables.set_bool("EXEC_DISABLE_SELL_STING", false)
+		tunables.set_bool("EXEC_DISABLE_SELL_TRACKIFY", false)
+	end
+	
+	if MCBusinessStealMission then -- there is 17 missions // https://gta.fandom.com/wiki/Business_Supplies/Steal_Missions
+		if tunables.get_bool("BIKER_DISABLE_AGGREGATE_POSITION") ~= true then
+			tunables.set_bool("BIKER_DISABLE_AGGREGATE_POSITION", true)
+		end
+		if tunables.get_bool("BIKER_DISABLE_MARKED_FOR_DEATH_ON_ABANDON") ~= true then
+			tunables.set_bool("BIKER_DISABLE_MARKED_FOR_DEATH_ON_ABANDON", true)
+		end
+		if tunables.get_bool("BIKER_DISABLE_FAVOURITE_BIKE") ~= true then
+			tunables.set_bool("BIKER_DISABLE_FAVOURITE_BIKE", true)
+		end
+		--if tunables.get_bool("BIKER_DISABLE_CLUB_RUN") ~= true then -- not included in the mission
+		--	tunables.set_bool("BIKER_DISABLE_CLUB_RUN", true)
+		--end
+		if tunables.get_bool("BIKER_DISABLE_GUNRUNNING") ~= true then
+			tunables.set_bool("BIKER_DISABLE_GUNRUNNING", true)
+		end
+		if tunables.get_bool("BIKER_DISABLE_POW") ~= true then
+			tunables.set_bool("BIKER_DISABLE_POW", true)
+		end
+		if tunables.get_bool("BIKER_DISABLE_GUNS_FOR_HIRE") ~= true then
+			tunables.set_bool("BIKER_DISABLE_GUNS_FOR_HIRE", true)
+		end
+		if tunables.get_bool("BIKER_DISABLE_BY_THE_POUND") ~= true then
+			tunables.set_bool("BIKER_DISABLE_BY_THE_POUND", true)
+		end
+		if tunables.get_bool("BIKER_DISABLE_NINE_TENTHS") ~= true then
+			tunables.set_bool("BIKER_DISABLE_NINE_TENTHS", true)
+		end
+		if tunables.get_bool("BIKER_DISABLE_CRACKED") ~= true then
+			tunables.set_bool("BIKER_DISABLE_CRACKED", true)
+		end
+		if tunables.get_bool("BIKER_DISABLE_JAILBREAK") ~= true then
+			tunables.set_bool("BIKER_DISABLE_JAILBREAK", true)
+		end
+		if tunables.get_bool("BIKER_DISABLE_FRAGILE_GOODS") ~= true then
+			tunables.set_bool("BIKER_DISABLE_FRAGILE_GOODS", true)
+		end
+		if tunables.get_bool("BIKER_DISABLE_OUTRIDER") ~= true then
+			tunables.set_bool("BIKER_DISABLE_OUTRIDER", true)
+		end
+		--if tunables.get_bool("BIKER_DISABLE_DEATHMATCH") ~= true then -- not included in the mission
+		--	tunables.set_bool("BIKER_DISABLE_DEATHMATCH", true)
+		--end
+		if tunables.get_bool("BIKER_DISABLE_JOUST") ~= true then
+			tunables.set_bool("BIKER_DISABLE_JOUST", true)
+		end
+		if tunables.get_bool("BIKER_DISABLE_CAGED_IN") ~= true then
+			tunables.set_bool("BIKER_DISABLE_CAGED_IN", true)
+		end
+		if tunables.get_bool("BIKER_DISABLE_ON_THE_RUN") ~= true then
+			tunables.set_bool("BIKER_DISABLE_ON_THE_RUN", true)
+		end
+		--if tunables.get_bool("BIKER_DISABLE_HIT_AND_RIDE") ~= true then
+		--	tunables.set_bool("BIKER_DISABLE_HIT_AND_RIDE", true)
+		--end
+		if tunables.get_bool("BIKER_DISABLE_CRIMINAL_MISCHIEF") ~= true then
+			tunables.set_bool("BIKER_DISABLE_CRIMINAL_MISCHIEF", true)
+		end
+		--if tunables.get_bool("BIKER_DISABLE_DEATHBIKE_DELIVERY") ~= true then -- not included in the mission
+		--	tunables.set_bool("BIKER_DISABLE_DEATHBIKE_DELIVERY", true)
+		--end
+	else
+		tunables.set_bool("BIKER_DISABLE_AGGREGATE_POSITION", false)
+		tunables.set_bool("BIKER_DISABLE_MARKED_FOR_DEATH_ON_ABANDON", false)
+		tunables.set_bool("BIKER_DISABLE_FAVOURITE_BIKE", false)
+		--tunables.set_bool("BIKER_DISABLE_CLUB_RUN", true) -- not included in the mission
+		tunables.set_bool("BIKER_DISABLE_GUNRUNNING", false)
+		tunables.set_bool("BIKER_DISABLE_POW", false)
+		tunables.set_bool("BIKER_DISABLE_GUNS_FOR_HIRE", false)
+		tunables.set_bool("BIKER_DISABLE_BY_THE_POUND", false)
+		tunables.set_bool("BIKER_DISABLE_NINE_TENTHS", false)
+		tunables.set_bool("BIKER_DISABLE_CRACKED", false)
+		tunables.set_bool("BIKER_DISABLE_JAILBREAK", false)
+		tunables.set_bool("BIKER_DISABLE_FRAGILE_GOODS", false)
+		tunables.set_bool("BIKER_DISABLE_OUTRIDER", false)
+		--tunables.set_bool("BIKER_DISABLE_DEATHMATCH", false) -- not included in the mission
+		tunables.set_bool("BIKER_DISABLE_JOUST", false)
+		tunables.set_bool("BIKER_DISABLE_CAGED_IN", false)
+		tunables.set_bool("BIKER_DISABLE_ON_THE_RUN", false)
+		--tunables.set_bool("BIKER_DISABLE_HIT_AND_RIDE", false)
+		tunables.set_bool("BIKER_DISABLE_CRIMINAL_MISCHIEF", false)
+		--tunables.set_bool("BIKER_DISABLE_DEATHBIKE_DELIVERY", false) -- not included in the mission
+	end
+	
+	if MCBusinessSellMission then -- there is 9 missions // https://gta.fandom.com/wiki/Business_Supplies/Sell_Missions
+		if tunables.get_bool("BIKER_DISABLE_SELL_CONVOY") ~= true then
+			tunables.set_bool("BIKER_DISABLE_SELL_CONVOY", true)
+		end
+		if tunables.get_bool("BIKER_DISABLE_SELL_TRASHMASTER") ~= true then
+			tunables.set_bool("BIKER_DISABLE_SELL_TRASHMASTER", true)
+		end
+		if tunables.get_bool("BIKER_DISABLE_SELL_PROVEN") ~= true then
+			tunables.set_bool("BIKER_DISABLE_SELL_PROVEN", true)
+		end
+		if tunables.get_bool("BIKER_DISABLE_SELL_FRIENDS_IN_NEED") ~= true then
+			tunables.set_bool("BIKER_DISABLE_SELL_FRIENDS_IN_NEED", true)
+		end
+		if tunables.get_bool("BIKER_DISABLE_SELL_BORDER_PATROL") ~= true then
+			tunables.set_bool("BIKER_DISABLE_SELL_BORDER_PATROL", true)
+		end
+		if tunables.get_bool("BIKER_DISABLE_SELL_HELICOPTER_DROP") ~= true then
+			tunables.set_bool("BIKER_DISABLE_SELL_HELICOPTER_DROP", true)
+		end
+		if tunables.get_bool("BIKER_DISABLE_SELL_POSTMAN") ~= true then
+			tunables.set_bool("BIKER_DISABLE_SELL_POSTMAN", true)
+		end
+		if tunables.get_bool("BIKER_DISABLE_SELL_AIR_DROP_AT_SEA") ~= true then
+			tunables.set_bool("BIKER_DISABLE_SELL_AIR_DROP_AT_SEA", true)
+		end
+		if tunables.get_bool("BIKER_DISABLE_SELL_STING_OP") ~= true then
+			tunables.set_bool("BIKER_DISABLE_SELL_STING_OP", true)
+		end
+		--if tunables.get_bool("BIKER_DISABLE_SELL_BENSON") ~= true then
+		--	tunables.set_bool("BIKER_DISABLE_SELL_BENSON", true)
+		--end
+		--if tunables.get_bool("BIKER_DISABLE_SELL_BAG_DROP") ~= true then -- not included in the mission
+		--	tunables.set_bool("BIKER_DISABLE_SELL_BAG_DROP", true)
+		--end
+		if tunables.get_bool("BIKER_DISABLE_SELL_RACE") ~= true then
+			tunables.set_bool("BIKER_DISABLE_SELL_RACE", true)
+		end
+	else
+		tunables.set_bool("BIKER_DISABLE_SELL_CONVOY", false)
+		tunables.set_bool("BIKER_DISABLE_SELL_TRASHMASTER", false)
+		tunables.set_bool("BIKER_DISABLE_SELL_PROVEN", false)
+		tunables.set_bool("BIKER_DISABLE_SELL_FRIENDS_IN_NEED", false)
+		tunables.set_bool("BIKER_DISABLE_SELL_BORDER_PATROL", false)
+		tunables.set_bool("BIKER_DISABLE_SELL_HELICOPTER_DROP", false)
+		tunables.set_bool("BIKER_DISABLE_SELL_POSTMAN", false)
+		tunables.set_bool("BIKER_DISABLE_SELL_AIR_DROP_AT_SEA", false)
+		tunables.set_bool("BIKER_DISABLE_SELL_STING_OP", false)
+		--tunables.set_bool("BIKER_DISABLE_SELL_BENSON", false)
+		--tunables.set_bool("BIKER_DISABLE_SELL_BAG_DROP", false) -- not included in the mission
+		tunables.set_bool("BIKER_DISABLE_SELL_RACE", false)
 	end
 	
 	if HangarAirStealMission then
@@ -3298,17 +4138,19 @@ HangarStaffSourced = false
 HangarCargoSourceCooldown = false
 NightclubGoodsCapacity = false
 
-script.register_looped("My Resupply", function (script)
+script.register_looped("GoldenGets Resupply", function (script)
 	if WarehouseStaffSourced then
-		stats.set_packed_stat_bool(3337, 32359, true)
-		stats.set_packed_stat_bool(3337, 32360, true)
-		stats.set_packed_stat_bool(3337, 32361, true)
-		stats.set_packed_stat_bool(3337, 32362, true)
-		stats.set_packed_stat_bool(3337, 32363, true)
+		repeat
+			for i = 12, 16 do
+				stats.set_bool_masked("MPX_FIXERPSTAT_BOOL1", true, i)
+				script:sleep(500) -- half second delay between each warehouse
+			end
+			script:sleep(969) -- add a delay to prevent transaction error or infinite 'transaction pending'
+		until WarehouseCrates == 555 or WarehouseStaffSourced == false
 	end
 	
 	if CEOSpecialItem then
-		globals.set_int(SCVSIl, 1)
+		locals_v_set_int(SupportVersion, SCVSIl, 1)
 	end
 	
 	if SpecialCargoSourceCooldown then
@@ -3350,13 +4192,16 @@ script.register_looped("My Resupply", function (script)
 	end
 	
 	if TriggerBunkerProduction then
-		globals.set_int(TTg + 6, 0)
-		globals.set_int(TTg, 1)
+		locals_v_set_int(SupportVersion, TTg + 6, 0)
+		locals_v_set_int(SupportVersion, TTg, 1)
 		script:sleep(1000)
 	end
 	
 	if HangarStaffSourced then
-		stats.set_bool_masked("MPX_DLC22022PSTAT_BOOL3", true, 9)
+		repeat
+			stats.set_bool_masked("MPX_DLC22022PSTAT_BOOL3", true, 9)
+			script:sleep(969) -- add a delay to prevent transaction error or infinite 'transaction pending'
+		until HangarCrates == 50 or HangarStaffSourced == false
 	end
 	
 	if HangarCargoSourceCooldown then
@@ -3385,37 +4230,35 @@ script.register_looped("My Resupply", function (script)
 	end
 end)
 
-WarehouseAuto = false
-
-script.register_looped("My WarehouseAuto", function (script)
+script.register_looped("GoldenGets WarehouseAuto", function (script)
     if WarehouseAuto then
-        if locals.get_int(GCS, 2) == 1 then -- Auto Sell Warehouse Special Cargo
-            locals.set_int(GCS, SCVMTl + 588, 1) -- crates to sell
-            locals.set_int(GCS, SCVMTl + 48, 0)
-            locals.set_int(GCS, SCVMTl + 577, 0)
-            locals.set_int(GCS, SCVMTl, 7) -- Special Cargo Sell Vehicle Type
+        if locals_v_get_int(SupportVersion, GCS, 2) == 1 then -- Auto Sell Warehouse Special Cargo
+            locals_v_set_int(SupportVersion, GCS, SCVMTl + 588, 1) -- crates to sell
+            locals_v_set_int(SupportVersion, GCS, SCVMTl + 48, 0)
+            locals_v_set_int(SupportVersion, GCS, SCVMTl + 577, 0)
+            locals_v_set_int(SupportVersion, GCS, SCVMTl, 7) -- Special Cargo Sell Vehicle Type
             script:sleep(500)
-            locals.set_int(GCS, SCVISl, 99999)  
+            locals_v_set_int(SupportVersion, GCS, SCVISl, 99999)  
         end
-        if locals.get_int(ASS, 2) == 1 then
+        if locals_v_get_int(SupportVersion, ASS, 2) == 1 then
             script:sleep(500)
-            locals.set_int(ASS, SCVAl2, 1)
+            locals_v_set_int(SupportVersion, ASS, SCVAl2, 1)
             script:sleep(200)
-            locals.set_int(ASS, SCVAl1, 1)
+            locals_v_set_int(SupportVersion, ASS, SCVAl1, 1)
             script:sleep(200)
-            locals.set_int(ASS, SCVAl3, 3012)
+            locals_v_set_int(SupportVersion, ASS, SCVAl3, 3012)
             script:sleep(1000)
         end
-        if locals.get_int(GCB, 2) == 1 then -- Auto Source Warehouse Special Cargo
-            locals.set_int(GCB, SCVIBl1, 1)
-            locals.set_int(GCB, SCVIBl2, 111)
-            locals.set_int(GCB, SCVIBl3, 6)
-            locals.set_int(GCB, SCVIBl4, 4)
+        if locals_v_get_int(SupportVersion, GCB, 2) == 1 then -- Auto Source Warehouse Special Cargo
+            locals_v_set_int(SupportVersion, GCB, SCVIBl1, 1)
+            locals_v_set_int(SupportVersion, GCB, SCVIBl2, 111)
+            locals_v_set_int(SupportVersion, GCB, SCVIBl3, 6)
+            locals_v_set_int(SupportVersion, GCB, SCVIBl4, 4)
             gui.show_message("Your Warehouse is now Full!")
         end
-        if locals.get_int(GCS, 2) ~= 1 then  
+        if locals_v_get_int(SupportVersion, GCS, 2) ~= 1 then  
             script:sleep(500)
-            if locals.get_int(AMW, 2) == 1 then
+            if locals_v_get_int(SupportVersion, AMW, 2) == 1 then
                 SCRIPT.REQUEST_SCRIPT(ASS)
                 SYSTEM.START_NEW_SCRIPT(ASS, 8344)
                 SCRIPT.SET_SCRIPT_AS_NO_LONGER_NEEDED(ASS)
@@ -3438,7 +4281,7 @@ HangarCargoSellCooldown = false
 NightclubGoodsValue = false
 NightclubSellTonysCut = false
 
-script.register_looped("My Selling", function()
+script.register_looped("GoldenGets Selling", function()
 	if SpecialCargoValue then
 		tunables.set_int("EXEC_CONTRABAND_SALE_VALUE_THRESHOLD1", CratesValue1)
 		tunables.set_int("EXEC_CONTRABAND_SALE_VALUE_THRESHOLD2", CratesValue2)
@@ -3465,9 +4308,9 @@ script.register_looped("My Selling", function()
 	
     if SpecialCargoShipmentType then
         if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat(GCS)) ~= 0 then
-            if locals.get_int(3337, GCS, SCVMTl) ~= 12 then 
+            if locals_v_get_int(SupportVersion, GCS, SCVMTl) ~= 12 then 
                 gui.show_message("Special Cargo - Selling", "Sell with single Shipment/Tug, Boats")
-                locals.set_int(3337, GCS, SCVMTl, 12) -- gb_contraband_sell.c	iVar0 = MISC::GET_RANDOM_INT_IN_RANGE(0, 14); --Local_545.f_7 = iVar0;
+                locals_v_set_int(SupportVersion, GCS, SCVMTl, 12) -- gb_contraband_sell.c	iVar0 = MISC::GET_RANDOM_INT_IN_RANGE(0, 14); --Local_545.f_7 = iVar0;
             end
         end
     end
@@ -3512,19 +4355,19 @@ script.register_looped("My Selling", function()
 	
 	if MCBusinessShipmentType then
         if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat(GBCS)) ~= 0 then
-            if locals.get_int(3337, GBCS, MCBSTl) == 0 then
+            if locals_v_get_int(SupportVersion, GBCS, MCBSTl) == 0 then
                 log.info("Single shipment type detected, auto change random shipment type.")
 				random_value = math.random(1, 10)
-                locals.set_int(3337, GBCS, MCBSTl, random_value)
+                locals_v_set_int(SupportVersion, GBCS, MCBSTl, random_value)
             end
         end
 	end
 	
     if MCBusinessShipmentType0 then
         if SCRIPT.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat(GBCS)) ~= 0 then
-            if locals.get_int(3337, GBCS, MCBSTl) ~= 0 then
+            if locals_v_get_int(SupportVersion, GBCS, MCBSTl) ~= 0 then
 				gui.show_message("MC Business - Selling", "Sell with single Shipment/MTL, Pounder")
-                locals.set_int(3337, GBCS, MCBSTl, 0) -- gb_biker_contraband_sell.c	iVar0 = MISC::GET_RANDOM_INT_IN_RANGE(0, 13); --Local_704.f_17 = randomIntInRange;
+                locals_v_set_int(SupportVersion, GBCS, MCBSTl, 0) -- gb_biker_contraband_sell.c	iVar0 = MISC::GET_RANDOM_INT_IN_RANGE(0, 13); --Local_704.f_17 = randomIntInRange;
             end    
         end
     end
@@ -3569,7 +4412,7 @@ end)
 ------------------------------------
 
 ---------------
-MyMisc = GoldenGets:add_tab("Misc")
+GoldenGetsMisc = GoldenGetsMenu:add_tab("Misc")
 ---------------
 
 CashMultiplier = tunables.get_float("CASH_MULTIPLIER")
@@ -3591,7 +4434,7 @@ LSCarMeetTrack = tunables.get_float("TUNER_CARCLUB_VISITS_STREAK_XP_MULTIPLIER")
 LSCarMeetMerch = tunables.get_float("TUNER_MERCH_PURCHASE_XP_MULTIPLIER")
 LSCarMeetAll = tunables.get_float("TUNER_CARCLUB_TIME_XP_MULTIPLIER")
 
-script.register_looped("get_My Multiplier", function (script)
+script.register_looped("get_GoldenGets Multiplier", function (script)
 	CashMultiplier = tunables.get_float("CASH_MULTIPLIER")
 	XPMultiplier = tunables.get_float("XP_MULTIPLIER")
 	TimeMultiplier = tunables.get_float("TIME_MULTIPLIER")
@@ -3613,8 +4456,8 @@ script.register_looped("get_My Multiplier", function (script)
 	script:yield()
 end)
 
-MyMisc:add_imgui(function()
-	if ImGui.BeginTabBar("My Misc Tab") then
+GoldenGetsMisc:add_imgui(function()
+	if ImGui.BeginTabBar("GoldenGets Misc Tab") then
 		if ImGui.BeginTabItem("Misc") then
 			if ImGui.Button("Bypass Daily Vehicle Sell Limit") then
 				stats.set_int("MPPLY_VEHICLE_SELL_TIME", 0)
@@ -3633,14 +4476,14 @@ MyMisc:add_imgui(function()
 			end
 			
 			if ImGui.Button("Remove Self Bounty") then
-				globals.set_int(3337, 1 + 2359296 + 5150 + 13, 2880000)
+				globals_v_set_int(SupportVersion, 1 + 2359296 + 5150 + 13, 2880000)
 			end
 			
 			disabletransactionerror = ImGui.Checkbox("Disable Transaction error", disabletransactionerror) --??????,??????
 			ImGui.EndTabItem()
 		end
 		
-		if ImGui.BeginTabItem("Tunable") then
+		if ImGui.BeginTabItem("Tunables") then
 			if ImGui.Button("Default Vehicle Price##BinPriceVehicle") then
 				-- Bin Price Vehicle
 				tunables.set_int("AW_BUY_IT_NOW_PRICE_APOCALYPSE_BRUTUS", 1866655)
@@ -4790,7 +5633,7 @@ disabletransactionerror = false
 taxiservice1 = false
 taxiservice2 = false
 
-script.register_looped("My Misc", function(script)
+script.register_looped("GoldenGets Misc", function(script)
 	if disabletransactionerror then --????????
 		if globals.set_int(BTEg1 + 6) == 4 or 20 then
 			globals.set_int(BTEg1, 0) -- shop_controller.c	if (Global_4536677)    HUD::SET_WARNING_MESSAGE_WITH_HEADER("CTALERT_A" /*Alert*/, func_1372(Global_4536683), instructionalKey, 0, false, -1, 0, 0, true, 0);
@@ -4907,7 +5750,7 @@ TunableMultplier = false
 LSCarMeetAllMultiplier = false
 MaxBetLimit = false
 
-script.register_looped("My Multiplier", function()
+script.register_looped("GoldenGets Multiplier", function()
 	if EnableVehicle then
 		if tunables.get_bool("ENABLE_VEHICLE_AKUMA") == false then
 			tunables.set_bool("ENABLE_VEHICLE_AKUMA", true)
@@ -6448,7 +7291,7 @@ end)
 
 ------------------------------------
 
-Reports = MyMisc:add_tab("Reports")
+Reports = GoldenGetsMisc:add_tab("Reports")
 
 Reports:add_text("Griefing:" .. stats.get_int("MPPLY_GRIEFING"))
 Reports:add_text("Exploiting:" .. stats.get_int("MPPLY_EXPLOITS"))
