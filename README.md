@@ -41,10 +41,10 @@ In fact, most of these scripts are independent of the GTA Online update version.
 - **Misc > Remove Self Bounty**
 
 
+## An Experimental Features
+
 > **[!Note:]**
 > Please note, some features are experimental and may not work as expected.
-
-## An Experimental Features
 
 - **Auto CEO/MC**
 - **Cooldowns > Misc Cooldowns**
@@ -68,7 +68,12 @@ I'm not sure how it works yet. If you find something, you can contact me
 ## About me
 
 Hi, I'm not very good at programming, I was just inspired by others to create this project.
-If you appreciate the time spent on this project and would like to support further development, please consider donating. [PayPal](https://www.paypal.me/mrafiwr) or send BTC: 13eAaVRL8Xs6J2pQY7mhANbzEd9VtF4f7e. Your support is greatly appreciated!
+If you appreciate the time spent on this project and would like to support further development, please consider donating. Your support is greatly appreciated!
+
+[PayPal](https://www.paypal.me/mrafiwr)
+
+BTC:
+bc1qauafrjpcjcasn4w24e0xz7ttf0z80m6j2s0zxv
 
 
 ## Credits
@@ -77,7 +82,7 @@ If you appreciate the time spent on this project and would like to support furth
 - [@UnKnoWnCheaTs](https://www.unknowncheats.me/forum/grand-theft-auto-v/500059-globals-locals-discussion-read-page-1-a.html) many found here
 - [@Wildbrick142](https://github.com/Wildbrick142) for all tunables from [V-Tunable-Names](https://github.com/Wildbrick142/V-Tunable-Names)
 - [@sch-lda](https://www.github.com/sch-lda) for instant hack/mini games from [MiniGameHack](https://www.github.com/YimMenu-Lua/MiniGameHack) and for some business controls from [sch.lua](https://github.com/sch-lda/SCH-LUA-YIMMENU)
-- [@gir489](https://www.github.com/gir489returns) for computer menu from [InternetComputers](https://github.com/YimMenu-Lua/Internet)
+- [@gir489](https://www.github.com/gir489returns) for Screen menu from [InternetComputers](https://github.com/YimMenu-Lua/Internet)
 - [@plumbwicked](https://github.com/plumbwick3d) for some business menu from [Wicked Menu CE](https://www.unknowncheats.me/forum/grand-theft-auto-v/487033-wicked-menu-cheat-engine.html)
 - [@SilentSal0](https://www.github.com/SilentSal0) for some features from [SilenNight](https://github.com/SilentSal0/SilentNight)
 - [@IceDoomfist](https://github.com/IceDoomfist) for some features from [Stand-Heist-Control](https://github.com/IceDoomfist/Stand-Heist-Control)
