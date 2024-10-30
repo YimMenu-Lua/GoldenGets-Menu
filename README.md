@@ -70,8 +70,6 @@ I'm not sure how it works yet. If you find something, you can contact me
 Hi, I'm not very good at programming, I was just inspired by others to create this project.
 If you appreciate the time spent on this project and would like to support further development, please consider donating. Your support is greatly appreciated!
 
-[PayPal](https://www.paypal.me/mrafiwr)
-
 BTC:
 bc1qauafrjpcjcasn4w24e0xz7ttf0z80m6j2s0zxv
 
