@@ -1,7 +1,13 @@
 # GoldenGets Menu
 Lua script for YimMenu which is useful for your GTA Online progress
 
-I think it might be too late to make and share this script after the disaster happened. But you can read the description below to consider.
+> **[!Note:]**
+> 
+> Just for fun, considering most modders left it out
+> 
+> This is not a project, i just dump it here.
+> 
+> Just took from the script developer and i added a lot of cooldown. i hope i dont need to update
 
 ## Features
 
@@ -15,60 +21,7 @@ I think it might be too late to make and share this script after the disaster ha
 - **Mission/Heist** (Coming Soon)
 - **Misc**
 
-
-<div align="center">
-  <h1> Screenshots Features</h1>
-</div>
-
-![Screenshots1](https://github.com/GoldenGets/GoldenGets-Menu/blob/main/Screenshots/1.JPG)
-![Screenshots2](https://github.com/GoldenGets/GoldenGets-Menu/blob/main/Screenshots/2.JPG)
-![Screenshots3](https://github.com/GoldenGets/GoldenGets-Menu/blob/main/Screenshots/3.JPG)
-![Screenshots4](https://github.com/GoldenGets/GoldenGets-Menu/blob/main/Screenshots/4.JPG)
-
-
-## Features that need to be updated in the next version
-
-In fact, most of these scripts are independent of the GTA Online update version. However, there are some features that should be updated in the future when GTA Online is updated.
-
-- **Switch CEO/President**
-- **Instant Hack/Mini Games**
-- **Cooldowns > Remove Job Cooldowns > Dispatch Work**
-- **Business > Controls > Auto-Fill Low Supplies**
-- **Business > Controls > Enable Special Cargo Auto**
-- **Business > Resupply > Instant Collect Crates**
-- **Business > Selling > Shipment Type Sell**
-- **Business > Selling > Instant Sell**
-- **Misc > Remove Self Bounty**
-
-
-## An Experimental Features
-
-> **[!Note:]**
-> Please note, some features are experimental and may not work as expected.
-
-- **Auto CEO/MC**
-- **Cooldowns > Misc Cooldowns**
-- **Business > Business Income > Max Agency Income**
-- **Business > Easy Business Mission**
-- **Misc > Tunables > Remove Bet Limit Challenge**
-
-I'm not sure how it works yet. If you find something, you can contact me
-
-
-> **[!Note:]**
-> **For safety reasons**, I've limited all business sales to a 2x profit cap to avoid detection. Based on past experience, exceeding large sales limits or using instant money options has resulted in bans.
-> If you don't want to be restricted just type manually by double clicking, and change the value.
-
-
-> **[⚠︎Disclaimer⚠︎]**
-> This is for educational and evaluation purposes only.
-> No responsibility is held or accepted for misuse.
-> Use at your own risk!
-
-## About me
-
-Hi, I'm not very good at programming, I was just inspired by others to create this project.
-If you appreciate the time spent on this project and would like to support further development, please consider donating. Your support is greatly appreciated!
+## Donate
 
 BTC:
 bc1qauafrjpcjcasn4w24e0xz7ttf0z80m6j2s0zxv
